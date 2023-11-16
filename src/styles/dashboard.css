@@ -1,0 +1,21 @@
+.button-container{
+    display: flex;
+    flex-wrap: wrap; /* Agregamos esta propiedad para que los botones se ajusten a dos columnas */
+    margin: 10px;
+}
+
+.dashboard-button{
+    background-color: #1E90FF;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 10px;
+    margin: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    width: calc(50% - 20px); /* Establecemos un ancho fijo para cada botón */
+    height: auto;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    text-align: center;
+}
