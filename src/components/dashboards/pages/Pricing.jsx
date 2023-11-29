@@ -1,81 +1,50 @@
+import React from "react";
 
-import React, { useState } from "react";
-
-const Pricing = () => {
-  const [customerName, setCustomerName] = useState("");
-  const [referenceCode, setReferenceCode] = useState("");
-  const [selectedProduct, setSelectedProduct] = useState("");
-  const [productPrice, setProductPrice] = useState("");
-
-  const handleCustomerNameChange = (event) => {
-    setCustomerName(event.target.value);
-  };
-
-  const handleReferenceCodeChange = (event) => {
-    setReferenceCode(event.target.value);
-  };
-
-  const handleProductChange = (event) => {
-    setSelectedProduct(event.target.value);
-    // Set the price based on the selected product
-    switch (event.target.value) {
-      case "Product A":
-        setProductPrice(10);
-        break;
-      case "Product B":
-        setProductPrice(20);
-        break;
-      case "Product C":
-        setProductPrice(30);
-        break;
-      default:
-        setProductPrice("");
-        break;
-    }
-  };
-  console.log(customerName, referenceCode, selectedProduct, productPrice)
-
+export default function Pricing() {
   return (
-    <div>
-      <h1>Pricing Table</h1>
-      <form>
-        <label htmlFor="customerName">Customer Name:</label>
-        <input
-          type="text"
-          id="customerName"
-          name="customerName"
-          value={customerName}
-          onChange={handleCustomerNameChange}
-        />
-        <br />
-        <label htmlFor="referenceCode">Reference Code:</label>
-        <input
-          type="text"
-          id="referenceCode"
-          name="referenceCode"
-          value={referenceCode}
-          onChange={handleReferenceCodeChange}
-        />
-        <br />
-        <label htmlFor="product">Product:</label>
-        <select id="product" name="product" onChange={handleProductChange}>
-          <option value="">Select a product</option>
-          <option value="Product A">Product A</option>
-          <option value="Product B">Product B</option>
-          <option value="Product C">Product C</option>
-        </select>
-        <br />
-        <label htmlFor="price">Price:</label>
-        <input
-          type="text"
-          id="price"
-          name="price"
-          value={productPrice}
-          readOnly
-        />
-      </form>
+    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" className="px-6 py-3">
+              Product name
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Color
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Category
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Price
+            </th>
+            <th scope="col" className="px-6 py-3">
+              <span className="sr-only">Edit</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            <th
+              scope="row"
+              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+            >
+              Apple MacBook Pro 17"
+            </th>
+            <td className="px-6 py-4">Silver</td>
+            <td className="px-6 py-4">Laptop</td>
+            <td className="px-6 py-4">$2999</td>
+            <td className="px-6 py-4 text-right">
+              <a
+                href="/"
+                className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+              >
+                Edit
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
-};
-
-export default Pricing;
+}

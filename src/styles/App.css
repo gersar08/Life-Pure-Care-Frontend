@@ -1,15 +1,20 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
 .App {
-  background-color: #8C8C8C;
+  background-color: rgba(142,196,216,0.8);
   text-align: center;
 }
 
 .App-header {
-  background-color: #3AAED8;
+  background-color: rgba(142,154,216,0.4);
   font-style: italic;
   min-width: 100vh;
   display: flex;
   flex-direction: column;
-  font-size: calc(9px + 2vmin);
+  font-size: calc(2px + 2vmin);
+  backdrop-filter: blur(100px);
   color: white;
 }
 
@@ -18,27 +23,10 @@
 }
 
 .App-body {
-  background-color: #306B34;
+  background-color:rgba(142,196,216,0.8);
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-}
-
-.Dashboard{
-    padding: 100px;
-    display: grid;
-    gap: 20px;
-  }
-
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
 }

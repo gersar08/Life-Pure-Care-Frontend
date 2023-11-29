@@ -1,30 +1,31 @@
 import React from 'react';
 import Header from './components/Header';
 import '../src/styles/App.css';
-import Login from './components/Login';
-import AdminDashboard from './components/dashboards/AdminDashboard';
-import Facturation from './components/dashboards/pages/Facturation';
-//import BalancePrev from './components/dashboards/pages/BalancePrev';
+import BalancePrev from './components/dashboards/pages/BalancePrev';
+/*
 import Inventory from './components/dashboards/pages/Inventory';
-import Users from './components/dashboards/pages/Users';
 import Pricing from './components/dashboards/pages/Pricing';
-
+import Users from './components/dashboards/pages/Users';
+import AdminDashboard from './components/dashboards/AdminDashboard';
+import Login from './components/Login';
+import Facturation from './components/dashboards/pages/Facturation';
+*/
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="App-header md:flex  md:justify-between">
         <Header />
       </header>
-      <div className='App-body'>
-        <Login />
-        <div className='Dashboard'>
-        <AdminDashboard />
-        { /* <BalancePrev /> */}
-        <Facturation />
+      <div className="App-body md:flex md:flex-col md:items-center">
+        <BalancePrev />
+        { /*
         <Inventory />
         <Pricing />
         <Users />
-        </div>
+        <AdminDashboard />
+        <Login />
+        <Facturation />
+        */}
       </div>
     </div>
   );
