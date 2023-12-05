@@ -6,37 +6,38 @@ import {
   ChartBarIcon,
   BriefcaseIcon,
   CurrencyDollarIcon,
-} from "@heroicons/react/24/solid";
+} from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
 function AdminDashboard() {
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Dashboard de Administrador</h1>
+      <h1 className="text-2xl font-bold mb-4 text-center">Dashboard Administrador</h1>
       <div className="grid grid-cols-2 gap-4">
-        <button className="dashboard-button flex flex-col items-center justify-center p-4 border rounded-lg">
+        <Link to={"/admin-dashboard/users"} className="bg-indigo-300 flex flex-col items-center justify-center p-4 border-4 rounded-lg bg-transparent hover:bg-blue-200">
           <UsersIcon className="h-10 w-10 mb-2" />
           Usuarios
-        </button>
-        <button className="dashboard-button flex flex-col items-center justify-center p-4 border rounded-lg">
+        </Link>
+        <Link to={"/admin-dashboard/inventario"} className="bg-indigo-300 flex flex-col items-center justify-center p-4 border-4 rounded-lg bg-transparent hover:bg-blue-200">
           <BuildingStorefrontIcon className="h-10 w-10 mb-2" />
           Inventario
-        </button>
-        <button className="dashboard-button flex flex-col items-center justify-center p-4 border rounded-lg">
+        </Link>
+        <Link to={"/admin-dashboard/facturacion"} className="bg-indigo-300 flex flex-col items-center justify-center p-4 border-4 rounded-lg bg-transparent hover:bg-blue-200">
           <DocumentTextIcon className="h-10 w-10 mb-2" />
           Facturación
-        </button>
-        <button className="dashboard-button flex flex-col items-center justify-center p-4 border rounded-lg">
+        </Link>
+        <Link to={"/admin-dashboard/informe-financiero"} className="bg-indigo-300 flex flex-col items-center justify-center p-4 border-4 rounded-lg bg-transparent hover:bg-blue-200">
           <ChartBarIcon className="h-10 w-10 mb-2" />
           Informe Financiero
-        </button>
-        <button className="dashboard-button flex flex-col items-center justify-center p-4 border rounded-lg">
+        </Link>
+        <Link to={"/admin-dashboard/clientes"} className="bg-indigo-300 flex flex-col items-center justify-center p-4 border-4 rounded-lg bg-transparent hover:bg-blue-200">
           <BriefcaseIcon className="h-10 w-10 mb-2" />
           Clientes
-        </button>
-        <button className="dashboard-button flex flex-col items-center justify-center p-4 border rounded-lg">
+        </Link>
+        <Link to={"/admin-dashboard/precios"} className="bg-indigo-300 flex flex-col items-center justify-center p-4 border-4 rounded-lg bg-transparent hover:bg-blue-200">
           <CurrencyDollarIcon className="h-10 w-10 mb-2" />
           Precios
-        </button>
+        </Link>
       </div>
     </div>
   );

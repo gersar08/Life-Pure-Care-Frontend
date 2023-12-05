@@ -1,33 +1,39 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import '../src/styles/App.css';
-import BalancePrev from './components/dashboards/pages/BalancePrev';
-/*
-import Inventory from './components/dashboards/pages/Inventory';
-import Pricing from './components/dashboards/pages/Pricing';
-import Users from './components/dashboards/pages/Users';
-import AdminDashboard from './components/dashboards/AdminDashboard';
 import Login from './components/Login';
+import AdminDashboard from './components/dashboards/AdminDashboard';
+import Users from './components/dashboards/pages/Users'
+import Inventory from './components/dashboards/pages/Inventory';
+import BalancePrev from './components/dashboards/pages/BalancePrev';
 import Facturation from './components/dashboards/pages/Facturation';
-*/
+import Pricing from './components/dashboards/pages/Pricing';
+import Clients from './components/dashboards/pages/Clients';
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header md:flex  md:justify-between">
-        <Header />
-      </header>
-      <div className="App-body md:flex md:flex-col md:items-center">
-        <BalancePrev />
-        { /*
-        <Inventory />
-        <Pricing />
-        <Users />
-        <AdminDashboard />
-        <Login />
-        <Facturation />
-        */}
+    <Router>
+      <div className="bg-gray-200 h-full flex flex-col">
+        <header className="App-header md:flex  md:justify-between">
+          <Header />
+        </header>
+        <div className="App-body lg:flex  md:flex md:items-center pt-12 w-full h-full">
+          <Routes>
+            <Route path="/" element={<Navigate to="/login" />} />
+            <Route path="/login" element={<Login />}  exactpath/>
+            <Route path="/admin-dashboard" element={<AdminDashboard />} />
+            <Route path='/admin-dashboard/users' element={<Users />} />
+            <Route path='/admin-dashboard/inventario' element={<Inventory/>} />
+            <Route path='/admin-dashboard/informe-financiero' element={<BalancePrev />}/>
+            <Route path='/admin-dashboard/facturacion' element={<Facturation />} />
+            <Route path='/admin-dashboard/precios' element={<Pricing />} />
+            <Route path='/admin-dashboard/clientes' element={<Clients />} />
+            <Route path="*" element={<h1>Not Found 404</h1>} />
+          </Routes>
+        </div>
       </div>
-    </div>
+    </Router>
   );
 }
 

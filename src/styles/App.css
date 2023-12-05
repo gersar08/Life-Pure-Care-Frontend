@@ -2,13 +2,8 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-.App {
-  background-color: rgba(142,196,216,0.8);
-  text-align: center;
-}
-
 .App-header {
-  background-color: rgba(142,154,216,0.4);
+  background-color: rgb(229 231 235);
   font-style: italic;
   min-width: 100vh;
   display: flex;
@@ -18,15 +13,6 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-.App-body {
-  background-color:rgba(142,196,216,0.8);
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+.App-body{
+  min-width: fit-content;
 }

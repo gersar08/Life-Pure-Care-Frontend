@@ -1,59 +1,100 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
-function Login() {
+export default function Login() {
+  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const csrfResponse = await fetch('http://localhost:8000/sanctum/csrf-cookie', {
+        credentials: 'include',
+      });
+      console.log('CSRF response', csrfResponse); // Agregado para depuración
+
+      const response = await fetch('http://localhost:8000/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ user_name: username, password }),
+      });
+      console.log('Login response', response); // Agregado para depuración
+
+      if (!response.ok) {
+        throw new Error('Error en la autenticación');
+      }
+
+
+     const data = await response.json();
+      console.log('Login data', data); // Agregado para depuración
+      localStorage.setItem('token', data.token);
+      navigate('/admin-dashboard');
+    } catch (error) {
+      console.error('There was a problem with the fetch operation: ' + error.message);
+      setError(error.message); // Actualizamos el estado error con el mensaje de error
+    }
+  };
   return (
-    <div className="flex items-center justify-center h-full bg-gray-50 py-10 px-10 rounded-xl sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Iniciar sesión
-          </h2>
-        </div>
-        <form className="mt-8 space-y-6">
-          <input type="hidden" name="remember" value="true" />
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="user_name" className="sr-only">
-                Usuario
-              </label>
-              <input
-                id="user_name"
-                name="usuario"
-                type="text"
-                autoComplete="username"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Usuario"
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Contraseña
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Contraseña"
-              />
-            </div>
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+    <div class="bg-gray-100 rounded-lg py-12 px-4 lg:px-24">
+      <p class="text-center text-sm text-gray-500 font-light">
+        Inicia Sesion para continuar
+      </p>
+      <form class="mt-6" onSubmit={handleSubmit}>
+        <div class="relative">
+          <input
+            class="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
+            id="username"
+            type="text"
+            required
+            placeholder="Usuario"
+            onChange={(e) => setUsername(e.target.value)}
+            />
+          <div class="absolute left-0 inset-y-0 flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-7 w-7 ml-3 text-gray-400 p-1"
+              viewBox="0 0 20 20"
+              fill="currentColor"
             >
-              Ingresar
-            </button>
+              <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+              <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+            </svg>
           </div>
-        </form>
-      </div>
+        </div>
+        <div class="relative mt-3">
+          <input
+            class="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
+            id="password"
+            required
+            type="password"
+            placeholder="Contraseña"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <div class="absolute left-0 inset-y-0 flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-7 w-7 ml-3 text-gray-400 p-1"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z" />
+            </svg>
+          </div>
+        </div>
+        <div class="flex items-center justify-center mt-8">
+          <button class="text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
+            Iniciar Sesion
+          </button>
+        </div>
+      </form>
+      {error && <p className="text-red-500 pt-5 ">{error}</p>}
     </div>
   );
 }
-
-export default Login;

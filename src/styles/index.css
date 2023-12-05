@@ -526,7 +526,7 @@ video {
 }
 
 .App {
-  background-color: rgba(142,196,216,0.8);
+  background-color: rgba(238, 238, 238, 1);
   text-align: center;
 }
 
@@ -542,12 +542,7 @@ video {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
 .App-body {
-  background-color:rgba(142,196,216,0.8);
   min-height: 100vh;
   display: flex;
   align-items: center;
