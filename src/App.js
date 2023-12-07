@@ -9,7 +9,7 @@ import Inventory from './components/dashboards/pages/Inventory';
 import BalancePrev from './components/dashboards/pages/BalancePrev';
 import Pricing from './components/dashboards/pages/Pricing';
 import Clients from './components/dashboards/pages/Clients';
-import CreateNewUser from './components/dashboards/pages/CreateNewUser';
+import CreateNewUser from './components/dashboards/pages/tools/CreateNewUser';
 import VentasControl from './components/dashboards/pages/VentasControl';
 import Facturation from './components/dashboards/pages/Facturation';
 
