@@ -11,6 +11,7 @@ import Pricing from './components/dashboards/pages/Pricing';
 import Clients from './components/dashboards/pages/Clients';
 import CreateNewUser from './components/dashboards/pages/CreateNewUser';
 import VentasControl from './components/dashboards/pages/VentasControl';
+import Facturation from './components/dashboards/pages/Facturation';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path='/admin-dashboard/precios' element={<Pricing />} />
             <Route path='/admin-dashboard/clientes' element={<Clients />} />
             <Route path='/admin-dashboard/usuarios/createuser' element={<CreateNewUser />} />
+            <Route path='/admin-dashboard/facturacion/generate' element={<Facturation />} />
             <Route path="*" element={<h1>Not Found 404</h1>} />
           </Routes>
         </div>
