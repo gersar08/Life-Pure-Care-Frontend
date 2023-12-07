@@ -25,7 +25,6 @@ export default function Login() {
         credentials: 'include',
         body: JSON.stringify({ user_name: username, password }),
       });
-      console.log('Login response', response); // Agregado para depuración
 
       if (!response.ok) {
         throw new Error('Error en la autenticación');
@@ -33,7 +32,6 @@ export default function Login() {
 
 
      const data = await response.json();
-      console.log('Login data', data); // Agregado para depuración
       localStorage.setItem('token', data.token);
       navigate('/admin-dashboard');
     } catch (error) {
@@ -94,7 +92,7 @@ export default function Login() {
           </button>
         </div>
       </form>
-      {error && <p className="text-red-500 pt-5 ">{error}</p>}
+      {error && <p className="text-red-500 pt-5 text-center">{error}</p>}
     </div>
   );
 }

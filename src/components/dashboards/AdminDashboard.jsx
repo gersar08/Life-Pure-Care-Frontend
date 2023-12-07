@@ -11,8 +11,8 @@ import { Link } from "react-router-dom";
 
 function AdminDashboard() {
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4 text-center">Dashboard Administrador</h1>
+    <div className="p-6 bg-sky-500 text-white rounded-md opacity-70">
+      <h1 className="text-2xl font-bold mb-4 text-center">Panel de control</h1>
       <div className="grid grid-cols-2 gap-4">
         <Link to={"/admin-dashboard/users"} className="bg-indigo-300 flex flex-col items-center justify-center p-4 border-4 rounded-lg bg-transparent hover:bg-blue-200">
           <UsersIcon className="h-10 w-10 mb-2" />

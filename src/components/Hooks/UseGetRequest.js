@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const UseGetRequest = (tabla) => {
+export default function useGetRequest (tabla){
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -29,9 +29,5 @@ const UseGetRequest = (tabla) => {
 
     fetchData();
   }, [tabla, token]);
-  console.log(tabla);
-  console.log(data);
   return { data, loading, error };
 };
-
-export default UseGetRequest;
