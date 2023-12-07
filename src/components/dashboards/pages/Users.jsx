@@ -106,6 +106,7 @@ function Users() {
                         setFormData({ ...formData, name: e.target.value })
                       }
                       className="bg-transparent"
+                      disabled
                     />
                   </td>
                   <td className="p-3 px-5">
@@ -127,6 +128,7 @@ function Users() {
                       }
                       className="bg-transparent"
                       max={8}
+                      disabled
                     />
                   </td>
                   <td className="p-3 px-5">
@@ -137,11 +139,12 @@ function Users() {
                         setFormData({ ...formData, role: e.target.value })
                       }
                       className="bg-transparent"
+                      disabled
                     />
                   </td>
                   <td>
                     <button className="text-sm m-4 bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">
-                      Guardar
+                      Modificar
                     </button>
                     <button
                       onClick={() => handleDelete(user.id)}
