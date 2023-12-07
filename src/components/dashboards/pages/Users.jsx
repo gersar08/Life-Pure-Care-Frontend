@@ -143,7 +143,7 @@ function Users() {
                     />
                   </td>
                   <td>
-                    <button className="text-sm m-4 bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">
+                    <button onClickk={() => navigate("/admin-dashboard/usuarios/edit-user")} className="text-sm m-4 bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">
                       Modificar
                     </button>
                     <button

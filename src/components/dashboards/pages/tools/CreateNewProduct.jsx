@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
-export default function EditUser() {
-  const { id } = useParams();
-  const [userData, setUserData] = useState({
-    name: "",
-    user_name: "",
-    password: "",
-    role: "",
+export default function CreateNewProduct() {
+  const [formData, setFormData] = useState({
+    product_name: "",
+    product_area: "",
+    cantidad: "",
   });
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -16,9 +19,9 @@ export default function EditUser() {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await axios.put(
-        `http://localhost:8000/api/users/${id}`,
-        userData,
+      const response = await axios.post(
+        "http://localhost:8000/api/productos",
+        formData,
         {
           headers: {
             "Content-Type": "application/json",
@@ -33,14 +36,6 @@ export default function EditUser() {
       console.error(error);
     }
   };
-
-  const handleChange = (event) => {
-    setUserData({
-      ...userData,
-      [event.target.name]: event.target.value,
-    });
-  };
-
   return (
     <div>
       <div
@@ -49,8 +44,8 @@ export default function EditUser() {
       >
         <div class="w-full md:w-full py-10 px-5 md:px-10">
           <div class="text-center mb-10">
-            <h1 class="font-bold text-3xl text-gray-900">Editar Usuario</h1>
-            <p>Rellene todos los datos y modifique los deseados</p>
+            <h1 class="font-bold text-3xl text-gray-900">Crear Producto</h1>
+            <p>Rellene todos los datos para crear el producto</p>
           </div>
           <form onSubmit={handleSubmit}>
             <div class="flex -mx-3">
@@ -64,7 +59,7 @@ export default function EditUser() {
                   </div>
                   <input
                     type="text"
-                    name="name"
+                    name="product_name"
                     class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                     placeholder="Jhon Doe"
                     onChange={handleChange}
@@ -83,7 +78,7 @@ export default function EditUser() {
                     <i class="mdi mdi-account-outline text-gray-400 text-lg"></i>
                   </div>
                   <input
-                    name="user_name"
+                    name="product_area"
                     type="text"
                     class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                     placeholder="pacord"
@@ -92,7 +87,7 @@ export default function EditUser() {
                   />
                 </div>
               </div>
-              <div class="w-1/2 px-3 mb-5">
+              <div class="w-1/2 px-3 mb-12">
                 <label for="" class="text-xs font-semibold px-1">
                   Contraseña
                 </label>
@@ -101,40 +96,24 @@ export default function EditUser() {
                     <i class="mdi mdi-account-outline text-gray-400 text-lg"></i>
                   </div>
                   <input
-                    name="password"
-                    type="password"
+                    name="cantidad"
+                    type="number"
                     class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                    placeholder="************"
+                    placeholder="100"
                     onChange={handleChange}
                     required
                   />
                 </div>
               </div>
             </div>
-            <div class="flex -mx-3">
-              <div class="w-1/2 px-3 mb-12">
-                <label for="" class="text-xs font-semibold px-1">
-                  Role
-                </label>
-                <div class="flex">
-                  <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
-                    <i class="mdi mdi-account-outline text-gray-400 text-lg"></i>
-                  </div>
-                  <input
-                    name="role"
-                    type="text"
-                    class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                    placeholder="Usuario/admin"
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-              </div>
-            </div>
+
             <div class="flex -mx-3">
               <div class="w-full px-3 mb-5">
-                <button type='submit' class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">
-                  Actualizar Datos
+                <button
+                  type="submit"
+                  class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"
+                >
+                  Registrar Producto!
                 </button>
               </div>
             </div>
