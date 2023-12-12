@@ -37,7 +37,7 @@ function Users() {
     console.log(userId);
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/precios/${userId}`,
+        `http://127.0.0.1:8000/api/clientes/${userId}`,
         {
           method: "DELETE",
           headers: {
@@ -76,12 +76,12 @@ function Users() {
   return (
     <div className="text-gray-900 bg-gray-200 ">
       <div className="p-4 flex justify-between">
-        <h1 className="text-3xl font-bold">Usuarios</h1>
+        <h1 className="text-3xl font-bold">Clientes</h1>
         <button
           className="text-md mr-3 bg-green-500 hover:bg-green-700 text-white py-2 px-3 rounded focus:outline-none focus:shadow-outline"
           onClick={() => navigate("/admin-dashboard/clientes/create-client")}
         >
-          Agregar Usuario
+          Agregar Cliente
         </button>
       </div>
       <div className="px-3 py-4 flex justify-center">
@@ -114,11 +114,12 @@ function Users() {
                   <td className="p-3 px-5">
                     <input
                       type="text"
-                      value={user.nombre + '' + user.apellido}
+                      value={user.nombre + ' ' + user.apellido}
                       onChange={(e) =>
                         setFormData({ ...formData, nombre: e.target.value })
                       }
                       className="bg-transparent"
+                      disabled
                     />
                   </td>
                   <td className="p-3 px-5">

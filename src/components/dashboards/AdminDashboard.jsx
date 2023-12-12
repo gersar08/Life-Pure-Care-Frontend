@@ -10,9 +10,9 @@ import { Link } from "react-router-dom";
 
 function AdminDashboard() {
   return (
-    <div className="p-6 bg-sky-500 text-white rounded-md opacity-70">
+    <div className="p-6 bg-sky-500 text-white rounded-md opacity-70 w-2/6">
       <h1 className="text-2xl font-bold mb-4 text-center">Panel de control</h1>
-      <div className="grid grid-cols-2 gap-4 relative">
+      <div className="grid grid-cols-2 gap-4 relative w-50">
         <Link
           to={"/admin-dashboard/usuarios"}
           className="bg-indigo-300 flex flex-col items-center justify-center p-4 border-4 rounded-lg bg-transparent hover:bg-blue-200"
