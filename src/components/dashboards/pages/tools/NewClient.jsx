@@ -55,7 +55,7 @@ const CreateNewUser = () => {
   };
 
   const handleCancel = () => {
-    navigate("/admin-dashboard/users");
+    navigate("/admin-dashboard/clientes");
   };
 
   return (
