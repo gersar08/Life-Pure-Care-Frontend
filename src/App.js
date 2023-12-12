@@ -16,6 +16,7 @@ import EditUser from './components/dashboards/pages/tools/EditUser';
 import EditInventario from './components/dashboards/pages/tools/EditInventario';
 import EditClient from './components/dashboards/pages/tools/EditClient';
 import CreateNewProduct from './components/dashboards/pages/tools/CreateNewProduct';
+import NewClient from './components/dashboards/pages/tools/NewClient';
 function App() {
   return (
     <Router>
@@ -38,7 +39,8 @@ function App() {
             <Route path='/admin-dashboard/facturacion/generate' element={<Facturation />} />
             <Route path='/admin-dashboard/usuarios/edit-user' element={<EditUser />} />
             <Route path='/admin-dashboard/inventario/edit-product' element={<EditInventario />} />
-            <Route path='/admin-dashboard/clientes/edit-product' element={<EditClient />} />
+            <Route path='/admin-dashboard/clientes/edit-client' element={<EditClient />} />
+            <Route path='/admin-dashboard/clientes/create-client' element={<NewClient />} />
             <Route path='/admin-dashboard/inventario/create-product' element={<CreateNewProduct />} />
             <Route path="*" element={<h1>Not Found 404</h1>} />
           </Routes>

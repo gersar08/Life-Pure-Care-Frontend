@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useGetRequest from "../../Hooks/useGetRequest";
 
-export default function Pricing() {
+export default function EspecialPricing() {
   // Definimos 'users' y 'setUsers' usando 'useState'
   const [users, setUsers] = useState(null);
   const navigate = useNavigate();
@@ -15,12 +15,13 @@ export default function Pricing() {
   const [formData, setFormData] = useState({
     // Para enviar los datos del formulario
     id: "",
+    client_id: "",
     producto_name: "",
-    precio_base: "",
+    precio_especial: "",
   });
 
   // Usamos el hook UseGetRequest para la solicitud GET
-  const { data } = useGetRequest(`precios`);
+  const { data } = useGetRequest(`precio-especial`);
   useEffect(() => {
     if (data) {
       setUsers(data);
@@ -33,7 +34,7 @@ export default function Pricing() {
     console.log(userId);
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/precios/${userId}`,
+        `http://127.0.0.1:8000/api/precio-especial/${userId}`,
         {
           method: "DELETE",
           headers: {
@@ -76,17 +77,18 @@ export default function Pricing() {
         <button
           className="text-md mr-3 bg-green-500 hover:bg-green-700 text-white py-2 px-3 rounded focus:outline-none focus:shadow-outline"
           onClick={() => navigate("/admin-dashboard/usuarios/createuser")}
+          disabled
         >
-          Agregar Usuario
+          Agregar precio especial
         </button>
       </div>
       <div className="px-3 py-4 flex justify-center">
         <table className="w-full text-md bg-white shadow-md rounded mb-4">
           <tbody>
             <tr className="border-b">
-              <th className="text-left p-3 px-5">N°</th>
+              <th className="text-left p-3 px-5">N° de Referencia cliente</th>
               <th className="text-left p-3 px-5">Nombre del producto</th>
-              <th className="text-left p-3 px-5">Precio</th>
+              <th className="text-left p-3 px-5">Precio Especial</th>
               <th></th>
             </tr>
             {Array.isArray(users) &&
@@ -98,7 +100,7 @@ export default function Pricing() {
                   <td className="p-3 px-5">
                     <input
                       type="text"
-                      value={user.id}
+                      value={user.client_id}
                       className="bg-transparent"
                       disabled
                     />
@@ -119,11 +121,11 @@ export default function Pricing() {
                   <td className="p-3 px-5">
                     <input
                       type="text"
-                      value={user.precio_base}
+                      value={user.precio_especial}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          precio_base: e.target.value,
+                          precio_especial: e.target.value,
                         })
                       }
                       className="bg-transparent"
@@ -134,9 +136,12 @@ export default function Pricing() {
                   <td>
                     <button
                       onClickk={() =>
-                        navigate("/admin-dashboard/clientes/edit-client")
+                        navigate(
+                          "/admin-dashboard/clientes/edit-precio-especial"
+                        )
                       }
                       className="text-sm m-4 bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                      disabled
                     >
                       Modificar
                     </button>
