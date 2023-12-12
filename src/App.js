@@ -11,12 +11,12 @@ import Pricing from './components/dashboards/pages/Pricing';
 import Clients from './components/dashboards/pages/Clients';
 import CreateNewUser from './components/dashboards/pages/tools/CreateNewUser';
 import VentasControl from './components/dashboards/pages/VentasControl';
-import Facturation from './components/dashboards/pages/Facturation';
 import EditUser from './components/dashboards/pages/tools/EditUser';
 import EditInventario from './components/dashboards/pages/tools/EditInventario';
 import EditClient from './components/dashboards/pages/tools/EditClient';
 import CreateNewProduct from './components/dashboards/pages/tools/CreateNewProduct';
 import NewClient from './components/dashboards/pages/tools/NewClient';
+import CreateFactura from './components/dashboards/pages/tools/CreateFactura';
 function App() {
   return (
     <Router>
@@ -36,12 +36,12 @@ function App() {
             <Route path='/admin-dashboard/precios' element={<Pricing />} />
             <Route path='/admin-dashboard/clientes' element={<Clients />} />
             <Route path='/admin-dashboard/usuarios/createuser' element={<CreateNewUser />} />
-            <Route path='/admin-dashboard/facturacion/generate' element={<Facturation />} />
             <Route path='/admin-dashboard/usuarios/edit-user' element={<EditUser />} />
             <Route path='/admin-dashboard/inventario/edit-product' element={<EditInventario />} />
             <Route path='/admin-dashboard/clientes/edit-client' element={<EditClient />} />
             <Route path='/admin-dashboard/clientes/create-client' element={<NewClient />} />
             <Route path='/admin-dashboard/inventario/create-product' element={<CreateNewProduct />} />
+            <Route path='/admin-dashboard/facturacion/generate' element={<CreateFactura />} />
             <Route path="*" element={<h1>Not Found 404</h1>} />
           </Routes>
         </div>

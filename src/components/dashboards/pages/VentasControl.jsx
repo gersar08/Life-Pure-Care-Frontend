@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 export default function VentasControl() {
   const [infoClientSelected, setInfoClientSelected] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const [infoClients, setInfoClients] = useState(null);
   const [inventario, setInventario] = useState(null);
   const [registro, setRegistro] = useState(null);
-
+  const navigate = useNavigate();
   const token = localStorage.getItem("token");
   useEffect(() => {
     const fetchData = async () => {
@@ -58,7 +58,7 @@ export default function VentasControl() {
     };
 
     fetchData();
-  }, [token]); // Pasar un array vacío como segundo argumento para que se ejecute una sola vez
+  }, [token]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -114,10 +114,6 @@ export default function VentasControl() {
         console.error(error);
       });
   };
-  console.log(inventario);
-  console.log(infoClients);
-  console.log(infoClientSelected);
-  console.log(registro);
   return (
     <div>
       <section class=" py-1 bg-blueGray-50">
@@ -131,6 +127,7 @@ export default function VentasControl() {
                 <button
                   class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-3  rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                   type="button"
+                  onClick={() => navigate("/admin-dashboard/facturacion/generate", { state: { id: selectedOption } })}
                 >
                   Generar Factura
                 </button>
@@ -357,5 +354,3 @@ export default function VentasControl() {
     </div>
   );
 }
-//todo: hacer que se guarden los registros daily
-
