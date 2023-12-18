@@ -15,7 +15,7 @@ function createWindow() {
 
   mainWindow.loadURL(
     isDev
-      ? 'http://localhost:3000'
+      ? 'https://rocky-dawn-84773-5951dec09d0b.herokuapp.com'
       : `file://${path.join(__dirname, '../build/index.html')}`
   );
 

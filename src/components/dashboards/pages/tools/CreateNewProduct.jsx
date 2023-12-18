@@ -20,7 +20,7 @@ export default function CreateNewProduct() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/productos",
+        "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/productos",
         formData,
         {
           headers: {

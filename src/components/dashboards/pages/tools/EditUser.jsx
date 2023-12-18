@@ -17,7 +17,7 @@ export default function EditUser() {
 
     try {
       const response = await axios.put(
-        `http://localhost:8000/api/users/${id}`,
+        `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/users/${id}`,
         userData,
         {
           headers: {

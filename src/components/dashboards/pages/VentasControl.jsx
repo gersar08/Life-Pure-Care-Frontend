@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 export default function VentasControl() {
   const [infoClientSelected, setInfoClientSelected] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -103,6 +104,53 @@ export default function VentasControl() {
           console.error(error);
         });
     });
+    const axiosInstance = axios.create({
+      baseURL: "http://localhost:8000/api",
+      timeout: 1000,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    });
+    // Actualizar el registro diario del cliente en la base de datos
+    try {
+      await axiosInstance.post("/registro/daily", {
+        id: infoClientSelected.id,
+      });
+      const data = Object.keys(registro).reduce((acc, key) => {
+        if (key.endsWith("_out")) {
+          acc[key.slice(0, -3)] = registro[key];
+        }
+        return acc;
+      }, {});
+      // Enviar los datos
+      await axiosInstance.post("/registro/daily", data);
+
+    } catch (error) {
+      if (error.response && error.response.status === 422) {
+        const response = await axios.get(
+          `http://localhost:8000/api/registro/daily/search/id/${infoClientSelected.id}`
+        );
+        const { garrafa, fardo, pet } = response.data;
+        console.log(response.data);
+        console.log(error.response);
+        console.log(error.response.status);
+
+        // Sumar los datos con los correspondientes en registro que terminan en _in
+        const newData = {
+          garrafa: garrafa + (registro.garrafa_in || 0),
+          fardo: fardo + (registro.fardo_in || 0),
+          pet: pet + (registro.pet_in || 0),
+        };
+
+        // Enviar los nuevos valores sumados
+        await axios.put(
+          `http://localhost:8000/api/registro/daily/${infoClientSelected.id}`,
+          newData
+        );
+      }
+    }
 
     Promise.all(updatePromises)
       .then(() => {
@@ -114,6 +162,11 @@ export default function VentasControl() {
         console.error(error);
       });
   };
+  console.log(registro);
+  console.log(infoClientSelected);
+  console.log(infoClients);
+  console.log(selectedOption);
+  console.log(inventario);
   return (
     <div>
       <section class=" py-1 bg-blueGray-50">
@@ -127,7 +180,11 @@ export default function VentasControl() {
                 <button
                   class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-3  rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                   type="button"
-                  onClick={() => navigate("/admin-dashboard/facturacion/generate", { state: { id: selectedOption } })}
+                  onClick={() =>
+                    navigate("/admin-dashboard/facturacion/generate", {
+                      state: { id: selectedOption },
+                    })
+                  }
                 >
                   Generar Factura
                 </button>

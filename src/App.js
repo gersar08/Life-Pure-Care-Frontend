@@ -6,7 +6,6 @@ import Login from './components/Login';
 import AdminDashboard from './components/dashboards/AdminDashboard';
 import Users from './components/dashboards/pages/Users'
 import Inventory from './components/dashboards/pages/Inventory';
-import BalancePrev from './components/dashboards/pages/BalancePrev';
 import Pricing from './components/dashboards/pages/Pricing';
 import Clients from './components/dashboards/pages/Clients';
 import CreateNewUser from './components/dashboards/pages/tools/CreateNewUser';
@@ -31,7 +30,6 @@ function App() {
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
             <Route path='/admin-dashboard/usuarios' element={<Users />} />
             <Route path='/admin-dashboard/inventario' element={<Inventory />} />
-            <Route path='/admin-dashboard/informe-financiero' element={<BalancePrev />} />
             <Route path='/admin-dashboard/facturacion' element={<VentasControl />} />
             <Route path='/admin-dashboard/precios' element={<Pricing />} />
             <Route path='/admin-dashboard/clientes' element={<Clients />} />

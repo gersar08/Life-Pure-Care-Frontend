@@ -34,14 +34,7 @@ function AdminDashboard() {
           <DocumentTextIcon className="h-10 w-10 mb-2" />
           Facturación
         </Link>
-        {/*
-           <button
-           className="bg-indigo-300 flex flex-col items-center justify-center p-4 border-4 rounded-lg bg-transparent hover:bg-blue-200"
-           onClick={handleClick}
-           >
-           <ChartBarIcon className="h-10 w-10 mb-2" />
-           Informe Financiero
-          </button> */}
+
         <div className="relative">
           <Link
             to={"/admin-dashboard/clientes"}

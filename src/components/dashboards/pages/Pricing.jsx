@@ -33,7 +33,7 @@ export default function Pricing() {
     console.log(userId);
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/precios/${userId}`,
+        `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/precios/${userId}`,
         {
           method: "DELETE",
           headers: {

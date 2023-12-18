@@ -31,7 +31,7 @@ const CreateNewUser = () => {
       };
 
       const apiResponse = await fetch(
-        "http://127.0.0.1:8000/api/clientes",
+        "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/clientes",
         requestOptions
       );
       const jsonData = await apiResponse.json();

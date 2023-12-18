@@ -8,7 +8,7 @@ const Header = () => {
 
   const handleLogout = async () => {
     // Haz una solicitud a la ruta /logout de tu API
-    const response = await fetch('http://127.0.0.1:8000/api/logout', {
+    const response = await fetch('https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/logout', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

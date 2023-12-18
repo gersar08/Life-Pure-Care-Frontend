@@ -34,7 +34,7 @@ export default function EspecialPricing() {
     console.log(userId);
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/precio-especial/${userId}`,
+        `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/precio-especial/${userId}`,
         {
           method: "DELETE",
           headers: {

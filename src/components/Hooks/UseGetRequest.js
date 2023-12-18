@@ -11,7 +11,7 @@ export default function useGetRequest (tabla){
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/${tabla}`, {
+        const response = await axios.get(`https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/${tabla}`, {
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',

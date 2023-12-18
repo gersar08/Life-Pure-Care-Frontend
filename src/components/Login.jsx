@@ -11,12 +11,12 @@ export default function Login() {
     event.preventDefault();
 
     try {
-      const csrfResponse = await fetch('http://localhost:8000/sanctum/csrf-cookie', {
+      const csrfResponse = await fetch('https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/sanctum/csrf-cookie', {
         credentials: 'include',
       });
       console.log('CSRF response', csrfResponse); // Agregado para depuración
 
-      const response = await fetch('http://localhost:8000/api/login', {
+      const response = await fetch('https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

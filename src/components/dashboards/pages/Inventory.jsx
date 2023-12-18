@@ -13,7 +13,7 @@ export default function Inventory() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/inventario",
+          "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/inventario",
           {
             headers: {
               "Content-Type": "application/json",
@@ -36,8 +36,7 @@ export default function Inventory() {
 
     try {
         const token = localStorage.getItem('token');
-        const response = await axios.delete(`http://localhost:8000/api/inventario/${inventoryDataId}`, {  //todo: Propar en postman
-
+        const response = await axios.delete(`https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/inventario/${inventoryDataId}`, {
             headers: {
                 "Content-Type": "application/json",
                 'Accept': "application/json",
