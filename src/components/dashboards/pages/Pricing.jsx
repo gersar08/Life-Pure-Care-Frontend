@@ -20,7 +20,7 @@ export default function Pricing() {
   });
 
   // Usamos el hook UseGetRequest para la solicitud GET
-  const { data } = useGetRequest(`precios`);
+  const { data } = useGetRequest(`productos`);
   useEffect(() => {
     if (data) {
       setUsers(data);
@@ -33,7 +33,7 @@ export default function Pricing() {
     console.log(userId);
     try {
       const response = await fetch(
-        `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/precios/${userId}`,
+        `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/productos/${userId}`,
         {
           method: "DELETE",
           headers: {

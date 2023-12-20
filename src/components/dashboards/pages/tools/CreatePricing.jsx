@@ -15,7 +15,7 @@ export default function CreateNewProduct() {
     const fetchExistingProducts = async () => {
       try {
         const response = await axios.get(
-          "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/precios",
+          "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/productos",
           {
             headers: {
               "Content-Type": "application/json",
@@ -53,7 +53,7 @@ export default function CreateNewProduct() {
       if (selectedProductId) {
         // If a product is selected, perform a PUT request
         const response = await axios.put(
-          `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/precios/${selectedProductId}`,
+          `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/productos/${selectedProductId}`,
           formData,
           {
             headers: {
@@ -67,7 +67,7 @@ export default function CreateNewProduct() {
       } else {
         // If no product is selected, perform a POST request
         const response = await axios.post(
-          "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/precios",
+          "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/productos",
           formData,
           {
             headers: {
@@ -99,7 +99,7 @@ export default function CreateNewProduct() {
             <div className="flex -mx-3"></div>
             <div className="flex -mx-3">
               <div className="w-1/2 px-3 mb-5">
-                <label htmlFor="" className="text-xs ml-5 font-semibold px-1">
+                <label htmlFor="producto_name" className="text-xs ml-5 font-semibold px-1">
                   Producto
                 </label>
                 <div className="flex">
@@ -118,7 +118,7 @@ export default function CreateNewProduct() {
                 </div>
               </div>
               <div className="w-1/2 px-3 mb-12">
-                <label htmlFor="" className="text-xs font-semibold px-1">
+                <label htmlFor="precio_base" className="text-xs font-semibold px-1">
                   Precio
                 </label>
                 <div className="flex">
