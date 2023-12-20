@@ -13,7 +13,7 @@ export default function VentasControl() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/clientes", {
+        const response = await fetch("https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/clientes", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -43,7 +43,7 @@ export default function VentasControl() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/inventario", {
+        const response = await fetch("https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/inventario", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -83,7 +83,7 @@ export default function VentasControl() {
 
     // Actualizar el inventario en la base de datos
     const updatePromises = inventario.map((product) => {
-      return fetch(`http://localhost:8000/api/inventario/${product.id}`, {
+      return fetch(`https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/inventario/${product.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -105,7 +105,7 @@ export default function VentasControl() {
         });
     });
     const axiosInstance = axios.create({
-      baseURL: "http://localhost:8000/api",
+      baseURL: "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api",
       timeout: 1000,
       headers: {
         Authorization: `Bearer ${token}`,
@@ -130,7 +130,7 @@ export default function VentasControl() {
     } catch (error) {
       if (error.response && error.response.status === 422) {
         const response = await axios.get(
-          `http://localhost:8000/api/registro/daily/search/id/${infoClientSelected.id}`
+          `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/registro/daily/search/id/${infoClientSelected.id}`
         );
         const { garrafa, fardo, pet } = response.data;
         console.log(response.data);
@@ -146,7 +146,7 @@ export default function VentasControl() {
 
         // Enviar los nuevos valores sumados
         await axios.put(
-          `http://localhost:8000/api/registro/daily/${infoClientSelected.id}`,
+          `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/registro/daily/${infoClientSelected.id}`,
           newData
         );
       }

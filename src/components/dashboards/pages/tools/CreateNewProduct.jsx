@@ -61,7 +61,7 @@ export default function CreateNewProduct() {
                     type="text"
                     name="product_name"
                     class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                    placeholder="Jhon Doe"
+                    placeholder="Fardos"
                     onChange={handleChange}
                     required
                   />
@@ -71,7 +71,7 @@ export default function CreateNewProduct() {
             <div class="flex -mx-3">
               <div class="w-1/2 px-3 mb-5">
                 <label for="" class="text-xs font-semibold px-1">
-                  Usuario
+                  Area de uso
                 </label>
                 <div class="flex">
                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
@@ -81,7 +81,7 @@ export default function CreateNewProduct() {
                     name="product_area"
                     type="text"
                     class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
-                    placeholder="pacord"
+                    placeholder="Limpieza, Produccion, etc"
                     onChange={handleChange}
                     required
                   />
@@ -89,7 +89,7 @@ export default function CreateNewProduct() {
               </div>
               <div class="w-1/2 px-3 mb-12">
                 <label for="" class="text-xs font-semibold px-1">
-                  Contraseña
+                  Cantidad
                 </label>
                 <div class="flex">
                   <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center">
