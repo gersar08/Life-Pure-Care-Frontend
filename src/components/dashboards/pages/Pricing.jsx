@@ -27,7 +27,7 @@ export default function Pricing() {
       <div className="p-4 flex justify-between">
         <h1 className="text-3xl font-bold">Precios</h1>
         <button
-          className="text-md mr-3 bg-green-500 hover:bg-green-700 text-white py-2 px-3 rounded focus:outline-none focus:shadow-outline"
+          className="text-md bg-green-500 hover:bg-green-700 text-white py-2 px-3 rounded focus:outline-none focus:shadow-outline"
           onClick={() => navigate("/admin-dashboard/pricing/create-price")}
         >
           Agregar Precio de Producto
@@ -38,7 +38,7 @@ export default function Pricing() {
           <tbody>
             <tr className="border-b">
               <th className="text-left p-3 px-5">Nombre del producto</th>
-              <th className="text-left p-3 px-5">Precio</th>
+              <th className="text-center p-3 px-5">Precio</th>
               <th></th>
             </tr>
             {Array.isArray(users) &&
@@ -70,12 +70,11 @@ export default function Pricing() {
                           precio_base: e.target.value,
                         })
                       }
-                      className="bg-transparent"
+                      className="bg-transparent text-center"
                       max={9}
                       disabled
                     />
                   </td>
-                  <td></td>
                 </tr>
               ))}
           </tbody>

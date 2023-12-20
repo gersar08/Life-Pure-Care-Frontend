@@ -56,6 +56,7 @@ export default function CreateNewProduct() {
 
     try {
       if (selectedProductId) {
+        console.log(selectedProductId);
         // If a product is selected, perform a PUT request
         const response = await axios.put(
           `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/productos/${selectedProductId}`,
@@ -128,6 +129,7 @@ export default function CreateNewProduct() {
                   <input
                     name="precio_base"
                     type="number"
+                    step="0.01"
                     className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
                     placeholder="5.60"
                     onChange={handleChange}
