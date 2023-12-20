@@ -9,7 +9,7 @@ export default function CreateNewProduct() {
 
   const [existingProducts, setExistingProducts] = useState([]);
   const [selectedProductId, setSelectedProductId] = useState("");
-
+  console.log(existingProducts);
   useEffect(() => {
     // Fetch existing products when the component mounts
     const fetchExistingProducts = async () => {
@@ -92,14 +92,19 @@ export default function CreateNewProduct() {
       >
         <div className="w-full md:w-full py-10 px-5 md:px-10">
           <div className="text-center mb-10">
-            <h1 className="font-bold text-3xl text-gray-900">Crear Nuevo Precio</h1>
+            <h1 className="font-bold text-3xl text-gray-900">
+              Crear Nuevo Precio
+            </h1>
             <p>Rellene todos los datos</p>
           </div>
           <form onSubmit={handleSubmit}>
             <div className="flex -mx-3"></div>
             <div className="flex -mx-3">
               <div className="w-1/2 px-3 mb-5">
-                <label htmlFor="producto_name" className="text-xs ml-5 font-semibold px-1">
+                <label
+                  htmlFor="producto_name"
+                  className="text-xs ml-5 font-semibold px-1"
+                >
                   Producto
                 </label>
                 <div className="flex">
@@ -118,7 +123,10 @@ export default function CreateNewProduct() {
                 </div>
               </div>
               <div className="w-1/2 px-3 mb-12">
-                <label htmlFor="precio_base" className="text-xs font-semibold px-1">
+                <label
+                  htmlFor="precio_base"
+                  className="text-xs font-semibold px-1"
+                >
                   Precio
                 </label>
                 <div className="flex">
