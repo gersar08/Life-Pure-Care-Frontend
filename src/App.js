@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import '../src/styles/App.css';
 import Login from './components/Login';
@@ -14,6 +14,19 @@ import CreateNewProduct from './components/dashboards/pages/tools/CreateNewProdu
 import NewClient from './components/dashboards/pages/tools/NewClient';
 import CreatePricing from './components/dashboards/pages/tools/CreatePricing';
 import FillPDFTemplate from './components/dashboards/pages/tools/FillPDFTemplate';
+
+function ProtectedComponent({ children }) {
+  const navigate = useNavigate();
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/login');
+    }
+  }, [token, navigate]);
+
+  return token ? children : null;
+}
 function App() {
   return (
     <Router>
@@ -25,17 +38,17 @@ function App() {
           <Routes>
             <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/login" element={<Login />} exactpath />
-            <Route path="/admin-dashboard" element={<AdminDashboard />} />
-            <Route path='/admin-dashboard/usuarios' element={<Users />} />
-            <Route path='/admin-dashboard/inventario' element={<Inventory />} />
-            <Route path='/admin-dashboard/facturacion' element={<VentasControl />} />
-            <Route path='/admin-dashboard/precios' element={<Pricing />} />
-            <Route path='/admin-dashboard/clientes' element={<Clients />} />
-            <Route path='/admin-dashboard/usuarios/createuser' element={<CreateNewUser />} />
-            <Route path='/admin-dashboard/clientes/create-client' element={<NewClient />} />
-            <Route path='/admin-dashboard/inventario/create-product' element={<CreateNewProduct />} />
-            <Route path='/admin-dashboard/pricing/create-price' element={<CreatePricing />} />
-            <Route path='/admin-dashboard/facturacion/generate' element={<FillPDFTemplate />} />
+            <Route path="/admin-dashboard" element={<ProtectedComponent><AdminDashboard/></ProtectedComponent>}/>
+            <Route path='/admin-dashboard/usuarios' element={<ProtectedComponent><Users/></ProtectedComponent>}/>
+            <Route path='/admin-dashboard/inventario' element={<ProtectedComponent><Inventory/></ProtectedComponent>}/>
+            <Route path='/admin-dashboard/facturacion' element={<ProtectedComponent><VentasControl/></ProtectedComponent>}/>
+            <Route path='/admin-dashboard/precios' element={<ProtectedComponent><Pricing/></ProtectedComponent>}/>
+            <Route path='/admin-dashboard/clientes' element={<ProtectedComponent><Clients/></ProtectedComponent>}/>
+            <Route path='/admin-dashboard/usuarios/createuser' element={<ProtectedComponent><CreateNewUser/></ProtectedComponent>}/>
+            <Route path='/admin-dashboard/clientes/create-client' element={<ProtectedComponent><NewClient/></ProtectedComponent>}/>
+            <Route path='/admin-dashboard/inventario/create-product' element={<ProtectedComponent><CreateNewProduct/></ProtectedComponent>}/>
+            <Route path='/admin-dashboard/pricing/create-price' element={<ProtectedComponent><CreatePricing/></ProtectedComponent>}/>
+            <Route path='/admin-dashboard/facturacion/generate' element={<ProtectedComponent><FillPDFTemplate/></ProtectedComponent>}/>
             <Route path="*" element={<h1>Not Found 404</h1>} />
           </Routes>
         </div>
