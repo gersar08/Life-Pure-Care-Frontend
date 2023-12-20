@@ -13,6 +13,8 @@ export default function CreateNewProduct() {
   useEffect(() => {
     // Fetch existing products when the component mounts
     const fetchExistingProducts = async () => {
+      const token = localStorage.getItem("token");
+
       try {
         const response = await axios.get(
           "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/productos",
@@ -20,6 +22,8 @@ export default function CreateNewProduct() {
             headers: {
               "Content-Type": "application/json",
               Accept: "application/json",
+              Authorization: `Bearer ${token}`,
+
             },
           }
         );
