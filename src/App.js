@@ -12,8 +12,8 @@ import CreateNewUser from './components/dashboards/pages/tools/CreateNewUser';
 import VentasControl from './components/dashboards/pages/VentasControl';
 import CreateNewProduct from './components/dashboards/pages/tools/CreateNewProduct';
 import NewClient from './components/dashboards/pages/tools/NewClient';
-import CreateFactura from './components/dashboards/pages/tools/CreateFactura';
 import CreatePricing from './components/dashboards/pages/tools/CreatePricing';
+import FillPDFTemplate from './components/dashboards/pages/tools/FillPDFTemplate';
 function App() {
   return (
     <Router>
@@ -34,8 +34,8 @@ function App() {
             <Route path='/admin-dashboard/usuarios/createuser' element={<CreateNewUser />} />
             <Route path='/admin-dashboard/clientes/create-client' element={<NewClient />} />
             <Route path='/admin-dashboard/inventario/create-product' element={<CreateNewProduct />} />
-            <Route path='/admin-dashboard/facturacion/generate' element={<CreateFactura />} />
             <Route path='/admin-dashboard/pricing/create-price' element={<CreatePricing />} />
+            <Route path='/admin-dashboard/facturacion/generate' element={<FillPDFTemplate />} />
             <Route path="*" element={<h1>Not Found 404</h1>} />
           </Routes>
         </div>

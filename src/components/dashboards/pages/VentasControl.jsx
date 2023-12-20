@@ -162,11 +162,6 @@ export default function VentasControl() {
         console.error(error);
       });
   };
-  console.log(registro);
-  console.log(infoClientSelected);
-  console.log(infoClients);
-  console.log(selectedOption);
-  console.log(inventario);
   return (
     <div>
       <section class=" py-1 bg-blueGray-50">
