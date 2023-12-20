@@ -14,6 +14,7 @@ import CreateNewProduct from './components/dashboards/pages/tools/CreateNewProdu
 import NewClient from './components/dashboards/pages/tools/NewClient';
 import CreatePricing from './components/dashboards/pages/tools/CreatePricing';
 import FillPDFTemplate from './components/dashboards/pages/tools/FillPDFTemplate';
+import PropTypes from 'prop-types';
 
 function ProtectedComponent({ children }) {
   const navigate = useNavigate();
@@ -27,6 +28,10 @@ function ProtectedComponent({ children }) {
 
   return token ? children : null;
 }
+
+ProtectedComponent.propTypes = {
+  children: PropTypes.node,
+};
 function App() {
   return (
     <Router>

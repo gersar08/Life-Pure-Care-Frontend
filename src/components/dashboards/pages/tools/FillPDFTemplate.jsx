@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { PDFDocument } from 'pdf-lib';
-
+import PropTypes from 'prop-types';
 const FillPDFTemplate = ({ history }) => {
   const [isFilling, setIsFilling] = useState(true);
 
@@ -45,5 +45,9 @@ const FillPDFTemplate = ({ history }) => {
 
   return isFilling ? <div>Llenando el PDF...</div> : null;
 };
-
+FillPDFTemplate.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 export default FillPDFTemplate;
