@@ -50,7 +50,7 @@ export default function CreateNewProduct() {
           <form onSubmit={handleSubmit}>
             <div class="flex -mx-3">
               <div class="w-full px-3 mb-5">
-                <label for="" class="text-xs font-semibold px-1">
+                <label for="product_name" class="text-xs font-semibold px-1">
                   Nombre
                 </label>
                 <div class="flex">
@@ -58,6 +58,7 @@ export default function CreateNewProduct() {
                     <i class="mdi mdi-lock-outline text-gray-400 text-lg"></i>
                   </div>
                   <input
+                    id="product_name"
                     type="text"
                     name="product_name"
                     class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
@@ -70,7 +71,7 @@ export default function CreateNewProduct() {
             </div>
             <div class="flex -mx-3">
               <div class="w-1/2 px-3 mb-5">
-                <label for="" class="text-xs font-semibold px-1">
+                <label for="product_area" class="text-xs font-semibold px-1">
                   Area de uso
                 </label>
                 <div class="flex">
@@ -78,6 +79,7 @@ export default function CreateNewProduct() {
                     <i class="mdi mdi-account-outline text-gray-400 text-lg"></i>
                   </div>
                   <input
+                    id="product_area"
                     name="product_area"
                     type="text"
                     class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
@@ -88,7 +90,7 @@ export default function CreateNewProduct() {
                 </div>
               </div>
               <div class="w-1/2 px-3 mb-12">
-                <label for="" class="text-xs font-semibold px-1">
+                <label for="cantidad" class="text-xs font-semibold px-1">
                   Cantidad
                 </label>
                 <div class="flex">
@@ -96,6 +98,7 @@ export default function CreateNewProduct() {
                     <i class="mdi mdi-account-outline text-gray-400 text-lg"></i>
                   </div>
                   <input
+                    id="cantidad"
                     name="cantidad"
                     type="number"
                     class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"

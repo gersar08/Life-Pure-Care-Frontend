@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 export default function CreateNewProduct() {
   const [formData, setFormData] = useState({
-    producto_name: "",
     precio_base: "",
   });
 
   const [existingProducts, setExistingProducts] = useState([]);
   const [selectedProductId, setSelectedProductId] = useState("");
+  const navigate = useNavigate();
   console.log(existingProducts);
+  console.log(formData);
+  console.log(selectedProductId);
   useEffect(() => {
     // Fetch existing products when the component mounts
     const fetchExistingProducts = async () => {
@@ -23,7 +25,6 @@ export default function CreateNewProduct() {
               "Content-Type": "application/json",
               Accept: "application/json",
               Authorization: `Bearer ${token}`,
-
             },
           }
         );
@@ -68,20 +69,7 @@ export default function CreateNewProduct() {
           }
         );
         console.log(response.data);
-      } else {
-        // If no product is selected, perform a POST request
-        const response = await axios.post(
-          "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/productos",
-          formData,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        console.log(response.data);
+        navigate('/admin-dashboard/precios',  { state: { successMessage: 'Producto actualizado con éxito' } })
       }
     } catch (error) {
       console.error(error);
