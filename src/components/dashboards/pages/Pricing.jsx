@@ -30,7 +30,7 @@ export default function Pricing() {
           className="text-md bg-green-500 hover:bg-green-700 text-white py-2 px-3 rounded focus:outline-none focus:shadow-outline"
           onClick={() => navigate("/admin-dashboard/pricing/create-price")}
         >
-          Agregar Precio de Producto
+          Actualizar Precios
         </button>
       </div>
       <div className="px-3 py-4 flex justify-center">
