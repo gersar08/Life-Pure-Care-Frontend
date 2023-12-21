@@ -13,14 +13,17 @@ export default function VentasControl() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/clientes", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(
+          "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/clientes",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         const data = await response.json();
         setInfoClients(data);
         console.log(infoClients);
@@ -43,14 +46,17 @@ export default function VentasControl() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/inventario", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(
+          "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/inventario",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         const data = await response.json();
         setInventario(data);
       } catch (error) {
@@ -83,15 +89,18 @@ export default function VentasControl() {
 
     // Actualizar el inventario en la base de datos
     const updatePromises = inventario.map((product) => {
-      return fetch(`https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/inventario/${product.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ cantidad: product.cantidad }),
-      })
+      return fetch(
+        `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/inventario/${product.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ cantidad: product.cantidad }),
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
           if (!data.error) {
@@ -104,33 +113,35 @@ export default function VentasControl() {
           console.error(error);
         });
     });
+
     const axiosInstance = axios.create({
       baseURL: "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api",
-      timeout: 1000,
       headers: {
-        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
       },
-      withCredentials: true,
     });
+
     // Actualizar el registro diario del cliente en la base de datos
     try {
       await axiosInstance.post("/registro/daily", {
         id: infoClientSelected.id,
       });
+
       const data = Object.keys(registro).reduce((acc, key) => {
         if (key.endsWith("_out")) {
           acc[key.slice(0, -3)] = registro[key];
         }
         return acc;
       }, {});
+
       // Enviar los datos
       await axiosInstance.post("/registro/daily", data);
-
     } catch (error) {
       if (error.response && error.response.status === 422) {
-        const response = await axios.get(
-          `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/registro/daily/search/id/${infoClientSelected.id}`
+        const response = await axiosInstance.get(
+          `/registro/daily/search/id/${infoClientSelected.id}`
         );
         const { garrafa, fardo, pet } = response.data;
         console.log(response.data);
@@ -145,8 +156,8 @@ export default function VentasControl() {
         };
 
         // Enviar los nuevos valores sumados
-        await axios.put(
-          `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/registro/daily/${infoClientSelected.id}`,
+        await axiosInstance.put(
+          `/registro/daily/${infoClientSelected.id}`,
           newData
         );
       }
@@ -204,6 +215,7 @@ export default function VentasControl() {
                         onChange={(e) => setSelectedOption(e.target.value)}
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       >
+                        <option value="">Seleccione el cliente</option>
                         {infoClients &&
                           infoClients.length > 0 &&
                           infoClients.map((client) => (
