@@ -57,7 +57,7 @@ export default function Pricing() {
                           producto_name: e.target.value,
                         })
                       }
-                      className="bg-transparent"
+                      className="bg-transparent text-center"
                     />
                   </td>
                   <td className="p-3 px-5">
