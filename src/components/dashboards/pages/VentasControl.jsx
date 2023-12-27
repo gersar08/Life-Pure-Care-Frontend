@@ -1,15 +1,16 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 export default function VentasControl() {
-  const [infoClientSelected, setInfoClientSelected] = useState(null);
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [infoClients, setInfoClients] = useState(null);
-  const [inventario, setInventario] = useState(null);
-  const [registro, setRegistro] = useState(null);
+  const [infoClientSelected, setInfoClientSelected] = useState();
+  const [selectedOption, setSelectedOption] = useState();
+  const [infoClients, setInfoClients] = useState();
+  const [inventario, setInventario] = useState();
+  const [registro, setRegistro] = useState();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+
+  // Hook para obtener los clientes
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -26,7 +27,6 @@ export default function VentasControl() {
         );
         const data = await response.json();
         setInfoClients(data);
-        console.log(infoClients);
       } catch (error) {
         console.error(error);
       }
@@ -34,6 +34,8 @@ export default function VentasControl() {
 
     fetchData();
   }, [token]);
+
+  // Hook para obtener el cliente seleccionado
   useEffect(() => {
     if (infoClients && selectedOption) {
       const selectedClient = infoClients.find(
@@ -43,135 +45,193 @@ export default function VentasControl() {
     }
   }, [infoClients, selectedOption]);
 
+  // Hook para obtener el inventario
   useEffect(() => {
-    const fetchData = async () => {
+    const obtenerInventario = async () => {
+      const axiosInstance = axios.create({
+        baseURL: "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       try {
-        const response = await fetch(
-          "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/inventario",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const data = await response.json();
-        setInventario(data);
+        const response = await axiosInstance.get("/inventario");
+        setInventario(response.data);
       } catch (error) {
-        console.error(error);
+        console.error("Error al obtener inventario:", error);
       }
     };
 
-    fetchData();
+    obtenerInventario();
   }, [token]);
 
+  // Hook para obtener el registro
   const handleChange = (event) => {
     const { name, value } = event.target;
     setRegistro((prevState) => ({ ...prevState, [name]: value }));
   };
 
+  //Hook para peticiones al backend
+  const axiosInstance = axios.create({
+    baseURL: "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  // Función para guardar los datos del cliente seleccionado
+  const guardarDatosCliente = (cliente) => {
+    setInfoClientSelected(cliente);
+  };
+
+  const actualizarInventario = async (registro, inventario) => {
+    const updatePromises = [];
+
+    for (let key in registro) {
+      let keyWithoutSuffix = key.replace(/(_in|_out)$/, "");
+      let producto = inventario.find(
+        (prod) => prod.product_name === keyWithoutSuffix
+      );
+      if (producto && key.endsWith("_in")) {
+        producto.cantidad = Number(producto.cantidad) + Number(registro[key]);
+      } else if (producto) {
+        producto.cantidad = Number(producto.cantidad) - Number(registro[key]);
+      }
+      // Agrega la promesa a la lista
+      updatePromises.push(
+        axiosInstance.put(`/inventario/${producto.id}`, {
+          cantidad: producto.cantidad,
+        })
+      );
+    }
+
+    // Espera a que todas las promesas se completen antes de continuar
+    if (updatePromises.length > 0) {
+      await Promise.all(updatePromises);
+      console.log("Inventario actualizado");
+    } else {
+      console.log("No hay promesas para resolver");
+    }
+  };
+
+  // Función para actualizar el inventario
+  const enviarInventario = async (inventario) => {
+    const updatePromises = inventario.map((product) => {
+      return axiosInstance.put(`/inventario/${product.id}`, {
+        cantidad: product.cantidad,
+      });
+    });
+    await Promise.all(updatePromises);
+  };
+
+  // Función para verificar si el cliente ya existe
+  const verificarCliente = async (cliente, registro) => {
+    try {
+      const response = await axiosInstance.post("/registro/daily", {
+        cliente_id: cliente.unique_id,
+        fardo: registro.fardo_in,
+        garrafa: registro.garrafa_in,
+        pet: registro.pet_in,
+      });
+      return response.status !== 422;
+    } catch (error) {
+      return false;
+    }
+  };
+
+  const obtenerRegistroCliente = async (cliente) => {
+    try {
+      const response = await axiosInstance.get(
+        `/registro/daily/search/${cliente.unique_id}`
+      );
+      return response.data;
+    } catch (error) {
+      return null;
+    }
+  };
+  const sumarDatosProductos = (registro, datosCliente) => {
+    // Recorre cada entrada en el objeto registro
+    for (let key in registro) {
+      // Extrae el nombre del producto desde la clave
+      let nombreProducto = key.slice(0, -3);
+
+      // Verifica si la clave termina en "_in" o "_out"
+      if (key.endsWith("_in") || key.endsWith("_out")) {
+        // Encuentra el producto correspondiente en datosCliente por nombre
+        if (datosCliente.hasOwnProperty(nombreProducto)) {
+          let cantidad = parseInt(registro[key]);
+          if (key.endsWith("_in")) {
+            datosCliente[nombreProducto] += cantidad;
+          } else if (key.endsWith("_out")) {
+            datosCliente[nombreProducto] -= cantidad;
+          }
+        }
+      }
+    }
+    // Devuelve los datos del cliente con las cantidades actualizadas
+    return datosCliente;
+  };
+
+  const enviarRegistroCliente = async (cliente, datos) => {
+    await axiosInstance.put(`/registro/daily/${cliente.unique_id}`, {
+      fardo: datos.fardo,
+      garrafa: datos.garrafa,
+      pet: datos.pet,
+    });
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    for (let [key, value] of Object.entries(registro)) {
-      const productName = key.endsWith("_in") ? key.slice(0, -3) : key;
-      const product = inventario.find(
-        (item) => item.product_name === productName
-      );
-      if (product) {
-        product.cantidad += key.endsWith("_in")
-          ? Number(value)
-          : -Number(value);
-      }
-    }
-
-    // Actualizar el inventario en la base de datos
-    const updatePromises = inventario.map((product) => {
-      return fetch(
-        `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/inventario/${product.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ cantidad: product.cantidad }),
-        }
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          if (!data.error) {
-            console.log(data.message); // Imprimir el mensaje de éxito
-          } else {
-            console.error(data.error); // Imprimir el mensaje de error
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    });
-
-    const axiosInstance = axios.create({
-      baseURL: "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    // Actualizar el registro diario del cliente en la base de datos
     try {
-      await axiosInstance.post("/registro/daily", {
-        id: infoClientSelected.id,
-      });
+      // 1. Guardar los datos del cliente seleccionado en una variable (infoClientSelected) ✅
+      guardarDatosCliente(selectedOption);
 
-      const data = Object.keys(registro).reduce((acc, key) => {
-        if (key.endsWith("_out")) {
-          acc[key.slice(0, -3)] = registro[key];
-        }
-        return acc;
-      }, {});
+      // 2. Hacer solicitud Get del stock en inventario ✅
 
-      // Enviar los datos
-      await axiosInstance.post("/registro/daily", data);
-    } catch (error) {
-      if (error.response && error.response.status === 422) {
-        const response = await axiosInstance.get(
-          `/registro/daily/search/id/${infoClientSelected.id}`
-        );
-        const { garrafa, fardo, pet } = response.data;
-        console.log(response.data);
-        console.log(error.response);
-        console.log(error.response.status);
+      // 3. Actualizar los datos de in/out en el inventario ✅
+      actualizarInventario(registro, inventario);
 
-        // Sumar los datos con los correspondientes en registro que terminan en _in
-        const newData = {
-          garrafa: garrafa + (registro.garrafa_in || 0),
-          fardo: fardo + (registro.fardo_in || 0),
-          pet: pet + (registro.pet_in || 0),
-        };
+      // 4. Realizar la solicitud put al inventario con los datos actualizados✅
+      await enviarInventario(inventario);
+      // 5. Verificar si el cliente ya existe, si no existe realizar una solicitud post en registro daily ✅
+      const clienteExiste = await verificarCliente(
+        infoClientSelected,
+        registro
+      );
 
-        // Enviar los nuevos valores sumados
+      if (!clienteExiste) {
+        // 6. Si existe, realizar solicitud get con la información del cliente✅
+        const datosCliente = await obtenerRegistroCliente(infoClientSelected);
+        // 7. Sumar los datos de los productos ✅
+        const datosSumados = sumarDatosProductos(registro, datosCliente);
+
+        // 8. Realizar la solicitud put con los datos actualizados ✅
+        await enviarRegistroCliente(infoClientSelected, datosSumados);
+        //end if
+      } else if (infoClientSelected?.unique_id) {
+        // Cliente no existe, realizar solicitud PUT en registro daily ✅
         await axiosInstance.put(
-          `/registro/daily/${infoClientSelected.id}`,
-          newData
+          `/registro/daily/${infoClientSelected.unique_id}`,
+          {
+            unique_id: infoClientSelected.unique_id,
+          }
         );
+      } else {
+        console.error("infoClientSelected.unique_id es undefined o null");
       }
-    }
 
-    Promise.all(updatePromises)
-      .then(() => {
-        // Limpiar las variables
-        setInventario([]);
-        setRegistro({});
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      // Limpiar las variables ✅
+      setInventario([]);
+      setRegistro({});
+      // Si all ha ido bien hasta este punto, mostrar una notificación de éxito
+      alert("Datos actualizados");
+    } catch (error) {
+      alert("Error, intentelo mas tarde");
+      console.error(error);
+    }
   };
   return (
     <div>
