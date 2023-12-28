@@ -1,13 +1,19 @@
-import React from "react";
-import { Viewer, SpecialZoomLevel } from "@react-pdf-viewer/core";
+import React, {useState} from "react";
 
-export default function Pdf() {
-  return (
-    <div>
-      <Viewer
-        fileUrl="../../../../templates/factura_consumidor_final.pdf"
-        defaultScale={SpecialZoomLevel.PageFit}
-      />
-    </div>
-  );
+function PDF() {
+
+  const [validarInfo ,setValidarInfo] = useState(null);
+
+  const Menu = () => (
+    <nav>
+      <button onClick={
+        setValidarInfo(!setValidarInfo)
+      }>
+        Revisar Informacion
+      </button>
+    </nav>
+  )
+  return (<Menu />);
 }
+
+export default PDF;
