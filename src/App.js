@@ -13,7 +13,7 @@ import VentasControl from './components/dashboards/pages/VentasControl';
 import CreateNewProduct from './components/dashboards/pages/tools/CreateNewProduct';
 import NewClient from './components/dashboards/pages/tools/NewClient';
 import UpdatePricing from './components/dashboards/pages/tools/UpdatePricing';
-import PDFViewer from './components/dashboards/pages/tools/PDFViewer';
+import PDFPrinter from './components/dashboards/pages/tools/PDFViewer';
 import PropTypes from 'prop-types';
 
 function ProtectedComponent({ children }) {
@@ -53,7 +53,7 @@ function App() {
             <Route path='/admin-dashboard/clientes/create-client' element={<ProtectedComponent><NewClient/></ProtectedComponent>}/>
             <Route path='/admin-dashboard/inventario/create-product' element={<ProtectedComponent><CreateNewProduct/></ProtectedComponent>}/>
             <Route path='/admin-dashboard/pricing/create-price' element={<ProtectedComponent><UpdatePricing/></ProtectedComponent>}/>
-            <Route path='/admin-dashboard/facturacion/generate' element={<ProtectedComponent><PDFViewer/></ProtectedComponent>}/>
+            <Route path='/admin-dashboard/facturacion/generate' element={<ProtectedComponent><PDFPrinter/></ProtectedComponent>}/>
             <Route path="*" element={<h1>Not Found 404</h1>} />
           </Routes>
         </div>
