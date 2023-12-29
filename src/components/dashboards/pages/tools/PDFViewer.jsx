@@ -1,35 +1,33 @@
 import React from "react";
 import { PDFDocument } from "pdf-lib";
+import { saveAs } from "file-saver";
 
 export default function PDFPrinter() {
   async function fillPdf() {
     try {
-      // Carga el archivo PDF
-      const pdfBuffer = await fetch(
-        "https://acrobat.adobe.com/id/urn:aaid:sc:VA6C2:c787379c-0338-4207-9ced-50f24ac4c22c"
-      ) // Asegúrate de que esta ruta sea correcta
-        .then((response) => response.arrayBuffer())
-        .catch((error) => console.error("Error al obtener el PDF:", error));
-
+      // carga el pdf en un buffer
+      const formUrl = "/templates/factura_consumidor_final1.pdf";
+      const formByte = await fetch(formUrl).then((res) => res.arrayBuffer());
       // Ahora puedes usar pdfBuffer como tus pdfBytes
-      console.log(pdfBuffer);
+      console.log(formByte);
 
       // Crea una instancia de PDFDocument
-      const pdfDoc = await PDFDocument.load(pdfBuffer);
+      const pdfDoc = await PDFDocument.load(formByte);
+      console.log(pdfDoc);
 
       // Date
-      const form = pdfDoc.getForm();
       const fechaActual = new Date();
       const dia = String(fechaActual.getDate()).padStart(2, "0");
       const mes = String(fechaActual.getMonth() + 1).padStart(2, "0"); // Los meses en JavaScript comienzan desde 0
       const ano = fechaActual.getFullYear();
-
       const fechaFormateada = `${dia}${mes}${ano}`;
+
+      // Get the form containing all the fields
+      const form = pdfDoc.getForm();
 
       // Get all fields in the PDF by their names
       const fechaField = form.getTextField("FECHA");
       const nameField = form.getTextField("nombre");
-      const lastNameField = form.getTextField("apellido");
       const addressField = form.getTextField("direccion");
       const municipalityField = form.getTextField("MUNICIPIO");
       const departmentField = form.getTextField("DEPTO");
@@ -43,11 +41,16 @@ export default function PDFPrinter() {
       const precioGarrafaField = form.getTextField("precio_base_garrafa");
       const precioFardoField = form.getTextField("precio_base_fardo");
       const precioPetField = form.getTextField("precio_base_pet");
-      const sonField = form.getTextField("SON");
+      const totalGarrafaField = form.getTextField("total_garrafa");
+      const totalFardoField = form.getTextField("total_fardo");
+      const totalPetField = form.getTextField("total_pet");
+      const totalResField = form.getTextField("total_res");
+      const ivaField = form.getTextField("IVA");
+      const subTotalField = form.getTextField("Sub-Total");
+      const ventaTotalField = form.getTextField("VentaTotal");
 
       fechaField.setText(fechaFormateada);
       nameField.setText("Juan");
-      lastNameField.setText("Perez");
       addressField.setText("Calle 1");
       municipalityField.setText("Municipio 1");
       departmentField.setText("Departamento 1");
@@ -61,25 +64,21 @@ export default function PDFPrinter() {
       precioGarrafaField.setText("100");
       precioFardoField.setText("200");
       precioPetField.setText("300");
-      sonField.setText("Mil cuatrocientos");
+      totalGarrafaField.setText(cantidadGarrafaField * precioGarrafaField);
+      totalFardoField.setText(cantidadFardoField * precioFardoField);
+      totalPetField.setText(cantidadPetField * precioPetField);
+      totalResField.setText(totalGarrafaField + totalFardoField + totalPetField);
+      ivaField.setText(totalResField * 0.13);
+      subTotalField.setText(totalResField - ivaField);
+      ventaTotalField.setText(totalResField);
 
-      // Serializa el PDFDocument a bytes (un Uint8Array)
+      // Serializa el documento PDF a bytes
       const pdfBytes = await pdfDoc.save();
 
-      // Crea un blob a partir de los bytes del PDF
-      console.log(pdfBytes);
+      // Genera una descarga del documento PDF
       const blob = new Blob([pdfBytes], { type: "application/pdf" });
-      // Crea una URL de objeto a partir del blob
-      const url = URL.createObjectURL(blob);
-
-      // Crea un enlace (link) para permitir la descarga del PDF
-      const downloadLink = document.createElement("a");
-      downloadLink.href = url;
-      downloadLink.download = "factura_llenada.pdf";
-      downloadLink.click();
-
-      // Limpia la URL del objeto creado
-      URL.revokeObjectURL(url);
+      saveAs(blob, "documento.pdf");
+      console.log(pdfBytes);
     } catch (error) {
       console.error("Error al procesar el PDF:", error);
       console.error(error.stack);
