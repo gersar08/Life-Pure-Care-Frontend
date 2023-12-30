@@ -31,3 +31,5 @@ export default function PDFSelector() {
     </div>
   );
 }
+
+//TODO: Add props to the components
