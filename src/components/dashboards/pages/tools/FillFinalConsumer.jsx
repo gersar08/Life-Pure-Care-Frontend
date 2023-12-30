@@ -2,7 +2,7 @@ import React from "react";
 import { PDFDocument } from "pdf-lib";
 import { saveAs } from "file-saver";
 
-export default function PDFPrinter() {
+export default function FillFinalConsumer() {
   async function fillPdf() {
     try {
       // carga el pdf en un buffer
@@ -20,7 +20,7 @@ export default function PDFPrinter() {
       const dia = String(fechaActual.getDate()).padStart(2, "0");
       const mes = String(fechaActual.getMonth() + 1).padStart(2, "0"); // Los meses en JavaScript comienzan desde 0
       const ano = fechaActual.getFullYear();
-      const fechaFormateada = `${dia}${mes}${ano}`;
+      const fechaFormateada = `${dia}/${mes}/${ano}`;
 
       // Get the form containing all the fields
       const form = pdfDoc.getForm();
@@ -45,10 +45,8 @@ export default function PDFPrinter() {
       const totalFardoField = form.getTextField("total_fardo");
       const totalPetField = form.getTextField("total_pet");
       const totalResField = form.getTextField("total_res");
-      const ivaField = form.getTextField("IVA");
-      const subTotalField = form.getTextField("Sub-Total");
-      const ventaTotalField = form.getTextField("VentaTotal");
 
+      // Set the values of each field
       fechaField.setText(fechaFormateada);
       nameField.setText("Juan");
       addressField.setText("Calle 1");
@@ -64,13 +62,25 @@ export default function PDFPrinter() {
       precioGarrafaField.setText("100");
       precioFardoField.setText("200");
       precioPetField.setText("300");
-      totalGarrafaField.setText(cantidadGarrafaField * precioGarrafaField);
-      totalFardoField.setText(cantidadFardoField * precioFardoField);
-      totalPetField.setText(cantidadPetField * precioPetField);
-      totalResField.setText(totalGarrafaField + totalFardoField + totalPetField);
-      ivaField.setText(totalResField * 0.13);
-      subTotalField.setText(totalResField - ivaField);
-      ventaTotalField.setText(totalResField);
+
+      // Calcula los totales
+      const cantidadGarrafa = Number(cantidadGarrafaField.getText());
+      const cantidadFardo = Number(cantidadFardoField.getText());
+      const cantidadPet = Number(cantidadPetField.getText());
+      const precioGarrafa = Number(precioGarrafaField.getText());
+      const precioFardo = Number(precioFardoField.getText());
+      const precioPet = Number(precioPetField.getText());
+
+      const totalGarrafa = cantidadGarrafa * precioGarrafa;
+      const totalFardo = cantidadFardo * precioFardo;
+      const totalPet = cantidadPet * precioPet;
+      const totalRes = totalGarrafa + totalFardo + totalPet;
+
+      // Set the values of each fields
+      totalGarrafaField.setText(totalGarrafa.toString());
+      totalFardoField.setText(totalFardo.toString());
+      totalPetField.setText(totalPet.toString());
+      totalResField.setText(totalRes.toString());
 
       // Serializa el documento PDF a bytes
       const pdfBytes = await pdfDoc.save();
@@ -84,10 +94,19 @@ export default function PDFPrinter() {
       console.error(error.stack);
     }
   }
-
   return (
-    <div>
-      <button onClick={fillPdf}>Fill PDF</button>
-    </div>
+    <button
+      onClick={fillPdf}
+      class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+    >
+      <svg
+        class="fill-current w-4 h-4 mr-2"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+      >
+        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+      </svg>
+      <span>Imprimir Consumidor Final</span>
+    </button>
   );
 }
