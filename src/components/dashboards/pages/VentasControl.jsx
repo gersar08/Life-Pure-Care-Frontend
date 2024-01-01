@@ -233,6 +233,8 @@ export default function VentasControl() {
       console.error(error);
     }
   };
+
+  console.log(selectedOption);
   return (
     <div>
       <section class=" py-1 bg-blueGray-50">
@@ -248,7 +250,7 @@ export default function VentasControl() {
                   type="button"
                   onClick={() =>
                     navigate("/admin-dashboard/facturacion/generate", {
-                      state: { id: selectedOption },
+                      state: { selectedOption },
                     })
                   }
                 >
