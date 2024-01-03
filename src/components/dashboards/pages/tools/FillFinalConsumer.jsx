@@ -2,7 +2,7 @@ import React from "react";
 import { PDFDocument } from "pdf-lib";
 import { saveAs } from "file-saver";
 
-export default function FillFinalConsumer({ registro, infoCliente, precios}) {
+export default function FillFinalConsumer({ registro, infoCliente, precios }) {
   async function fillPdf() {
     try {
       // carga el pdf en un buffer
@@ -22,7 +22,6 @@ export default function FillFinalConsumer({ registro, infoCliente, precios}) {
       const ano = fechaActual.getFullYear();
       const fechaFormateada = `${dia}/${mes}/${ano}`;
       const fechaPdf = `${dia}_${mes}_${ano}`;
-
 
       // Get the form containing all the fields
       const form = pdfDoc.getForm();
@@ -90,10 +89,19 @@ export default function FillFinalConsumer({ registro, infoCliente, precios}) {
       const precioPet = Number(precioPetField.getText());
 
       // Calcula los totales
-      const totalGarrafa = (Number(cantidadGarrafa) * Number(precioGarrafa)).toFixed(2);
-      const totalFardo = (Number(cantidadFardo) * Number(precioFardo)).toFixed(2);
-      const totalPet = (Number(cantidadPet) * Number(precioPet)).toFixed(2);
-      const totalRes = (Number(totalGarrafa) + Number(totalFardo) + Number(totalPet)).toFixed(2);
+      const totalGarrafa =
+        cantidadGarrafa !== 0
+          ? (cantidadGarrafa * precioGarrafa).toFixed(2)
+          : "";
+      const totalFardo =
+        cantidadFardo !== 0 ? (cantidadFardo * precioFardo).toFixed(2) : "";
+      const totalPet =
+        cantidadPet !== 0 ? (cantidadPet * precioPet).toFixed(2) : "";
+      const totalRes = (
+        Number(totalGarrafa) +
+        Number(totalFardo) +
+        Number(totalPet)
+      ).toFixed(2);
 
       // Convierte los totales a cadenas de texto
       const totalGarrafaStr = totalGarrafa.toString();
@@ -111,7 +119,10 @@ export default function FillFinalConsumer({ registro, infoCliente, precios}) {
 
       // Genera una descarga del documento PDF
       const blob = new Blob([pdfBytes], { type: "application/pdf" });
-      saveAs(blob, `consumidor_final_${infoCliente.nombre}_${infoCliente.apellido}_${fechaPdf}.pdf`);
+      saveAs(
+        blob,
+        `consumidor_final_${infoCliente.nombre}_${infoCliente.apellido}_${fechaPdf}.pdf`
+      );
       console.log(pdfBytes);
     } catch (error) {
       console.error("Error al procesar el PDF:", error);

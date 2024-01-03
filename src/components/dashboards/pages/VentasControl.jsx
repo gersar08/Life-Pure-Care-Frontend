@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function VentasControl() {
   const [infoClientSelected, setInfoClientSelected] = useState();
   const [selectedOption, setSelectedOption] = useState();
@@ -112,7 +115,6 @@ export default function VentasControl() {
     // Espera a que todas las promesas se completen antes de continuar
     if (updatePromises.length > 0) {
       await Promise.all(updatePromises);
-      console.log("Inventario actualizado");
     } else {
       console.log("No hay promesas para resolver");
     }
@@ -165,9 +167,9 @@ export default function VentasControl() {
         if (datosCliente.hasOwnProperty(nombreProducto)) {
           let cantidad = parseInt(registro[key]);
           if (key.endsWith("_in")) {
-            datosCliente[nombreProducto] += cantidad;
-          } else if (key.endsWith("_out")) {
             datosCliente[nombreProducto] -= cantidad;
+          } else if (key.endsWith("_out")) {
+            datosCliente[nombreProducto] += cantidad;
           }
         }
       }
@@ -227,16 +229,20 @@ export default function VentasControl() {
       setInventario([]);
       setRegistro({});
       // Si all ha ido bien hasta este punto, mostrar una notificación de éxito
-      alert("Datos actualizados");
+      toast.success("Datos actualizados", {
+        duration: 10000,
+        position: "top-center",
+      });
     } catch (error) {
       alert("Error, intentelo mas tarde");
       console.error(error);
     }
   };
 
-  console.log(selectedOption);
   return (
     <div>
+      <ToastContainer />
+
       <section class=" py-1 bg-blueGray-50">
         <div class="w-full lg:w-8/12 px-4 mx-auto mt-6">
           <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
