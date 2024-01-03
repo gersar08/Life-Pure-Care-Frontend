@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
@@ -96,5 +97,3 @@ export default function PDFSelector() {
     </div>
   );
 }
-
-//TODO 2: fix the pdf forms

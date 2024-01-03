@@ -9,9 +9,7 @@ export default function CreateNewProduct() {
   const [existingProducts, setExistingProducts] = useState([]);
   const [selectedProductId, setSelectedProductId] = useState("");
   const navigate = useNavigate();
-  console.log(existingProducts);
-  console.log(formData);
-  console.log(selectedProductId);
+
   useEffect(() => {
     // Fetch existing products when the component mounts
     const fetchExistingProducts = async () => {
@@ -70,7 +68,9 @@ export default function CreateNewProduct() {
           }
         );
         console.log(response.data);
-        navigate('/admin-dashboard/precios',  { state: { successMessage: 'Producto actualizado con éxito' } })
+        navigate("/admin-dashboard/precios", {
+          state: { successMessage: "Producto actualizado con éxito" },
+        });
       }
     } catch (error) {
       console.error(error);

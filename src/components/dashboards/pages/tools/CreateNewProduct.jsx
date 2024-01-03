@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 export default function CreateNewProduct() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     product_name: "",
     product_area: "",
     cantidad: "",
   });
+  const token = localStorage.getItem("token");
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -16,11 +19,9 @@ export default function CreateNewProduct() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const token = localStorage.getItem("token");
-
     try {
       const response = await axios.post(
-        "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/productos",
+        "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/inventario",
         formData,
         {
           headers: {
@@ -32,6 +33,7 @@ export default function CreateNewProduct() {
       );
 
       console.log(response.data);
+      navigate(-1);
     } catch (error) {
       console.error(error);
     }
