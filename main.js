@@ -3,10 +3,10 @@ const path = require('path');
 
 function createWindow () {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    minHeight: 600,
-    minWidth: 800,
+    width: 1200,
+    height: 1030,
+    minHeight: 1030,
+    minWidth: 1200,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
@@ -15,7 +15,6 @@ function createWindow () {
 
   win.loadURL('http://localhost:3000')
 
-  win.webContents.openDevTools()
 }
 
 app.whenReady().then(() => {
