@@ -1,4 +1,5 @@
 const { app, BrowserWindow } = require('electron');
+const { autoUpdater } = require('electron-updater');
 const path = require('path');
 
 function createWindow () {
@@ -18,7 +19,9 @@ function createWindow () {
 }
 
 app.whenReady().then(() => {
-  createWindow()
+  createWindow();
+  autoUpdater.checkForUpdatesAndNotify();
+
 
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
