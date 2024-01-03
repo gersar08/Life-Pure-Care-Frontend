@@ -14,5 +14,6 @@
 }
 
 .App-body{
-  min-width: fit-content;
+  min-width: full;
+  display: flex;
 }

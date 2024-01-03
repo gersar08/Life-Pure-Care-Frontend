@@ -52,13 +52,13 @@ function AdminDashboard() {
   }, [lowStockProducts, toastShown]);
 
   return (
-    <div className="p-6 bg-sky-500 text-white rounded-md opacity-70 w-2/6">
+    <div className="p-5 h-90 bg-sky-500 text-white rounded-md opacity-70 w-3/8">
       <ToastContainer />
       <h1 className="text-2xl font-bold mb-4 text-center">Panel de control</h1>
-      <div className="grid grid-cols-2 gap-4 relative w-50">
+      <div className="grid grid-cols-3 gap-2 relative w-80">
         <Link
           to={"/admin-dashboard/usuarios"}
-          className="bg-indigo-300 flex flex-col items-center justify-center p-4 border-4 rounded-lg bg-transparent hover:bg-blue-200"
+          className="bg-indigo-300 flex flex-col items-center justify-center p-8 border-4 rounded-lg bg-transparent hover:bg-blue-200"
         >
           <UsersIcon className="h-10 w-10 mb-2" />
           Usuarios

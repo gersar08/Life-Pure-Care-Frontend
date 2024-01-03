@@ -40,7 +40,7 @@ export default function Login() {
     }
   };
   return (
-    <div class="bg-gray-100 rounded-lg py-12 px-4 lg:px-24">
+    <div class="bg-gray-100 rounded-lg py-10 px-4 lg:px-24">
       <p class="text-center text-sm text-gray-500 font-light">
         Inicia Sesion para continuar
       </p>

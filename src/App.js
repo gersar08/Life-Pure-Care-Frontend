@@ -35,11 +35,11 @@ ProtectedComponent.propTypes = {
 function App() {
   return (
     <Router>
-      <div className="bg-gray-200 h-full flex flex-col">
+      <div className="bg-gray-200 h-screen flex flex-col overflow-hidden">
         <header className="App-header md:flex  md:justify-between">
           <Header />
         </header>
-        <div className="App-body lg:flex  md:flex md:items-center pt-12 w-full h-full">
+        <div className="App-body">
           <Routes>
             <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/login" element={<Login />} exactpath />
