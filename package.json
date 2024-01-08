@@ -12,7 +12,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.6.1",
+    "axios": "^1.6.5",
     "electron-updater": "^6.1.7",
     "file-saver": "^2.0.5",
     "pdf-lib": "^1.17.1",
