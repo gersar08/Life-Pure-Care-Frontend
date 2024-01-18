@@ -13,16 +13,15 @@ const CreateNewUser = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
-
   const handleConfirmUser = async (e) => {
     e.preventDefault();
     try {
       const requestOptions = {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
         },
         withCredentials: true,
         body: JSON.stringify(formData),
@@ -42,7 +41,7 @@ const CreateNewUser = () => {
     }
   };
   if (response && !error) {
-    navigate("/admin-dashboard/users");
+    navigate(-1);
   }
   const handleChange = async (e) => {
     const { name, value } = e.target;
@@ -53,7 +52,7 @@ const CreateNewUser = () => {
   };
 
   const handleCancel = () => {
-    navigate("/admin-dashboard/users");
+    navigate(-1);
   };
 
   return (
