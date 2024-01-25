@@ -8,13 +8,14 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
       // carga el pdf en un buffer
       const formUrl = "/templates/factura_credito_fiscal.pdf";
       const formByte = await fetch(formUrl).then((res) => res.arrayBuffer());
+
       // Crea una instancia de PDFDocument
       const pdfDoc = await PDFDocument.load(formByte);
 
       // Date
       const fechaActual = new Date();
       const dia = String(fechaActual.getDate()).padStart(2, "0");
-      const mes = String(fechaActual.getMonth() + 1).padStart(2, "0"); // Los meses en JavaScript comienzan desde 0
+      const mes = String(fechaActual.getMonth() + 1).padStart(2, "0");
       const ano = fechaActual.getFullYear();
       const fechaFormateada = `${dia}/${mes}/${ano}`;
       const fechaPdf = `${dia}_${mes}_${ano}`;

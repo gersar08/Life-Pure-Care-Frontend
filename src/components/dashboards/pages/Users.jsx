@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import useGetRequest from "../../Hooks/useGetRequest";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { toast, ToastContainer } from "react-toastify";
@@ -12,9 +12,9 @@ function Users() {
   const [setError] = useState(null);
   const token = localStorage.getItem("token");
   const [setInfo] = useState(null);
-
+  const location = useLocation();
+  const { successMessage } = location.state || {};
   const [formData, setFormData] = useState({
-    // Para enviar los datos del formulario
     id: "",
     name: "",
     user_name: "",
@@ -22,7 +22,22 @@ function Users() {
     role: "",
   });
 
-  // Usamos el hook UseGetRequest para la solicitud GET
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+  }, [successMessage]);
+
   const { data } = useGetRequest(`users`);
   useEffect(() => {
     if (data) {
@@ -31,8 +46,9 @@ function Users() {
   }, [data]);
 
   const handleEdit = (userId) => {
-    navigate(`/admin-dashboard/usuarios/editarusuario`, {state: {userId}});
+    navigate(`/admin-dashboard/usuarios/editarusuario`, { state: { userId } });
   };
+
   const handleDelete = async (userId) => {
     setIsLoading(true);
     setError(null);
