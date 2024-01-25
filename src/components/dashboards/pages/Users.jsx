@@ -8,8 +8,6 @@ function Users() {
   // Definimos 'users' y 'setUsers' usando 'useState'
   const [users, setUsers] = useState(null);
   const navigate = useNavigate();
-  const [setIsLoading] = useState(false);
-  const [setError] = useState(null);
   const token = localStorage.getItem("token");
   const [setInfo] = useState(null);
   const location = useLocation();
@@ -48,8 +46,6 @@ function Users() {
   };
 
   const handleDelete = async (userId) => {
-    setIsLoading(true);
-    setError(null);
     console.log(userId);
     try {
       const response = await fetch(
