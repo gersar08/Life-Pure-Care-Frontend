@@ -32,8 +32,6 @@ function Users() {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
-        transition: Bounce,
       });
     }
   }, [successMessage]);
@@ -78,8 +76,6 @@ function Users() {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "light",
-          transition: Bounce,
         }
       );
     }
@@ -91,8 +87,6 @@ function Users() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "light",
-      transition: Bounce,
     });
     setUsers(users.filter((user) => user.id !== userId));
   };

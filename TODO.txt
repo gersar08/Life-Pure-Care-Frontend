@@ -13,8 +13,8 @@
 -En handleSubmit actualizar primero los datos nuevos en otra funcion✅
 -Luego enviar la solicitud put a la url necesaria✅
 -Al actualizarse vuelve a url anterior✅
--Al volver enviar un status success que activara un toast con el mensaje "Usuario actualizado"❗
-//Agregar Boton de Descargar e Imprimir o Cancelar en el pdf printer ❗
+-Al volver enviar un status success que activara un toast con el mensaje "Usuario actualizado"✅
+//Agregar Boton de Descargar e Imprimir o Cancelar en el pdf printer
 //Hacer pruebas en la app.
 //Crear el EditClient
 //Deshabilitar los botones del admin Dashboard dependiendo los privilegios
