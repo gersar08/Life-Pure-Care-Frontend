@@ -13,7 +13,6 @@ export default function VentasControl() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-  // Hook para obtener los clientes
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -38,7 +37,6 @@ export default function VentasControl() {
     fetchData();
   }, [token]);
 
-  // Hook para obtener el cliente seleccionado
   useEffect(() => {
     if (infoClients && selectedOption) {
       const selectedClient = infoClients.find(
@@ -48,7 +46,6 @@ export default function VentasControl() {
     }
   }, [infoClients, selectedOption]);
 
-  // Hook para obtener el inventario
   useEffect(() => {
     const obtenerInventario = async () => {
       const axiosInstance = axios.create({
@@ -70,13 +67,11 @@ export default function VentasControl() {
     obtenerInventario();
   }, [token]);
 
-  // Hook para obtener el registro
   const handleChange = (event) => {
     const { name, value } = event.target;
     setRegistro((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  //Hook para peticiones al backend
   const axiosInstance = axios.create({
     baseURL: "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api",
     headers: {
@@ -86,7 +81,6 @@ export default function VentasControl() {
     },
   });
 
-  // Función para guardar los datos del cliente seleccionado
   const guardarDatosCliente = (cliente) => {
     setInfoClientSelected(cliente);
   };
@@ -104,7 +98,6 @@ export default function VentasControl() {
       } else if (producto) {
         producto.cantidad = Number(producto.cantidad) - Number(registro[key]);
       }
-      // Agrega la promesa a la lista
       updatePromises.push(
         axiosInstance.put(`/inventario/${producto.id}`, {
           cantidad: producto.cantidad,
@@ -112,7 +105,6 @@ export default function VentasControl() {
       );
     }
 
-    // Espera a que todas las promesas se completen antes de continuar
     if (updatePromises.length > 0) {
       await Promise.all(updatePromises);
     } else {
@@ -120,7 +112,6 @@ export default function VentasControl() {
     }
   };
 
-  // Función para actualizar el inventario
   const enviarInventario = async (inventario) => {
     const updatePromises = inventario.map((product) => {
       return axiosInstance.put(`/inventario/${product.id}`, {
@@ -130,7 +121,6 @@ export default function VentasControl() {
     await Promise.all(updatePromises);
   };
 
-  // Función para verificar si el cliente ya existe
   const verificarCliente = async (cliente, registro) => {
     try {
       const response = await axiosInstance.post("/registro/daily", {
@@ -156,14 +146,9 @@ export default function VentasControl() {
     }
   };
   const sumarDatosProductos = (registro, datosCliente) => {
-    // Recorre cada entrada en el objeto registro
     for (let key in registro) {
-      // Extrae el nombre del producto desde la clave
       let nombreProducto = key.slice(0, -3);
-
-      // Verifica si la clave termina en "_in" o "_out"
       if (key.endsWith("_in") || key.endsWith("_out")) {
-        // Encuentra el producto correspondiente en datosCliente por nombre
         if (datosCliente.hasOwnProperty(nombreProducto)) {
           let cantidad = parseInt(registro[key]);
           if (key.endsWith("_in")) {
@@ -174,7 +159,6 @@ export default function VentasControl() {
         }
       }
     }
-    // Devuelve los datos del cliente con las cantidades actualizadas
     return datosCliente;
   };
 
@@ -188,33 +172,21 @@ export default function VentasControl() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      // 1. Guardar los datos del cliente seleccionado en una variable (infoClientSelected) ✅
       guardarDatosCliente(selectedOption);
 
-      // 2. Hacer solicitud Get del stock en inventario ✅
-
-      // 3. Actualizar los datos de in/out en el inventario ✅
       actualizarInventario(registro, inventario);
 
-      // 4. Realizar la solicitud put al inventario con los datos actualizados✅
       await enviarInventario(inventario);
-      // 5. Verificar si el cliente ya existe, si no existe realizar una solicitud post en registro daily ✅
       const clienteExiste = await verificarCliente(
         infoClientSelected,
         registro
       );
 
       if (!clienteExiste) {
-        // 6. Si existe, realizar solicitud get con la información del cliente✅
         const datosCliente = await obtenerRegistroCliente(infoClientSelected);
-        // 7. Sumar los datos de los productos ✅
         const datosSumados = sumarDatosProductos(registro, datosCliente);
-
-        // 8. Realizar la solicitud put con los datos actualizados ✅
         await enviarRegistroCliente(infoClientSelected, datosSumados);
-        //end if
       } else if (infoClientSelected?.unique_id) {
-        // Cliente no existe, realizar solicitud PUT en registro daily ✅
         await axiosInstance.put(
           `/registro/daily/${infoClientSelected.unique_id}`,
           {
@@ -224,11 +196,8 @@ export default function VentasControl() {
       } else {
         console.error("infoClientSelected.unique_id es undefined o null");
       }
-
-      // Limpiar las variables ✅
       setInventario([]);
       setRegistro({});
-      // Si all ha ido bien hasta este punto, mostrar una notificación de éxito
       toast.success("Datos actualizados", {
         duration: 10000,
         position: "top-center",
@@ -272,10 +241,7 @@ export default function VentasControl() {
                 <div className="flex flex-wrap">
                   <div className="w-full lg:w-6/12 px-4">
                     <div className="relative w-full mb-3">
-                      <label
-                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                        htmlfor="grid-password"
-                      >
+                      <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
                         N° de referencia
                       </label>
                       <select
@@ -299,10 +265,7 @@ export default function VentasControl() {
                   </div>
                   <div className="w-full lg:w-6/12 px-4">
                     <div className="relative w-full mb-3">
-                      <label
-                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                        htmlfor="grid-password"
-                      >
+                      <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
                         Nombre del cliente
                       </label>
                       <input
@@ -319,10 +282,7 @@ export default function VentasControl() {
                   </div>
                   <div className="w-full lg:w-6/12 px-4">
                     <div className="relative w-full mb-3">
-                      <label
-                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                        htmlfor="grid-password"
-                      >
+                      <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
                         N° de telefono
                       </label>
                       <input
@@ -335,10 +295,7 @@ export default function VentasControl() {
                   </div>
                   <div className="w-full lg:w-6/12 px-4">
                     <div className="relative w-full mb-3">
-                      <label
-                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                        htmlfor="grid-password"
-                      >
+                      <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
                         Documento de identidad
                       </label>
                       <input
@@ -360,10 +317,7 @@ export default function VentasControl() {
                   <div className="w-full lg:w-12/12 px-4"></div>
                   <div className="w-full lg:w-4/12 px-4">
                     <div className="relative w-full mb-3">
-                      <label
-                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                        htmlfor="grid-password"
-                      >
+                      <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
                         Garrafones
                       </label>
                       <input
@@ -377,10 +331,7 @@ export default function VentasControl() {
                   </div>
                   <div className="w-full lg:w-4/12 px-4">
                     <div className="relative w-full mb-3">
-                      <label
-                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                        htmlfor="grid-password"
-                      >
+                      <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
                         Fardos
                       </label>
                       <input
@@ -394,10 +345,7 @@ export default function VentasControl() {
                   </div>
                   <div className="w-full lg:w-4/12 px-4">
                     <div className="relative w-full mb-3">
-                      <label
-                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                        htmlfor="grid-password"
-                      >
+                      <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
                         Pet
                       </label>
                       <input
@@ -420,10 +368,7 @@ export default function VentasControl() {
                   <div className="w-full lg:w-12/12 px-4"></div>
                   <div className="w-full lg:w-4/12 px-4">
                     <div className="relative w-full mb-3">
-                      <label
-                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                        htmlfor="grid-password"
-                      >
+                      <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
                         Garrafones
                       </label>
                       <input
@@ -437,10 +382,7 @@ export default function VentasControl() {
                   </div>
                   <div className="w-full lg:w-4/12 px-4">
                     <div className="relative w-full mb-3">
-                      <label
-                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                        htmlfor="grid-password"
-                      >
+                      <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
                         Fardos
                       </label>
                       <input
@@ -454,10 +396,7 @@ export default function VentasControl() {
                   </div>
                   <div className="w-full lg:w-4/12 px-4">
                     <div className="relative w-full mb-3">
-                      <label
-                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                        htmlfor="grid-password"
-                      >
+                      <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
                         Pet
                       </label>
                       <input

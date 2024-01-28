@@ -41,7 +41,9 @@ const CreateNewUser = () => {
     }
   };
   if (response && !error) {
-    navigate(-1);
+    navigate("/admin-dashboard/usuarios", {
+      state: { successMessage: "Usuario creado exitosamente" },
+    });
   }
   const handleChange = async (e) => {
     const { name, value } = e.target;
@@ -49,6 +51,14 @@ const CreateNewUser = () => {
       ...formData,
       [name]: value,
     });
+  };
+
+  const handleSelectChange = (e) => {
+    const { value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      role: value,
+    }));
   };
 
   const handleCancel = () => {
@@ -139,15 +149,22 @@ const CreateNewUser = () => {
             >
               Rol *
             </label>
-            <input
-              type="string"
-              id="role"
-              class="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
+            <select
+              name="selectedRole"
+              className="w-full pl-2 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+              onChange={handleSelectChange}
               required
-              placeholder="Ingrese un rol"
-              name="role"
-              onChange={handleChange}
-            />
+            >
+              <option disabled>
+                Seleccione un rol
+              </option>
+              <option value="admin">Administrador</option>
+              <option value="Operador de Produccion">Operador de Produccion</option>
+              <option value="Supervisor de Inventario">
+                Supervisor de Inventario
+              </option>
+              <option value="Operador de caja">Operador de caja</option>
+            </select>
           </div>
 
           <button

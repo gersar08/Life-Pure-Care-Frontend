@@ -13,9 +13,10 @@ import VentasControl from './components/dashboards/pages/VentasControl';
 import CreateNewProduct from './components/dashboards/pages/tools/CreateNewProduct';
 import NewClient from './components/dashboards/pages/tools/NewClient';
 import UpdatePricing from './components/dashboards/pages/tools/UpdatePricing';
-import PropTypes from 'prop-types';
 import PDFSelector from './components/dashboards/pages/tools/PDFSelector';
 import EditUser from './components/dashboards/pages/tools/EditUser';
+import EditInventory from './components/dashboards/pages/tools/EditInventory';
+import PropTypes from 'prop-types';
 
 function ProtectedComponent({ children }) {
   const navigate = useNavigate();
@@ -56,6 +57,7 @@ function App() {
             <Route path='/admin-dashboard/pricing/create-price' element={<ProtectedComponent><UpdatePricing/></ProtectedComponent>}/>
             <Route path='/admin-dashboard/facturacion/generate' element={<ProtectedComponent><PDFSelector/></ProtectedComponent>}/>
             <Route path='/admin-dashboard/usuarios/editarusuario' element={<ProtectedComponent><EditUser/></ProtectedComponent>}/>
+            <Route path='/admin-dashboard/inventario/editarproducto' element={<ProtectedComponent><EditInventory/></ProtectedComponent>}/>
             <Route path="*" element={<h1>Not Found 404</h1>} />
           </Routes>
         </div>

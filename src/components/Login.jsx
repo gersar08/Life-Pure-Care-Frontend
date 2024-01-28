@@ -40,24 +40,24 @@ export default function Login() {
     }
   };
   return (
-    <div class="bg-gray-100 rounded-lg py-10 px-4 lg:px-24">
-      <p class="text-center text-sm text-gray-500 font-light">
+    <div className="bg-gray-100 rounded-lg py-10 px-4 lg:px-24">
+      <p className="text-center text-sm text-gray-500 font-light">
         Inicia Sesion para continuar
       </p>
-      <form class="mt-6" onSubmit={handleSubmit}>
-        <div class="relative">
+      <form className="mt-6" onSubmit={handleSubmit}>
+        <div className="relative">
           <input
-            class="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
+            className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
             id="username"
             type="text"
             required
             placeholder="Usuario"
             onChange={(e) => setUsername(e.target.value)}
             />
-          <div class="absolute left-0 inset-y-0 flex items-center">
+          <div className="absolute left-0 inset-y-0 flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="h-7 w-7 ml-3 text-gray-400 p-1"
+              className="h-7 w-7 ml-3 text-gray-400 p-1"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -66,19 +66,19 @@ export default function Login() {
             </svg>
           </div>
         </div>
-        <div class="relative mt-3">
+        <div className="relative mt-3">
           <input
-            class="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
+            className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
             id="password"
             required
             type="password"
             placeholder="Contraseña"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <div class="absolute left-0 inset-y-0 flex items-center">
+          <div className="absolute left-0 inset-y-0 flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="h-7 w-7 ml-3 text-gray-400 p-1"
+              className="h-7 w-7 ml-3 text-gray-400 p-1"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -86,13 +86,13 @@ export default function Login() {
             </svg>
           </div>
         </div>
-        <div class="flex items-center justify-center mt-8">
-          <button class="text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
+        <div className="flex items-center justify-center mt-8">
+          <button className="text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
             Iniciar Sesion
           </button>
         </div>
       </form>
-      {error && <p className="text-red-500 pt-5 text-center">{error}</p>}
+      {error && <p classNameName="text-red-500 pt-5 text-center">{error}</p>}
     </div>
   );
 }
