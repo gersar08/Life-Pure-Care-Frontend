@@ -14,7 +14,9 @@ export default function Login() {
       const csrfResponse = await fetch('https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/sanctum/csrf-cookie', {
         credentials: 'include',
       });
-      console.log('CSRF response', csrfResponse); // Agregado para depuración
+      if (!csrfResponse.ok) {
+        throw new Error('Error en la autenticación');
+      }
 
       const response = await fetch('https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/login', {
         method: 'POST',

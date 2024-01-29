@@ -17,6 +17,7 @@ import PDFSelector from './components/dashboards/pages/tools/PDFSelector';
 import EditUser from './components/dashboards/pages/tools/EditUser';
 import EditInventory from './components/dashboards/pages/tools/EditInventory';
 import PropTypes from 'prop-types';
+import EditClient from './components/dashboards/pages/tools/EditClient';
 
 function ProtectedComponent({ children }) {
   const navigate = useNavigate();
@@ -45,19 +46,21 @@ function App() {
           <Routes>
             <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/login" element={<Login />} exactpath />
-            <Route path="/admin-dashboard" element={<ProtectedComponent><AdminDashboard/></ProtectedComponent>}/>
-            <Route path='/admin-dashboard/usuarios' element={<ProtectedComponent><Users/></ProtectedComponent>}/>
-            <Route path='/admin-dashboard/inventario' element={<ProtectedComponent><Inventory/></ProtectedComponent>}/>
-            <Route path='/admin-dashboard/facturacion' element={<ProtectedComponent><VentasControl/></ProtectedComponent>}/>
-            <Route path='/admin-dashboard/precios' element={<ProtectedComponent><Pricing/></ProtectedComponent>}/>
-            <Route path='/admin-dashboard/clientes' element={<ProtectedComponent><Clients/></ProtectedComponent>}/>
-            <Route path='/admin-dashboard/usuarios/createuser' element={<ProtectedComponent><CreateNewUser/></ProtectedComponent>}/>
-            <Route path='/admin-dashboard/clientes/create-client' element={<ProtectedComponent><NewClient/></ProtectedComponent>}/>
-            <Route path='/admin-dashboard/inventario/create-product' element={<ProtectedComponent><CreateNewProduct/></ProtectedComponent>}/>
-            <Route path='/admin-dashboard/pricing/create-price' element={<ProtectedComponent><UpdatePricing/></ProtectedComponent>}/>
-            <Route path='/admin-dashboard/facturacion/generate' element={<ProtectedComponent><PDFSelector/></ProtectedComponent>}/>
-            <Route path='/admin-dashboard/usuarios/editarusuario' element={<ProtectedComponent><EditUser/></ProtectedComponent>}/>
-            <Route path='/admin-dashboard/inventario/editarproducto' element={<ProtectedComponent><EditInventory/></ProtectedComponent>}/>
+            <Route path="/admin-dashboard" element={<ProtectedComponent><AdminDashboard /></ProtectedComponent>} />
+            <Route path='/admin-dashboard/usuarios' element={<ProtectedComponent><Users /></ProtectedComponent>} />
+            <Route path='/admin-dashboard/inventario' element={<ProtectedComponent><Inventory /></ProtectedComponent>} />
+            <Route path='/admin-dashboard/facturacion' element={<ProtectedComponent><VentasControl /></ProtectedComponent>} />
+            <Route path='/admin-dashboard/precios' element={<ProtectedComponent><Pricing /></ProtectedComponent>} />
+            <Route path='/admin-dashboard/clientes' element={<ProtectedComponent><Clients /></ProtectedComponent>} />
+            <Route path='/admin-dashboard/usuarios/createuser' element={<ProtectedComponent><CreateNewUser /></ProtectedComponent>} />
+            <Route path='/admin-dashboard/clientes/create-client' element={<ProtectedComponent><NewClient /></ProtectedComponent>} />
+            <Route path='/admin-dashboard/inventario/create-product' element={<ProtectedComponent><CreateNewProduct /></ProtectedComponent>} />
+            <Route path='/admin-dashboard/pricing/create-price' element={<ProtectedComponent><UpdatePricing /></ProtectedComponent>} />
+            <Route path='/admin-dashboard/facturacion/generate' element={<ProtectedComponent><PDFSelector /></ProtectedComponent>} />
+            <Route path='/admin-dashboard/usuarios/editarusuario' element={<ProtectedComponent><EditUser /></ProtectedComponent>} />
+            <Route path='/admin-dashboard/inventario/editarproducto' element={<ProtectedComponent><EditInventory /></ProtectedComponent>} />
+            <Route path='/admin-dashboard/inventario/editarcliente' element={<ProtectedComponent><EditClient /></ProtectedComponent>} />
+
             <Route path="*" element={<h1>Not Found 404</h1>} />
           </Routes>
         </div>
