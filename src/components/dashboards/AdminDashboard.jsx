@@ -11,12 +11,13 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import useGetRequest from './../Hooks/useGetRequest';
 
 function AdminDashboard() {
   const token = localStorage.getItem("token");
   const [toastShown, setToastShown] = useState(false);
   const [lowStockProducts, setLowStockProducts] = useState([]);
-
+  const username = localStorage.getItem("user");
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
@@ -52,6 +53,14 @@ function AdminDashboard() {
     }
   }, [lowStockProducts, toastShown]);
 
+  const {data: userData} = useGetRequest(`users/search/user_name/${username}`);
+
+  useEffect(() => {
+    // Ahora puedes usar 'userData' dentro de este hook
+    console.log(userData);
+    localStorage.setItem('rol', userData.role);
+  }, [userData]);
+
   return (
     <div className="p-5 h-90 mb-16 w-3/6 bg-sky-500 text-white rounded-md opacity-70 w-3/8">
       <ToastContainer />
@@ -60,6 +69,7 @@ function AdminDashboard() {
         <Link
           to={"/admin-dashboard/usuarios"}
           className="bg-indigo-300 flex flex-col items-center justify-center p-8 border-4 rounded-lg bg-transparent hover:bg-blue-200"
+          disabled={localStorage.getItem('rol') !== 'admin'}
         >
           <UsersIcon className="h-10 w-10 mb-2" />
           Usuarios
@@ -67,6 +77,7 @@ function AdminDashboard() {
         <Link
           to={"/admin-dashboard/inventario"}
           className="bg-indigo-300 flex flex-col items-center justify-center p-8 border-4 rounded-lg bg-transparent hover:bg-blue-200"
+          disabled={localStorage.getItem('rol') !== 'admin' || localStorage.getItem('rol') !== 'Supervisor de Inventario'}
         >
           <BuildingStorefrontIcon className="h-10 w-10 mb-2" />
           Inventario
@@ -74,6 +85,8 @@ function AdminDashboard() {
         <Link
           to={"/admin-dashboard/facturacion"}
           className="bg-indigo-300 flex flex-col items-center justify-center p-8 border-4 rounded-lg bg-transparent hover:bg-blue-200"
+          disabled={localStorage.getItem('rol') !== 'admin' || localStorage.getItem('rol') !== 'Operador de Caja' }
+
         >
           <DocumentTextIcon className="h-10 w-10 mb-2" />
           Facturación
@@ -82,6 +95,7 @@ function AdminDashboard() {
         <Link
           to={"/admin-dashboard/clientes"}
           className="bg-indigo-300 flex flex-col items-center justify-center p-8 border-4 rounded-lg bg-transparent hover:bg-blue-200"
+          disabled={localStorage.getItem('rol') !== 'admin'}
         >
           <BriefcaseIcon className="h-10 w-10 mb-2" />
           Clientes
@@ -89,6 +103,8 @@ function AdminDashboard() {
         <Link
           to={"/admin-dashboard/precios"}
           className="bg-indigo-300 flex flex-col items-center justify-center p-8 border-4 rounded-lg bg-transparent hover:bg-blue-200"
+          disabled={localStorage.getItem('rol') !== 'admin'}
+
         >
           <CurrencyDollarIcon className="h-10 w-10 mb-2" />
           Precios
@@ -96,6 +112,8 @@ function AdminDashboard() {
         <Link
           to={"/admin-dashboard/registro-ventas"}
           className="bg-indigo-300 flex flex-col items-center justify-center p-8 border-4 rounded-lg bg-transparent hover:bg-blue-200"
+          disabled={localStorage.getItem('rol') !== 'admin'}
+
         >
           <ClipboardDocumentListIcon className="h-10 w-10 mb-2" />
           <div className="flex justify-center items-center">Registro Ventas</div>
