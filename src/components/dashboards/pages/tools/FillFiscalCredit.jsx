@@ -16,7 +16,7 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
   const fechaFormateada = `${dia}/${mes}/${ano}`;
   const fechaPdf = `${dia}_${mes}_${ano}`;
   //URL PDF
-  const [pdfUrl, setPdfUrl] = useState(null);
+ // const [pdfUrl, setPdfUrl] = useState(null);
 
   useEffect(() => {
     const formatPdf = async () => {
