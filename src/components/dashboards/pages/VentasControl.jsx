@@ -224,11 +224,17 @@ export default function VentasControl() {
                 <button
                   className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-3  rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                   type="button"
-                  onClick={() =>
-                    navigate("/admin-dashboard/facturacion/generate", {
-                      state: { selectedOption },
-                    })
-                  }
+                  onClick={(event) => {
+                    if (
+                      localStorage.getItem("rol") !== "admin" ||
+                      localStorage.getItem("rol") !== "Operador de Caja"
+                    ) {
+                      event.preventDefault();
+                      toast.error("No tienes los permisos suficientes");
+                    } else {
+                      navigate("/admin-dashboard/facturacion");
+                    }
+                  }}
                 >
                   Generar Factura
                 </button>
