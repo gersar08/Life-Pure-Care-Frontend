@@ -164,9 +164,3 @@ export default function RegistroClientes() {
   );
 }
 
-// TODO
-//Poder editar el registro ✅
-//boton de cierre de caja
-// preview de la factura
-//Agrandar tamaño de la tabla de admin
-//Revisar por que quedan numeros negativos en el registro de ventas
