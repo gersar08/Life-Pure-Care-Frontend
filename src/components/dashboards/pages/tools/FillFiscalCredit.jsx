@@ -132,7 +132,7 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
       }
     };
     formatPdf();
-  }, [ registro, infoCliente, precios]);
+  }, [registro, infoCliente, precios]);
 
   async function fillPdf() {
     if (pdfBytes) {
@@ -142,15 +142,17 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
         blob,
         `credito_fiscal_${infoCliente.nombre}_${infoCliente.apellido}_${fechaPdf}.pdf`
       );
-    }else{
+    } else {
       toast.error("Error al procesar el PDF");
     }
   }
   return (
     <div>
-      <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-        {pdfUrl && <Viewer fileUrl={pdfUrl} />}
-      </Worker>
+      {/*
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+           {pdfUrl && <Viewer fileUrl={pdfUrl} />}
+       </Worker>
+        */}
       <ToastContainer />
       <button
         onClick={fillPdf}
