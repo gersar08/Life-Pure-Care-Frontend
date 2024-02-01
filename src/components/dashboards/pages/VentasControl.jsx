@@ -86,7 +86,7 @@ export default function VentasControl() {
   };
 
   const actualizarInventario = async (registro, inventario) => {
-    const updatePromises = [];
+    let updatePromises = [];
 
     for (let key in registro) {
       let keyWithoutSuffix = key.replace(/(_in|_out)$/, "");
@@ -98,17 +98,18 @@ export default function VentasControl() {
       } else if (producto) {
         producto.cantidad = Number(producto.cantidad) - Number(registro[key]);
       }
-      updatePromises.push(
-        axiosInstance.put(`/inventario/${producto.id}`, {
-          cantidad: producto.cantidad,
-        })
-      );
-    }
+      if (producto) {
+        updatePromises.push(
+          axiosInstance.put(`/inventario/${producto.id}`, {
+            cantidad: producto.cantidad,
+          })
+        );
+      } else {
+        console.log(`No se encontró el producto: ${keyWithoutSuffix}`);
+      }
 
-    if (updatePromises.length > 0) {
+      // Espera a que todas las promesas en el array se resuelvan.
       await Promise.all(updatePromises);
-    } else {
-      console.log("No hay promesas para resolver");
     }
   };
 
@@ -125,9 +126,9 @@ export default function VentasControl() {
     try {
       const response = await axiosInstance.post("/registro/daily", {
         cliente_id: cliente.unique_id,
-        fardo: registro.fardo_in,
-        garrafa: registro.garrafa_in,
-        pet: registro.pet_in,
+        fardo: registro.fardo_out,
+        garrafa: registro.garrafa_out,
+        pet: registro.pet_out,
       });
       return response.status !== 422;
     } catch (error) {
@@ -212,10 +213,10 @@ export default function VentasControl() {
     <div>
       <ToastContainer />
 
-      <section className="py-1 bg-blueGray-50">
-        <div className=" h-full lg:w-8/12 mb-5 mx-auto">
-          <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
-            <div className="rounded-t bg-white mb-0 px-6 py-6">
+      <section className=" bg-blueGray-50">
+        <div className=" h-100 md:w-8/12 mb-14 mx-auto">
+          <div className="relative flex flex-col min-w-0 break-words w-full mb-4 shadow-lg rounded-lg bg-blueGray-100 border-0">
+            <div className="rounded-t bg-white px-6 py-4">
               <div className="text-center flex justify-between">
                 <h6 className="text-blueGray-700 text-xl font-bold">
                   Control de Ventas
@@ -233,9 +234,9 @@ export default function VentasControl() {
                 </button>
               </div>
             </div>
-            <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
+            <div className="flex-auto px-4 lg:px-8 py-3 pt-0">
               <form onSubmit={handleSubmit}>
-                <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                <h6 className="text-blueGray-400 text-sm mt-2 mb-4 font-bold uppercase">
                   Informacion del cliente
                 </h6>
                 <div className="flex flex-wrap">
@@ -308,9 +309,9 @@ export default function VentasControl() {
                   </div>
                 </div>
 
-                <hr className="mt-6 border-b-1 border-blueGray-300" />
+                <hr className="border-b-1 border-blueGray-300" />
 
-                <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                <h6 className="text-blueGray-400 text-sm mt-1 mb-4 font-bold uppercase">
                   Informacion de productos de entrada
                 </h6>
                 <div className="flex flex-wrap">
@@ -359,7 +360,7 @@ export default function VentasControl() {
                   </div>
                 </div>
 
-                <hr className="mt-6 border-b-1 border-blueGray-300" />
+                <hr className=" border-b-1 border-blueGray-300" />
 
                 <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                   Informacion de productos salida

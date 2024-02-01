@@ -5,6 +5,7 @@ import {
   DocumentTextIcon,
   BriefcaseIcon,
   CurrencyDollarIcon,
+  ClipboardDocumentListIcon
 } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -52,10 +53,10 @@ function AdminDashboard() {
   }, [lowStockProducts, toastShown]);
 
   return (
-    <div className="p-5 h-90 bg-sky-500 text-white rounded-md opacity-70 w-3/8">
+    <div className="p-5 h-90 mb-16 w-3/6 bg-sky-500 text-white rounded-md opacity-70 w-3/8">
       <ToastContainer />
       <h1 className="text-2xl font-bold mb-4 text-center">Panel de control</h1>
-      <div className="grid grid-cols-2 gap-4 relative w-80">
+      <div className="grid grid-cols-2 gap-4 relative w-90">
         <Link
           to={"/admin-dashboard/usuarios"}
           className="bg-indigo-300 flex flex-col items-center justify-center p-8 border-4 rounded-lg bg-transparent hover:bg-blue-200"
@@ -78,21 +79,26 @@ function AdminDashboard() {
           Facturación
         </Link>
 
-        <div className="relative">
-          <Link
-            to={"/admin-dashboard/clientes"}
-            className="bg-indigo-300 flex flex-col items-center justify-center p-8 border-4 rounded-lg bg-transparent hover:bg-blue-200"
-          >
-            <BriefcaseIcon className="h-10 w-10 mb-2" />
-            Clientes
-          </Link>
-        </div>
+        <Link
+          to={"/admin-dashboard/clientes"}
+          className="bg-indigo-300 flex flex-col items-center justify-center p-8 border-4 rounded-lg bg-transparent hover:bg-blue-200"
+        >
+          <BriefcaseIcon className="h-10 w-10 mb-2" />
+          Clientes
+        </Link>
         <Link
           to={"/admin-dashboard/precios"}
           className="bg-indigo-300 flex flex-col items-center justify-center p-8 border-4 rounded-lg bg-transparent hover:bg-blue-200"
         >
           <CurrencyDollarIcon className="h-10 w-10 mb-2" />
           Precios
+        </Link>
+        <Link
+          to={"/admin-dashboard/registro-ventas"}
+          className="bg-indigo-300 flex flex-col items-center justify-center p-8 border-4 rounded-lg bg-transparent hover:bg-blue-200"
+        >
+          <ClipboardDocumentListIcon className="h-10 w-10 mb-2" />
+          <div className="flex justify-center items-center">Registro Ventas</div>
         </Link>
       </div>
     </div>

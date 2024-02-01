@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-
 import FillFiscalCredit from "./FillFiscalCredit";
 import FillFinalConsumer from "./FillFinalConsumer";
 export default function PDFSelector() {
@@ -45,7 +44,6 @@ export default function PDFSelector() {
     instance
       .get(`/registro/daily/search/${selectedOption}`)
       .then((response) => {
-        console.log(response.data);
         setRegistro(response.data);
       })
       .catch((error) => {
@@ -57,7 +55,6 @@ export default function PDFSelector() {
     instance
       .get(`/clientes/search/unique_id/${selectedOption}`)
       .then((response) => {
-        console.log(response.data);
         setInfoCliente(response.data);
       })
       .catch((error) => {
@@ -69,7 +66,6 @@ export default function PDFSelector() {
     instance
       .get(`/productos`)
       .then((response) => {
-        console.log(response.data);
         setPrecios(response.data);
       })
       .catch((error) => {
