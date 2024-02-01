@@ -3,9 +3,9 @@ import { PDFDocument } from "pdf-lib";
 import { saveAs } from "file-saver";
 import { toast, ToastContainer } from "react-toastify";
 import { ArrowDownTrayIcon } from "@heroicons/react/20/solid";
-import { Worker, Viewer } from "@react-pdf-viewer/core";
+/*import { Worker, Viewer } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
-
+*/
 export default function FillFiscalCredit({ registro, infoCliente, precios }) {
   const [pdfBytes, setPdfBytes] = useState(null);
   // Date
