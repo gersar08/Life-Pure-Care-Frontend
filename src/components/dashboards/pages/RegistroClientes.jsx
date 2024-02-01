@@ -92,7 +92,7 @@ export default function RegistroClientes() {
           <button
             className="text-md mr-3 bg-red-500 hover:bg-red-700 text-white py-2 px-3 rounded focus:outline-none focus:shadow-outline"
             onClick={handleDeleteTable}
-            disabled={localStorage.getItem('rol') !== 'admin' || localStorage.getItem('rol') !== 'Operador de caja'}
+            disabled={localStorage.getItem('rol') !== 'admin' && localStorage.getItem('rol') !== 'Operador de caja'}
 
          >
             Cierre de caja

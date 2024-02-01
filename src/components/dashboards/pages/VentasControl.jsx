@@ -226,7 +226,7 @@ export default function VentasControl() {
                   type="button"
                   onClick={(event) => {
                     if (
-                      localStorage.getItem("rol") !== "admin" ||
+                      localStorage.getItem("rol") !== "admin" &&
                       localStorage.getItem("rol") !== "Operador de Caja"
                     ) {
                       event.preventDefault();
