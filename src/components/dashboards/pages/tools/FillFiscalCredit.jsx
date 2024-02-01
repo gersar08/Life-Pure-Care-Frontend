@@ -123,9 +123,9 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
         const pdfBytes = await pdfDoc.save();
         setPdfBytes(pdfBytes);
         // Crea una URL de objeto a partir de los bytes del PDF
-        const blob = new Blob([pdfBytes], { type: "application/pdf" });
-        const url = URL.createObjectURL(blob);
-        setPdfUrl(url);
+        //const blob = new Blob([pdfBytes], { type: "application/pdf" });
+       // const url = URL.createObjectURL(blob);
+       // setPdfUrl(url);
       } catch (error) {
         toast.error("Error al procesar el PDF:", error);
         console.error(error.stack);

@@ -152,10 +152,8 @@ export default function VentasControl() {
       if (key.endsWith("_in") || key.endsWith("_out")) {
         if (datosCliente.hasOwnProperty(nombreProducto)) {
           let cantidad = parseInt(registro[key]);
-          if (key.endsWith("_in")) {
+          if (key.endsWith("_out")) {
             datosCliente[nombreProducto] -= cantidad;
-          } else if (key.endsWith("_out")) {
-            datosCliente[nombreProducto] += cantidad;
           }
         }
       }
@@ -232,7 +230,9 @@ export default function VentasControl() {
                       event.preventDefault();
                       toast.error("No tienes los permisos suficientes");
                     } else {
-                      navigate("/admin-dashboard/facturacion");
+                      navigate("/admin-dashboard/facturacion/generate", {
+                        state: { selectedOption },
+                      });
                     }
                   }}
                 >
