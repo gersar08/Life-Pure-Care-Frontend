@@ -1,49 +1,65 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Login() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const csrfResponse = await fetch('https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/sanctum/csrf-cookie', {
-        credentials: 'include',
-      });
+      const csrfResponse = await fetch(
+        "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/sanctum/csrf-cookie",
+        {
+          credentials: "include",
+        }
+      );
       if (!csrfResponse.ok) {
-        throw new Error('Error en la autenticación');
+        throw new Error("Error en la autenticación");
       }
 
-      const response = await fetch('https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({ user_name: username, password }),
-      });
+      const response = await fetch(
+        "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ user_name: username, password }),
+        }
+      );
 
       if (!response.ok) {
-        throw new Error('Error en la autenticación');
+        throw new Error("Error en la autenticación");
       }
 
-
-     const data = await response.json();
-      localStorage.setItem('token', data.token); 
-      localStorage.setItem('user', username);
-      navigate('/admin-dashboard');
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", username);
+      navigate("/admin-dashboard");
     } catch (error) {
-      console.error('There was a problem with the fetch operation: ' + error.message);
-      setError(error.message); // Actualizamos el estado error con el mensaje de error
+      console.error(
+        "There was a problem with the fetch operation: " + error.message
+      );
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      }); // Actualizamos el estado error con el mensaje de error
     }
   };
   return (
     <div className="bg-gray-100 rounded-lg py-10 px-4 lg:px-24">
+      <ToastContainer />
       <p className="text-center text-sm text-gray-500 font-light">
         Inicia Sesion para continuar
       </p>
@@ -56,7 +72,7 @@ export default function Login() {
             required
             placeholder="Usuario"
             onChange={(e) => setUsername(e.target.value)}
-            />
+          />
           <div className="absolute left-0 inset-y-0 flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +111,6 @@ export default function Login() {
           </button>
         </div>
       </form>
-      {error && <p classNameName="text-red-500 pt-5 text-center">{error}</p>}
     </div>
   );
 }
