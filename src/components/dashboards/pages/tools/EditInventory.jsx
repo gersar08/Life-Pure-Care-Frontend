@@ -35,7 +35,7 @@ export default function EditInventory() {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await axios.put(
+      await axios.put(
         `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/inventario/${infoProduct}`,
         formData,
         {
@@ -46,7 +46,6 @@ export default function EditInventory() {
           },
         }
       );
-      console.log(response);
       navigate("/admin-dashboard/inventario", {
         state: { successMessage: "Producto actualizado con éxito" },
       });

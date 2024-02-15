@@ -82,7 +82,6 @@ export default function Inventory() {
         closeOnClick: true,
         draggable: true,
       });
-      console.log(response.data);
       setInventoryData(
         inventoryData.filter((inventory) => inventory.id !== inventoryDataId)
       );
@@ -166,7 +165,7 @@ export default function Inventory() {
                       <PencilSquareIcon className="w-6 h-6" />
                     </button>
                     <button
-                      onClick={() => handleDelete(user.id)}
+                      onClick={() => handleDelete(item.id)}
                       className="text-sm mr-4 bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
                     >
                       <TrashIcon className="w-6 h-6" />
