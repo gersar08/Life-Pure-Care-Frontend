@@ -5,13 +5,27 @@ import { toast, ToastContainer } from "react-toastify";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 function Users() {
-  // Definimos 'users' y 'setUsers' usando 'useState'
   const [users, setUsers] = useState(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-
-  // Usamos el hook UseGetRequest para la solicitud GET
+  const location = useLocation();
+  const { successMessage } = location.state || {};
   const { data } = useGetRequest(`clientes`);
+
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }, [successMessage]);
+
   useEffect(() => {
     if (data) {
       setUsers(data);
@@ -33,7 +47,6 @@ function Users() {
       );
       const responseData = await response.json();
       setInfo(responseData);
-
     } catch (error) {
       toast.error(error, {
         position: "top-center",

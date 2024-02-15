@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import useGetRequest from "../../Hooks/useGetRequest";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Pricing() {
   // Definimos 'users' y 'setUsers' usando 'useState'
   const [users, setUsers] = useState(null);
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const { successMessage } = location.state || {};
   const [formData, setFormData] = useState({
     // Para enviar los datos del formulario
     id: "",
@@ -22,8 +24,23 @@ export default function Pricing() {
     }
   }, [data]);
 
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }, [successMessage]);
+
   return (
     <div className="text-gray-900 bg-gray-200 ">
+      <ToastContainer />
       <div className="p-4 flex justify-between">
         <h1 className="text-3xl font-bold">Precios</h1>
         <button

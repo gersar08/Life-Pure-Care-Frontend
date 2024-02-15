@@ -9,7 +9,6 @@ export default function Inventory() {
   const [inventoryData, setInventoryData] = useState([]);
   const token = localStorage.getItem("token");
   const location = useLocation();
-
   const { successMessage } = location.state || {};
 
   useEffect(() => {
