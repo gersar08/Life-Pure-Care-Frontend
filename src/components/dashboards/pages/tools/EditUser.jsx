@@ -50,7 +50,7 @@ export default function EditUser() {
     const token = localStorage.getItem("token");
 
     try {
-      await axios.put(
+      const response = await axios.put(
         `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/users/${infoClient}`,
         formData,
         {

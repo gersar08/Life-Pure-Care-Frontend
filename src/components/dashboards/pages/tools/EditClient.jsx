@@ -39,7 +39,7 @@ export default function EditClient() {
     const token = localStorage.getItem("token");
 
     try {
-      await axios.put(
+      const response = await axios.put(
         `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/clientes/${infoClient}`,
         formData,
         {
@@ -85,7 +85,9 @@ export default function EditClient() {
         <form onSubmit={handleSubmit} className="w-full">
           <div className="flex mb-6">
             <div className="w-1/2 mr-2">
-              <label className="block text-gray-700 text-sm font-semibold mb-2">
+              <label
+                className="block text-gray-700 text-sm font-semibold mb-2"
+              >
                 Nombre *
               </label>
               <input
@@ -99,7 +101,9 @@ export default function EditClient() {
               />
             </div>
             <div className="w-1/2 ml-2">
-              <label className="block text-gray-700 text-sm font-semibold mb-2">
+              <label
+                className="block text-gray-700 text-sm font-semibold mb-2"
+              >
                 Apellido *
               </label>
               <input
@@ -115,7 +119,9 @@ export default function EditClient() {
           </div>
           <div className=" flex mb-6">
             <div className="w-1/2 mr-2">
-              <label className="block text-gray-700 text-sm font-semibold mb-2">
+              <label
+                className="block text-gray-700 text-sm font-semibold mb-2"
+              >
                 Telefono *
               </label>
               <input
@@ -149,7 +155,9 @@ export default function EditClient() {
             </div>
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-semibold mb-2">
+            <label
+              className="block text-gray-700 text-sm font-semibold mb-2"
+            >
               Direccion *
             </label>
             <input
@@ -163,7 +171,9 @@ export default function EditClient() {
             />
           </div>
           <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-semibold mb-2">
+            <label
+              className="block text-gray-700 text-sm font-semibold mb-2"
+            >
               Codigo de referencia *
             </label>
             <input
@@ -171,7 +181,7 @@ export default function EditClient() {
               id="password"
               className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
               required
-              placeholder={clienteData ? clienteData.unique_id : ""}
+              placeholder={clienteData ? clienteData.unique_id : "" }
               name="unique_id"
               onChange={handleChange}
             />
