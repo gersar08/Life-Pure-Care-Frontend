@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const CreateNewUser = () => {
   const [formData, setFormData] = useState({
     // Para enviar los datos del formulario
@@ -9,42 +10,27 @@ const CreateNewUser = () => {
     role: "",
   });
   const navigate = useNavigate();
-  const [response, setResponse] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
   const handleConfirmUser = async (e) => {
     e.preventDefault();
     try {
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-        body: JSON.stringify(formData),
-      };
-
-      const apiResponse = await fetch(
+      await axios.post(
         "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/users",
-        requestOptions
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
-      const jsonData = await apiResponse.json();
-
-      setResponse(jsonData);
-      setLoading(false);
+      navigate(-1);
     } catch (error) {
-      setError(error);
-      setLoading(false);
+      console.error(error);
     }
   };
-  if (response && !error) {
-    navigate("/admin-dashboard/usuarios", {
-      state: { successMessage: "Usuario creado exitosamente" },
-    });
-  }
+
   const handleChange = async (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -66,10 +52,10 @@ const CreateNewUser = () => {
   };
 
   return (
-    <div class="bg-transparent flex items-center justify-center w-screen h-screen">
-      <div class="bg-white p-12 rounded-lg shadow-lg max-w-sm w-full">
-        <div class="flex justify-center mb-6">
-          <span class="inline-block bg-gray-200 rounded-full p-3">
+    <div className="bg-transparent flex items-center justify-center w-screen h-screen">
+      <div className="bg-white p-12 rounded-lg shadow-lg max-w-sm w-full">
+        <div className="flex justify-center mb-6">
+          <span className="inline-block bg-gray-200 rounded-full p-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -83,68 +69,58 @@ const CreateNewUser = () => {
             </svg>
           </span>
         </div>
-        <h2 class="text-2xl font-semibold text-center mb-4">
+        <h2 className="text-2xl font-semibold text-center mb-4">
           Crea un nuevo usuario
         </h2>
-        <p class="text-gray-600 text-center mb-6">
+        <p className="text-gray-600 text-center mb-6">
           Ingresa los detalles del registro.
         </p>
         <form onSubmit={handleConfirmUser}>
-          <div class="mb-4">
-            <label
-              for="name"
-              class="block text-gray-700 text-sm font-semibold mb-2"
-            >
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-semibold mb-2">
               Nombre Completo *
             </label>
             <input
               type="text"
               name="name"
               id="name"
-              class="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
+              className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
               required
               placeholder="James Brown"
               onChange={handleChange}
             />
           </div>
-          <div class="mb-4">
-            <label
-              for="user_name"
-              class="block text-gray-700 text-sm font-semibold mb-2"
-            >
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-semibold mb-2">
               Usuario *
             </label>
             <input
               type="username"
               id="username"
               name="user_name"
-              class="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
+              className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
               required
               placeholder="Usuario"
               onChange={handleChange}
             />
           </div>
-          <div class="mb-4">
-            <label
-              for="password"
-              class="block text-gray-700 text-sm font-semibold mb-2"
-            >
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-semibold mb-2">
               Contraseña *
             </label>
             <input
               type="password"
               id="password"
-              class="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
+              className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
               required
               placeholder="••••••••"
               name="password"
               onChange={handleChange}
             />
           </div>
-          <div class="mb-6">
+          <div className="mb-6">
             <label
-              for="role"
-              class="block text-gray-700 text-sm font-semibold mb-2"
+              className="block text-gray-700 text-sm font-semibold mb-2"
               onChange={handleChange}
             >
               Rol *
@@ -155,11 +131,11 @@ const CreateNewUser = () => {
               onChange={handleSelectChange}
               required
             >
-              <option disabled>
-                Seleccione un rol
-              </option>
+              <option value="">Seleccione un rol</option>
               <option value="admin">Administrador</option>
-              <option value="Operador de Produccion">Operador de Produccion</option>
+              <option value="Operador de Produccion">
+                Operador de Produccion
+              </option>
               <option value="Supervisor de Inventario">
                 Supervisor de Inventario
               </option>
@@ -169,24 +145,22 @@ const CreateNewUser = () => {
 
           <button
             type="submit"
-            class="w-full mb-3 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+            className="w-full mb-3 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
           >
             Registrar
           </button>
           <button
             onClick={handleCancel}
             type="back"
-            class="w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+            className="w-full bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
           >
             Cancelar
           </button>
         </form>
-        {loading && <p>Cargando...</p>}
-        {error && <p>Error: {error.message}</p>}
-        {response && <p>Respuesta: {JSON.stringify(response)}</p>}
       </div>
     </div>
   );
 };
 
 export default CreateNewUser;
+

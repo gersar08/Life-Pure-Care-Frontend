@@ -39,8 +39,10 @@ export default function Login() {
       }
 
       const data = await response.json();
+      console.log(data)
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", username);
+      localStorage.setItem("userIdLogged", data.user.id)
       navigate("/admin-dashboard");
     } catch (error) {
       console.error(

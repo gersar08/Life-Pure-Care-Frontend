@@ -18,6 +18,7 @@ function AdminDashboard() {
   const [toastShown, setToastShown] = useState(false);
   const [lowStockProducts, setLowStockProducts] = useState([]);
   const username = localStorage.getItem("user");
+
   useEffect(() => {
     if (
       localStorage.getItem("rol") === "admin" ||

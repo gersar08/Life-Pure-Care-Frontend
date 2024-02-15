@@ -33,6 +33,7 @@ function Users() {
       );
       const responseData = await response.json();
       setInfo(responseData);
+
     } catch (error) {
       toast.error(error, {
         position: "top-center",
@@ -42,8 +43,7 @@ function Users() {
         draggable: true,
       });
     }
-
-    toast.success("Usuario eliminado con éxito", {
+    toast.success("Cliente eliminado con éxito", {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,

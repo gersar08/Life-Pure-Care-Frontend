@@ -16,7 +16,7 @@ export default function CreateNewProduct() {
       const token = localStorage.getItem("token");
 
       try {
-        const response = await axios.get(
+        await axios.get(
           "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/productos",
           {
             headers: {
@@ -27,7 +27,6 @@ export default function CreateNewProduct() {
           }
         );
         setExistingProducts(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error(error);
       }
@@ -54,9 +53,7 @@ export default function CreateNewProduct() {
 
     try {
       if (selectedProductId) {
-        console.log(selectedProductId);
-        // If a product is selected, perform a PUT request
-        const response = await axios.put(
+         await axios.put(
           `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/productos/${selectedProductId}`,
           formData,
           {
@@ -67,7 +64,6 @@ export default function CreateNewProduct() {
             },
           }
         );
-        console.log(response.data);
         navigate("/admin-dashboard/precios", {
           state: { successMessage: "Producto actualizado con éxito" },
         });
@@ -145,7 +141,7 @@ export default function CreateNewProduct() {
                   type="submit"
                   className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"
                 >
-                  Registrar Producto!
+                  Actualizar Precio
                 </button>
               </div>
             </div>

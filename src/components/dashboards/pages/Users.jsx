@@ -9,6 +9,7 @@ function Users() {
   const [users, setUsers] = useState(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const idUser = localStorage.getItem("userIdLogged");
   const [setInfo] = useState(null);
   const location = useLocation();
   const { successMessage } = location.state || {};
@@ -46,34 +47,45 @@ function Users() {
   };
 
   const handleDelete = async (userId) => {
-    console.log(userId);
-    try {
-      const response = await fetch(
-        `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/users/${userId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const responseData = await response.json();
-      setInfo(responseData);
-    } catch (error) {
-      toast.error(
-        { error },
-        {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        }
-      );
+    if (parseInt(idUser) === parseInt(userId)) {
+      toast.error("No puedes eliminar el usuario actual", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      try {
+        const response = await fetch(
+          `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/users/${userId}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const responseData = await response.json();
+        setInfo(responseData);
+      } catch (error) {
+        toast.error(
+          { error },
+          {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
+        );
+      }
     }
     toast.success("Usuario eliminado con éxito", {
       position: "top-center",

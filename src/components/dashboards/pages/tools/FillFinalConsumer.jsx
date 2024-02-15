@@ -10,11 +10,9 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
       const formUrl = "/templates/factura_consumidor_final1.pdf";
       const formByte = await fetch(formUrl).then((res) => res.arrayBuffer());
       // Ahora puedes usar pdfBuffer como tus pdfBytes
-      console.log(formByte);
 
       // Crea una instancia de PDFDocument
       const pdfDoc = await PDFDocument.load(formByte);
-      console.log(pdfDoc);
 
       // Date
       const fechaActual = new Date();
@@ -124,7 +122,6 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
         blob,
         `consumidor_final_${infoCliente.nombre}_${infoCliente.apellido}_${fechaPdf}.pdf`
       );
-      console.log(pdfBytes);
     } catch (error) {
       console.error("Error al procesar el PDF:", error);
       console.error(error.stack);

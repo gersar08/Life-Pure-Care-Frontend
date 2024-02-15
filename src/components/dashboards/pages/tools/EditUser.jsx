@@ -32,7 +32,6 @@ export default function EditUser() {
       name: formData?.name || "",
       user_name: formData?.user_name || "",
     };
-    console.log(updatedFormData);
   };
   const handleSelectChange = (e) => {
     const { value } = e.target;
@@ -51,7 +50,7 @@ export default function EditUser() {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await axios.put(
+      await axios.put(
         `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/users/${infoClient}`,
         formData,
         {
@@ -62,7 +61,6 @@ export default function EditUser() {
           },
         }
       );
-      console.log(response);
       navigate("/admin-dashboard/usuarios", {
         state: { successMessage: "Usuario actualizado con éxito" },
       });

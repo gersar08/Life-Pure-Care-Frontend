@@ -105,7 +105,15 @@ export default function VentasControl() {
           })
         );
       } else {
-        console.log(`No se encontró el producto: ${keyWithoutSuffix}`);
+        toast.error(`No se encontró el producto: ${keyWithoutSuffix}`, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       }
 
       // Espera a que todas las promesas en el array se resuelvan.
