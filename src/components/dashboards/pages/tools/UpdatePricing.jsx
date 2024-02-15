@@ -16,7 +16,7 @@ export default function CreateNewProduct() {
       const token = localStorage.getItem("token");
 
       try {
-        await axios.get(
+        const response = await axios.get(
           "https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/productos",
           {
             headers: {

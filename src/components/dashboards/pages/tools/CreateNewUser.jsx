@@ -25,7 +25,9 @@ const CreateNewUser = () => {
           },
         }
       );
-      navigate(-1);
+      navigate(-1, {
+        state: { successMessage: "Usuario creado con éxito" },
+      });
     } catch (error) {
       console.error(error);
     }
@@ -163,4 +165,3 @@ const CreateNewUser = () => {
 };
 
 export default CreateNewUser;
-
