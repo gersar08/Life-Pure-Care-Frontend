@@ -12,10 +12,10 @@ export default function CreateNewProduct() {
   const handleChange = (event) => {
     setFormData({
       ...formData,
-      [event.target.name]: event.target.value,
+      [event.target.name]: event.target.value.toLowerCase(),
     });
-  };
 
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
 

@@ -23,8 +23,9 @@ export default function EditInventory() {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: value,
+      [name]: value.toLowerCase(),
     }));
+    console.log(formData);
   };
   const handleCancel = (e) => {
     navigate(-1); // Navigate to the previous route
