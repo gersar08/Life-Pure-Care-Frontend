@@ -3,6 +3,7 @@ import { PDFDocument } from "pdf-lib";
 import { saveAs } from "file-saver";
 import { toast, ToastContainer } from "react-toastify";
 import { ArrowDownTrayIcon } from "@heroicons/react/20/solid";
+import writtenNumber from "written-number";
 /*import { Worker, Viewer } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 */
@@ -15,6 +16,8 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
   const ano = fechaActual.getFullYear();
   const fechaFormateada = `${dia}/${mes}/${ano}`;
   const fechaPdf = `${dia}_${mes}_${ano}`;
+  writtenNumber.defaults.lang = 'es';
+
   //URL PDF
   // const [pdfUrl, setPdfUrl] = useState(null);
 
@@ -52,6 +55,7 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
         const subTotalField = form.getTextField("Sub-Total");
         const ivaField = form.getTextField("IVA");
         const ventaTotalField = form.getTextField("VentaTotal");
+        const sonField = form.getTextField("SON");
 
         // Set the values of each field
         fechaField.setText(fechaFormateada);
@@ -122,7 +126,9 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
         const ivaStr = iva.toString();
         const subTotalStr = subTotal.toString();
         const ventaTotalStr = ventaTotal.toString();
-
+        let entero = Math.floor(Number(ventaTotal));
+        let decimal = Math.round((ventaTotal - entero) * 100);
+        let sonFieldText = writtenNumber(entero) + ' con ' + writtenNumber(decimal) + ' centavos';
         // Set the values of each fields
         totalGarrafaField.setText(totalGarrafaStr);
         totalFardoField.setText(totalFardoStr);
@@ -131,6 +137,7 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
         subTotalField.setText(`$ ${subTotalStr}`);
         ivaField.setText(`$ ${ivaStr}`);
         ventaTotalField.setText(`$ ${ventaTotalStr}`);
+        sonField.setText(sonFieldText);
 
         // Serializa el documento PDF a bytes
         const pdfBytes = await pdfDoc.save();
