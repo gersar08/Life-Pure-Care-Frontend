@@ -16,7 +16,7 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
   const ano = fechaActual.getFullYear();
   const fechaFormateada = `${dia}/${mes}/${ano}`;
   const fechaPdf = `${dia}_${mes}_${ano}`;
-  writtenNumber.defaults.lang = 'es';
+  writtenNumber.defaults.lang = "es";
 
   //URL PDF
   // const [pdfUrl, setPdfUrl] = useState(null);
@@ -126,9 +126,13 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
         const ivaStr = iva.toString();
         const subTotalStr = subTotal.toString();
         const ventaTotalStr = ventaTotal.toString();
-        let entero = Math.floor(Number(ventaTotal));
-        let decimal = Math.round((ventaTotal - entero) * 100);
-        let sonFieldText = writtenNumber(entero) + ' con ' + writtenNumber(decimal) + ' centavos';
+        const entero = Math.floor(Number(ventaTotal));
+        const decimal = Math.round((ventaTotal - entero) * 100);
+        const sonFieldText =
+          writtenNumber(entero) +
+          " con " +
+          writtenNumber(decimal) +
+          " centavos";
         // Set the values of each fields
         totalGarrafaField.setText(totalGarrafaStr);
         totalFardoField.setText(totalFardoStr);
