@@ -49,7 +49,7 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
         const totalFardoField = form.getTextField("total_fardo");
         const totalPetField = form.getTextField("total_pet");
         const totalResField = form.getTextField("total_res");
-        const subTotalField = form.getTextField("sub-total");
+        const subTotalField = form.getTextField("Sub-Total");
         const ivaField = form.getTextField("IVA");
         const ventaTotalField = form.getTextField("VentaTotal");
 
