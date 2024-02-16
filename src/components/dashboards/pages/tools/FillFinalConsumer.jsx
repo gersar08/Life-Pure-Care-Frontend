@@ -26,7 +26,7 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
       const form = pdfDoc.getForm();
 
       // Get all fields in the PDF by their names
-      const fechaField = form.getTextField("FECHA");
+      const fechaField = form.getTextField("Fecha");
       const nameField = form.getTextField("nombre");
       const addressField = form.getTextField("direccion");
       const nitField = form.getTextField("n_documento");
@@ -42,7 +42,9 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
       const totalGarrafaField = form.getTextField("total_garrafa");
       const totalFardoField = form.getTextField("total_fardo");
       const totalPetField = form.getTextField("total_pet");
-      const totalResField = form.getTextField("total_res");
+      const totalResField = form.getTextField("totalSum");
+      const ivaField = form.getTextField("IVA");
+      const ventaTotalField = form.getTextField("total");
 
       // Set the values of each field
       fechaField.setText(fechaFormateada);
@@ -102,17 +104,25 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
         Number(totalPet)
       ).toFixed(2);
 
+      const iva = (Number(totalRes) * 0.13).toFixed(2);
+      const ventaTotal = (Number(totalRes) + iva).toFixed(2);
+
       // Convierte los totales a cadenas de texto
       const totalGarrafaStr = totalGarrafa.toString();
       const totalFardoStr = totalFardo.toString();
       const totalPetStr = totalPet.toString();
       const totalResStr = totalRes.toString();
+      const ivaStr = iva.toString();
+      const ventaTotalStr = ventaTotal.toString();
 
       // Set the values of each fields
       totalGarrafaField.setText(`$ ${totalGarrafaStr}`);
       totalFardoField.setText(`$ ${totalFardoStr}`);
       totalPetField.setText(`$ ${totalPetStr}`);
       totalResField.setText(`$ ${totalResStr}`);
+      ivaField.setText(`$ ${ivaStr}`);
+      ventaTotalField.setText(`$ ${ventaTotalStr}`);
+
       // Serializa el documento PDF a bytes
       const pdfBytes = await pdfDoc.save();
 
