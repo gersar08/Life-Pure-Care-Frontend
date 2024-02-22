@@ -25,7 +25,7 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
     const formatPdf = async () => {
       try {
         // carga el pdf en un buffer
-        const formUrl = "/templates/factura_credito_fiscal.pdf";
+        const formUrl = "/public/templates/credito_fiscal.pdf";
         const formByte = await fetch(formUrl).then((res) => res.arrayBuffer());
 
         // Crea una instancia de PDFDocument

@@ -7,7 +7,7 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
   async function fillPdf() {
     try {
       // carga el pdf en un buffer
-      const formUrl = "/templates/factura_consumidor_final1.pdf";
+      const formUrl = "/public/templates/factura_consumidor_final1.pdf";
       const formByte = await fetch(formUrl).then((res) => res.arrayBuffer());
       // Ahora puedes usar pdfBuffer como tus pdfBytes
 
