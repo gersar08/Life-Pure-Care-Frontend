@@ -7,6 +7,10 @@ const CreateNewUser = () => {
     apellido: "",
     telefono: "",
     direccion: "",
+    municipio: "",
+    departamento: "",
+    registro_num: "",
+    giro: "",
     n_documento: "",
     unique_id: "",
   });
@@ -59,9 +63,9 @@ const CreateNewUser = () => {
   };
 
   return (
-    <div class="bg-transparent flex items-center justify-center w-screen h-screen">
-      <div class="bg-white p-4 rounded-lg shadow-lg max-w-sm w-full">
-        <div class="flex justify-center mb-6">
+    <div class="bg-transparent flex items-center justify-center w-screen h-screen -mt-20">
+      <div class="bg-white p-5 rounded-lg shadow-lg max-w-sm w-full">
+        <div class="flex justify-center">
           <span class="inline-block bg-gray-200 rounded-full p-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -79,11 +83,11 @@ const CreateNewUser = () => {
         <h2 class="text-2xl font-semibold text-center mb-4">
           Ingrese cliente nuevo
         </h2>
-        <p class="text-gray-600 text-center mb-6">
+        <p class="text-gray-600 text-center mb-3">
           Ingresa los detalles del cliente.
         </p>
         <form onSubmit={handleConfirmClient} className="w-full">
-          <div class="flex mb-6">
+          <div class="flex mb-3">
             <div class="w-1/2 mr-2">
               <label
                 for="nombre"
@@ -119,63 +123,98 @@ const CreateNewUser = () => {
               />
             </div>
           </div>
-          <div class=" flex mb-6">
+          <div class=" flex mb-3">
             <div class="w-1/2 mr-2">
-            <label
-              for="user_name"
-              class="block text-gray-700 text-sm font-semibold mb-2"
-            >
-              Telefono *
-            </label>
-            <input
-              type="username"
-              id="username"
-              name="telefono"
-              class="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
-              required
-              maxLength={8}
-              placeholder="Telefono"
-              onChange={handleChange}
-            />
+              <label
+                for="user_name"
+                class="block text-gray-700 text-sm font-semibold mb-2"
+              >
+                Telefono *
+              </label>
+              <input
+                type="username"
+                id="username"
+                name="telefono"
+                class="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
+                required
+                maxLength={8}
+                placeholder="Telefono"
+                onChange={handleChange}
+              />
             </div>
             <div class="w-1/2 ml-2">
-            <label
-              for="n_documento"
-              class="block text-gray-700 text-sm font-semibold mb-2"
-              onChange={handleChange}
-            >
-              DUI *
-            </label>
-            <input
-              type="text"
-              id="n_documento"
-              class="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
-              required
-              maxLength={9}
-              placeholder="Ingrese DUI"
-              name="n_documento"
-              onChange={handleChange}
-            />
+              <label
+                for="n_documento"
+                class="block text-gray-700 text-sm font-semibold mb-2"
+                onChange={handleChange}
+              >
+                DUI *
+              </label>
+              <input
+                type="text"
+                id="n_documento"
+                class="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
+                required
+                maxLength={9}
+                placeholder="Ingrese DUI"
+                name="n_documento"
+                onChange={handleChange}
+              />
+            </div>
           </div>
+          <div class=" flex mb-3">
+            <div className="w-1/2 mr-2">
+              <label
+                for="password"
+                class="block text-gray-700 text-sm font-semibold mb-2"
+              >
+                Direccion *
+              </label>
+              <input
+                type="text"
+                id="password"
+                class="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
+                required
+                placeholder="calle, colonia, ciudad"
+                name="direccion"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="w-1/2 ml-2">
+              <label
+                for="password"
+                class="block text-gray-700 text-sm font-semibold mb-2"
+              >
+                Municipio *
+              </label>
+              <input
+                type="text"
+                id="password"
+                class="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
+                required
+                placeholder="Municipio"
+                name="municipio"
+                onChange={handleChange}
+              />
+            </div>
           </div>
-          <div class="mb-4">
-            <label
-              for="password"
-              class="block text-gray-700 text-sm font-semibold mb-2"
-            >
-              Direccion *
-            </label>
-            <input
-              type="text"
-              id="password"
-              class="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
-              required
-              placeholder="calle, colonia, ciudad"
-              name="direccion"
-              onChange={handleChange}
-            />
-          </div>
-          <div class="mb-6">
+          <div class=" flex mb-3">
+            <div className="w-1/2 mr-2">
+              <label
+                class="block text-gray-700 text-sm font-semibold mb-2"
+              >
+                Departamento *
+              </label>
+              <input
+                type="text"
+                class="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
+                required
+                placeholder="Departamento"
+                name="departamento"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="w-1/2 mr-2">
             <label
               for="password"
               class="block text-gray-700 text-sm font-semibold mb-2"
@@ -192,20 +231,55 @@ const CreateNewUser = () => {
               onChange={handleChange}
             />
           </div>
+          </div>
+          <div class=" flex mb-3">
+            <div className="w-1/2 mr-2">
+              <label
+                class="block text-gray-700 text-sm font-semibold mb-2"
+              >
+                Giro *
+              </label>
+              <input
+                type="text"
+                class="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
+                required
+                placeholder="Giro"
+                name="giro"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="w-1/2 mr-2">
+              <label
+                for="password"
+                class="block text-gray-700 text-sm font-semibold mb-2"
+              >
+                Numero de registro *
+              </label>
+              <input
+                type="text"
+                id="password"
+                class="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
+                required
+                placeholder="Registro"
+                name="registro_num"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
           <div class="flex m-2">
-          <button
-            type="submit"
-            class="w-1/2 mr-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
-          >
-            Registrar
-          </button>
-          <button
-            onClick={handleCancel}
-            type="back"
-            class="w-1/2 ml-2 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
-          >
-            Cancelar
-          </button>
+            <button
+              type="submit"
+              class="w-1/2 mr-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+            >
+              Registrar
+            </button>
+            <button
+              onClick={handleCancel}
+              type="back"
+              class="w-1/2 ml-2 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+            >
+              Cancelar
+            </button>
           </div>
         </form>
         {loading && <p>Cargando...</p>}
