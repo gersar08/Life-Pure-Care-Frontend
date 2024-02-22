@@ -27,7 +27,7 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
 
       // Get all fields in the PDF by their names
       const fechaField = form.getTextField("Fecha");
-      const nameField = form.getTextField("nombre");
+      const nameField = form.getTextField("cliente");
       const addressField = form.getTextField("direccion");
       const nitField = form.getTextField("n_documento");
       const garrafaField = form.getTextField("garrafa");
