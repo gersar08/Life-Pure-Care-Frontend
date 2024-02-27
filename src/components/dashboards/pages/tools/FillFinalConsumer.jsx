@@ -13,6 +13,7 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
 
       // Crea una instancia de PDFDocument
       const pdfDoc = await PDFDocument.load(formByte);
+      console.log("PDF cargado correctamente", pdfDoc, pdfBytes)
 
       // Date
       const fechaActual = new Date();
@@ -136,7 +137,6 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
       );
     } catch (error) {
       console.error("Error al procesar el PDF:", error);
-      console.error(error.stack);
     }
   }
   return (
