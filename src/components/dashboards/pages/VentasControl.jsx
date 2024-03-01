@@ -95,7 +95,7 @@ export default function VentasControl() {
       );
       if (producto && key.endsWith("_in")) {
         producto.cantidad = Number(producto.cantidad) + Number(registro[key]);
-      } else if (producto) {
+      } else if (producto && key.endsWith("_out")) {
         producto.cantidad = Number(producto.cantidad) - Number(registro[key]);
       }
       if (producto) {
@@ -340,34 +340,6 @@ export default function VentasControl() {
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                         name="garrafa_in"
                         value={registro?.garrafa_in || ""}
-                        onChange={handleChange}
-                      />
-                    </div>
-                  </div>
-                  <div className="w-full lg:w-4/12 px-4">
-                    <div className="relative w-full mb-3">
-                      <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                        Fardos
-                      </label>
-                      <input
-                        type="number"
-                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        name="fardo_in"
-                        value={registro?.fardo_in || ""}
-                        onChange={handleChange}
-                      />
-                    </div>
-                  </div>
-                  <div className="w-full lg:w-4/12 px-4">
-                    <div className="relative w-full mb-3">
-                      <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                        Pet
-                      </label>
-                      <input
-                        type="number"
-                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        name="pet_in"
-                        value={registro?.pet_in || ""}
                         onChange={handleChange}
                       />
                     </div>

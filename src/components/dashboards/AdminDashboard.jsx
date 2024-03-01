@@ -38,14 +38,58 @@ function AdminDashboard() {
           }
         );
         const { data } = response;
-        const lowStock = data.filter(
-          (product) =>
-            (product.product_name === "garrafa" ||
-              product.product_name === "fardo" ||
-              product.product_name === "pet") &&
-            product.cantidad < 1000
-        );
-
+        const lowStock = data.filter((product) => {
+          switch (product.product_name) {
+            case "garrafa":
+              return product.cantidad < 300;
+            case "bobinas plasticas":
+              return product.cantidad < 150;
+            case "bolsas para empaque":
+              return product.cantidad < 100;
+            case "sellos":
+              return product.cantidad < 40;
+            case "botella para pet de 600 ml":
+              return product.cantidad < 2;
+            case "tapones para pet de 600 ml":
+              return product.cantidad < 300;
+            case "viñetas para pet de 600 ml":
+              return product.cantidad < 5;
+            case "guantes de nitrilo":
+              return product.cantidad < 8;
+            case "mascones":
+              return product.cantidad < 30;
+            case "filtros de 15 micras":
+              return product.cantidad < 10;
+            case "quimico alox ultra / cs-perrox ":
+              return product.cantidad < 10;
+            case "quimico saniquat plus":
+              return product.cantidad < 5;
+            case "quimico extra clean":
+              return product.cantidad < 10;
+            case "quimico clean foam c":
+              return product.cantidad < 10;
+            case "quimico alkemy hc-325":
+              return product.cantidad < 10;
+            case "detergente":
+              return product.cantidad < 2;
+            case "alcohol 90":
+              return product.cantidad < 8;
+            case "alcohol gel":
+              return product.cantidad < 4;
+            case "lejia":
+              return product.cantidad < 8;
+            case "aqua aroma":
+              return product.cantidad < 5;
+            case "jabon liquido":
+              return product.cantidad < 4;
+            case "termocuplas":
+              return product.cantidad < 3;
+            case "toallas":
+              return product.cantidad < 1;
+            default:
+              return false;
+          }
+        });
         setLowStockProducts(lowStock);
       };
       fetchData();

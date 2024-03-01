@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
+import {
+  PencilSquareIcon,
+  TrashIcon,
+  ArrowDownCircleIcon,
+  ArrowUpCircleIcon,
+} from "@heroicons/react/24/outline";
 import { ToastContainer, toast } from "react-toastify";
 
 export default function Inventory() {
@@ -51,6 +56,7 @@ export default function Inventory() {
 
     fetchData();
   }, [token]);
+  console.log(inventoryData);
   const handleDelete = async (inventoryDataId) => {
     try {
       const token = localStorage.getItem("token");
@@ -100,6 +106,66 @@ export default function Inventory() {
     });
   };
 
+  const handleUpItem = async (itemId) => {
+    const itemUpdated = inventoryData.find((item) => item.id === itemId);
+    itemUpdated.cantidad = itemUpdated.cantidad + 1;
+    try {
+      const response = await axios.put(
+        `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/inventario/${itemId}`,
+        itemUpdated,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setInventoryData(
+        inventoryData.map((item) => (item.id === itemId ? itemUpdated : item))
+      );
+
+      console.log(response);
+    } catch {
+      toast.error("Error al actualizar el item", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+      });
+    }
+  };
+  const handleDownItem = async (itemId) => {
+    const itemUpdated = inventoryData.find((item) => item.id === itemId);
+    itemUpdated.cantidad = itemUpdated.cantidad - 1;
+    try {
+      const response = await axios.put(
+        `https://rocky-dawn-84773-5951dec09d0b.herokuapp.com/api/inventario/${itemId}`,
+        itemUpdated,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setInventoryData(
+        inventoryData.map((item) => (item.id === itemId ? itemUpdated : item))
+      );
+
+      console.log(response);
+    } catch {
+      toast.error("Error al actualizar el item", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+      });
+    }
+  };
   return (
     <div>
       <ToastContainer />
@@ -158,14 +224,30 @@ export default function Inventory() {
                   </td>
                   <td className="p-3 px-5 flex justify-end">
                     <button
+                      onClick={() => handleDownItem(item.id)}
+                      className="rounded focus:outline-none focus:shadow-outline mr-5"
+                      title="Disminuir -1 en el inventario"
+                    >
+                      <ArrowDownCircleIcon className="w-6 h-6 text-green-700" />
+                    </button>
+                    <button
+                      onClick={() => handleUpItem(item.id)}
+                      className="rounded focus:outline-none focus:shadow-outline mr-8"
+                      title="Aumentar +1 en el inventario"
+                    >
+                      <ArrowUpCircleIcon className="w-6 h-6 text-yellow-500" />
+                    </button>
+                    <button
                       onClick={() => handleEdit(item.id)}
-                      className="text-sm bg-blue-500 hover:bg-blue-800 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outliine mr-5"
+                      className="text-sm text-black rounded focus:outline-none focus:shadow-outliine mr-5"
+                      title="Editar el item seleccionado"
                     >
                       <PencilSquareIcon className="w-6 h-6" />
                     </button>
                     <button
                       onClick={() => handleDelete(item.id)}
-                      className="text-sm mr-4 bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                      className="text-sm text-red-500 rounded focus:outline-none focus:shadow-outline mr-5"
+                      title="Eliminar el item seleccionado"
                     >
                       <TrashIcon className="w-6 h-6" />
                     </button>
