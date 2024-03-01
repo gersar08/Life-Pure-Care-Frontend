@@ -6,14 +6,14 @@ import { ArrowDownTrayIcon } from "@heroicons/react/20/solid";
 export default function FillFinalConsumer({ registro, infoCliente, precios }) {
   async function fillPdf() {
     try {
-      // carga el pdf en un buffer
-      const formUrl = "/public/templates/factura_consumidor_final1.pdf";
-      const formByte = await fetch(formUrl).then((res) => res.arrayBuffer());
-      // Ahora puedes usar pdfBuffer como tus pdfBytes
-
-      // Crea una instancia de PDFDocument
-      const pdfDoc = await PDFDocument.load(formByte);
-      console.log("PDF cargado correctamente", pdfDoc, pdfBytes)
+      // Carga el pdf en un buffer
+      const formUrl = "/public/factura_consumidor_final1.pdf";
+      /*
+      const buffer = await fs.readFileSync(
+        "/public/factura_consumidor_final1.pdf"
+      );
+      */
+      const pdfDoc = await PDFDocument.load(formUrl);
 
       // Date
       const fechaActual = new Date();
@@ -44,7 +44,7 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
       const totalFardoField = form.getTextField("total_fardo");
       const totalPetField = form.getTextField("total_pet");
       const totalResField = form.getTextField("totalSum");
-   //   const ivaField = form.getTextField("IVA");
+      //   const ivaField = form.getTextField("IVA");
       const ventaTotalField = form.getTextField("total");
 
       // Set the values of each field
@@ -105,17 +105,16 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
         Number(totalPet)
       ).toFixed(2);
 
-    //  const iva = (Number(totalRes) * 0.13).toFixed(2);
-     // const ventaTotal = (Number(totalRes) + Number(iva)).toFixed(2);
-        const ventaTotal = (Number(totalRes)).toFixed(2);
-
+      //  const iva = (Number(totalRes) * 0.13).toFixed(2);
+      // const ventaTotal = (Number(totalRes) + Number(iva)).toFixed(2);
+      const ventaTotal = Number(totalRes).toFixed(2);
 
       // Convierte los totales a cadenas de texto
       const totalGarrafaStr = totalGarrafa.toString();
       const totalFardoStr = totalFardo.toString();
       const totalPetStr = totalPet.toString();
       const totalResStr = totalRes.toString();
-    //  const ivaStr = iva.toString();
+      //  const ivaStr = iva.toString();
       const ventaTotalStr = ventaTotal.toString();
 
       // Set the values of each fields
@@ -123,7 +122,7 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
       totalFardoField.setText(`$ ${totalFardoStr}`);
       totalPetField.setText(`$ ${totalPetStr}`);
       totalResField.setText(`$ ${totalResStr}`);
-     // ivaField.setText(`$ ${ivaStr}`);
+      // ivaField.setText(`$ ${ivaStr}`);
       ventaTotalField.setText(`$ ${ventaTotalStr}`);
 
       // Serializa el documento PDF a bytes
@@ -142,9 +141,9 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
   return (
     <button
       onClick={fillPdf}
-      class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+      className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
     >
-      <ArrowDownTrayIcon class="w-6 h-6 m-2" />
+      <ArrowDownTrayIcon className="w-6 h-6 m-2" />
       <span>Imprimir Consumidor Final</span>
     </button>
   );

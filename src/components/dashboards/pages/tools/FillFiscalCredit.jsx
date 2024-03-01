@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { PDFDocument } from "pdf-lib";
 import { saveAs } from "file-saver";
+import { PDFDocument } from "pdf-lib";
 import { toast, ToastContainer } from "react-toastify";
 import { ArrowDownTrayIcon } from "@heroicons/react/20/solid";
 import writtenNumber from "written-number";
-/*import { Worker, Viewer } from "@react-pdf-viewer/core";
-import "@react-pdf-viewer/default-layout/lib/styles/index.css";
-*/
+
 export default function FillFiscalCredit({ registro, infoCliente, precios }) {
   const [pdfBytes, setPdfBytes] = useState(null);
   // Date
@@ -18,14 +16,12 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
   const fechaPdf = `${dia}_${mes}_${ano}`;
   writtenNumber.defaults.lang = "es";
 
-  //URL PDF
-  // const [pdfUrl, setPdfUrl] = useState(null);
 
   useEffect(() => {
+    const formUrl = "/public/templates/credito_fiscal.pdf";
     const formatPdf = async () => {
       try {
         // carga el pdf en un buffer
-        const formUrl = "/public/templates/credito_fiscal.pdf";
         const formByte = await fetch(formUrl).then((res) => res.arrayBuffer());
 
         // Crea una instancia de PDFDocument
@@ -37,8 +33,12 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
         // Get all fields in the PDF by their names
         const fechaField = form.getTextField("FECHA");
         const nameField = form.getTextField("nombre");
+        const registroField = form.getTextField("registro_num");
+        const giroField = form.getTextField("giro");
+        const municipioField = form.getTextField("municipio");
+        const departamentoField = form.getTextField("departamento");
         const addressField = form.getTextField("direccion");
-        const nitField = form.getTextField("n_documento");
+        const nitField = form.getTextField("nit");
         const garrafaField = form.getTextField("garrafa");
         const fardoField = form.getTextField("fardo");
         const petField = form.getTextField("pet");
@@ -146,10 +146,7 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
         // Serializa el documento PDF a bytes
         const pdfBytes = await pdfDoc.save();
         setPdfBytes(pdfBytes);
-        // Crea una URL de objeto a partir de los bytes del PDF
-        //const blob = new Blob([pdfBytes], { type: "application/pdf" });
-        // const url = URL.createObjectURL(blob);
-        // setPdfUrl(url);
+
       } catch (error) {
         toast.error("Error al procesar el PDF:", error);
         console.error(error.stack);
@@ -172,11 +169,6 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
   }
   return (
     <div>
-      {/*
-        <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-           {pdfUrl && <Viewer fileUrl={pdfUrl} />}
-       </Worker>
-        */}
       <ToastContainer />
       <button
         onClick={fillPdf}
