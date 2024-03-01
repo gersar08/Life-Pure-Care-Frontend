@@ -8,14 +8,42 @@ import {
   ArrowUpCircleIcon,
 } from "@heroicons/react/24/outline";
 import { ToastContainer, toast } from "react-toastify";
+const Pagination = ({ totalItems, itemsPerPage, currentPage, paginate }) => {
+  const pageNumbers = [];
 
+  for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  return (
+    <nav className="flex justify-center mt-4">
+      <ul className="flex">
+        {pageNumbers.map((number) => (
+          <li key={number} className="mx-1">
+            <button
+              onClick={() => paginate(number)}
+              className={`${
+                currentPage === number
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-300 text-gray-700"
+              } px-4 py-2 rounded-md transition duration-300 ease-in-out hover:bg-blue-700`}
+            >
+              {number}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+};
 export default function Inventory() {
   const navigate = useNavigate();
   const [inventoryData, setInventoryData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5); // Number of items to display per page
   const token = localStorage.getItem("token");
   const location = useLocation();
   const { successMessage } = location.state || {};
-
   useEffect(() => {
     if (successMessage) {
       toast.success(successMessage, {
@@ -166,6 +194,15 @@ export default function Inventory() {
       });
     }
   };
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = inventoryData.slice(indexOfFirstItem, indexOfLastItem);
+
   return (
     <div>
       <ToastContainer />
@@ -181,21 +218,21 @@ export default function Inventory() {
             Agregar Nuevo Item
           </button>
         </div>
-        <div className="px-3 py-4 flex justify-center">
+        <div className="px-3 flex justify-center">
           <table className="w-full text-md bg-white shadow-md rounded mb-4">
             <tbody>
               <tr className="border-b">
-                <th className="text-left p-3 px-5">Nombre del Producto</th>
+                <th className="text-left p-3 px-6">Nombre del Producto</th>
                 <th className="text-left p-3 px-5">Cantidad</th>
                 <th className="text-left p-3 px-5">Area de Uso</th>
                 <th className="text-left p-3 px-5"></th>
               </tr>
-              {inventoryData.map((item) => (
+              {currentItems.map((item) => (
                 <tr
                   className="border-b hover:bg-orange-100 bg-gray-100"
                   key={item.id}
                 >
-                  <td className="p-3 px-5">
+                  <td className="p-3 px-6">
                     <input
                       type="text"
                       name="product_name"
@@ -257,6 +294,12 @@ export default function Inventory() {
             </tbody>
           </table>
         </div>
+        <Pagination
+          totalItems={inventoryData.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          paginate={setCurrentPage}
+        />
       </div>
     </div>
   );
