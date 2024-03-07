@@ -10,10 +10,7 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
       const existingPdfBytes = await fetch(formUrl).then((res) =>
         res.arrayBuffer()
       );
-      console.log("existingPdfBytes:", existingPdfBytes); // Agregado
-      console.log("Longitud de existingPdfBytes:", existingPdfBytes.byteLength); // Agregado
       const pdfDoc = await PDFDocument.load(existingPdfBytes);
-      console.log("pdfDoc:", pdfDoc);
       // Date
       const fechaActual = new Date();
       const dia = String(fechaActual.getDate()).padStart(2, "0");
