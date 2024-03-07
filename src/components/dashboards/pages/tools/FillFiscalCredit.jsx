@@ -145,7 +145,7 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
         const decimal = Math.round((ventaTotal - entero) * 100);
         const sonFieldText =
           writtenNumber(entero) +
-          " con " +
+          " dolares con " +
           writtenNumber(decimal) +
           " centavos";
         // Set the values of each fields
@@ -153,9 +153,9 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
         totalFardoField.setText(totalFardoStr);
         totalPetField.setText(totalPetStr);
         totalResField.setText(totalResStr);
-        subTotalField.setText(`$ ${subTotalStr}`);
-        ivaField.setText(`$ ${ivaStr}`);
-        ventaTotalField.setText(`$ ${ventaTotalStr}`);
+        subTotalField.setText(subTotalStr);
+        ivaField.setText(ivaStr);
+        ventaTotalField.setText(ventaTotalStr);
         sonField.setText(sonFieldText);
 
         // Serializa el documento PDF a bytes
