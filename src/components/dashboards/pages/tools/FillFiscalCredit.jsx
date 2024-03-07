@@ -16,16 +16,27 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
   const fechaPdf = `${dia}_${mes}_${ano}`;
   writtenNumber.defaults.lang = "es";
 
-
   useEffect(() => {
-    const formUrl = "/public/templates/credito_fiscal.pdf";
+    const formUrl = "/PDF/credito_fiscal2.pdf";
     const formatPdf = async () => {
       try {
         // carga el pdf en un buffer
-        const formByte = await fetch(formUrl).then((res) => res.arrayBuffer());
-
+        const response = await fetch(formUrl);
+        if (!response.ok) {
+          toast.error("Error al cargar el archivo PDF.");
+          return;
+        }
+        const formByte = await response.arrayBuffer();
+        const headerBytes = new Uint8Array(formByte.slice(0, 1024)); // Lee los primeros 1024 bytes
+        const headerString = String.fromCharCode.apply(null, headerBytes);
+        console.log(headerString);
+        if (!headerString.includes("%PDF-")) {
+          toast.error("El archivo no tiene un encabezado PDF válido.");
+          return;
+        }
         // Crea una instancia de PDFDocument
-        const pdfDoc = await PDFDocument.load(formByte);
+        const pdfDoc = await PDFDocument.load(formByte); // Corrección aquí
+        console.log(pdfDoc.context.header.toString());
 
         // Get the form containing all the fields
         const form = pdfDoc.getForm();
@@ -65,6 +76,10 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
         garrafaField.setText("Garrafa");
         fardoField.setText("Fardo");
         petField.setText("Pet");
+        registroField.setText(infoCliente.n_documento);
+        giroField.setText(infoCliente.giro);
+        municipioField.setText(infoCliente.municipio);
+        departamentoField.setText(infoCliente.departamento);
 
         // Set the values of each field
         cantidadGarrafaField.setText(registro.garrafa.toString());
@@ -146,7 +161,6 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
         // Serializa el documento PDF a bytes
         const pdfBytes = await pdfDoc.save();
         setPdfBytes(pdfBytes);
-
       } catch (error) {
         toast.error("Error al procesar el PDF:", error);
         console.error(error.stack);
@@ -172,9 +186,9 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
       <ToastContainer />
       <button
         onClick={fillPdf}
-        class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+        className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
       >
-        <ArrowDownTrayIcon class="w-6 h-6 m-2" />
+        <ArrowDownTrayIcon className="w-6 h-6 m-2" />
         <span>Imprimir Credito Fiscal</span>
       </button>
     </div>

@@ -6,15 +6,14 @@ import { ArrowDownTrayIcon } from "@heroicons/react/20/solid";
 export default function FillFinalConsumer({ registro, infoCliente, precios }) {
   async function fillPdf() {
     try {
-      // Carga el pdf en un buffer
-      const formUrl = "/public/factura_consumidor_final1.pdf";
-      /*
-      const buffer = await fs.readFileSync(
-        "/public/factura_consumidor_final1.pdf"
+      const formUrl = "/PDF/consumidor_final.pdf";
+      const existingPdfBytes = await fetch(formUrl).then((res) =>
+        res.arrayBuffer()
       );
-      */
-      const pdfDoc = await PDFDocument.load(formUrl);
-
+      console.log("existingPdfBytes:", existingPdfBytes); // Agregado
+      console.log("Longitud de existingPdfBytes:", existingPdfBytes.byteLength); // Agregado
+      const pdfDoc = await PDFDocument.load(existingPdfBytes);
+      console.log("pdfDoc:", pdfDoc);
       // Date
       const fechaActual = new Date();
       const dia = String(fechaActual.getDate()).padStart(2, "0");
@@ -28,8 +27,8 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
 
       // Get all fields in the PDF by their names
       const fechaField = form.getTextField("Fecha");
-      const nameField = form.getTextField("cliente");
-      const addressField = form.getTextField("direccion");
+      const nameField = form.getTextField("Cliente");
+      const addressField = form.getTextField("Direccion");
       const nitField = form.getTextField("n_documento");
       const garrafaField = form.getTextField("garrafa");
       const fardoField = form.getTextField("fardo");
@@ -44,7 +43,7 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
       const totalFardoField = form.getTextField("total_fardo");
       const totalPetField = form.getTextField("total_pet");
       const totalResField = form.getTextField("totalSum");
-      //   const ivaField = form.getTextField("IVA");
+      const subTotalField = form.getTextField("sub_total");
       const ventaTotalField = form.getTextField("total");
 
       // Set the values of each field
@@ -118,12 +117,12 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
       const ventaTotalStr = ventaTotal.toString();
 
       // Set the values of each fields
-      totalGarrafaField.setText(`$ ${totalGarrafaStr}`);
-      totalFardoField.setText(`$ ${totalFardoStr}`);
-      totalPetField.setText(`$ ${totalPetStr}`);
-      totalResField.setText(`$ ${totalResStr}`);
-      // ivaField.setText(`$ ${ivaStr}`);
-      ventaTotalField.setText(`$ ${ventaTotalStr}`);
+      totalGarrafaField.setText(totalGarrafaStr);
+      totalFardoField.setText(totalFardoStr);
+      totalPetField.setText(totalPetStr);
+      totalResField.setText(totalResStr);
+      subTotalField.setText(totalResStr);
+      ventaTotalField.setText(ventaTotalStr);
 
       // Serializa el documento PDF a bytes
       const pdfBytes = await pdfDoc.save();
