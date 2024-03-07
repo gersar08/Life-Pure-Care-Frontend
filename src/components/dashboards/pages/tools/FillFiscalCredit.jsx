@@ -17,7 +17,7 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
   writtenNumber.defaults.lang = "es";
 
   useEffect(() => {
-    const formUrl = "/PDF/credito_fiscal2.pdf";
+    const formUrl = "/PDF/credito_fiscal.pdf";
     const formatPdf = async () => {
       try {
         // carga el pdf en un buffer
