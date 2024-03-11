@@ -73,9 +73,9 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
         nameField.setText(infoCliente.nombre + " " + infoCliente.apellido);
         addressField.setText(infoCliente.direccion);
         nitField.setText(infoCliente.n_documento);
-        garrafaField.setText("Garrafa");
-        fardoField.setText("Fardo");
-        petField.setText("Pet");
+        garrafaField.setText("garrafones de 5 galones");
+        fardoField.setText("fardo de agua");
+        petField.setText("paquete pet 600 ml");
         registroField.setText(infoCliente.n_documento);
         giroField.setText(infoCliente.giro);
         municipioField.setText(infoCliente.municipio);
