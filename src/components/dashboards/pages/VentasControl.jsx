@@ -12,7 +12,23 @@ export default function VentasControl() {
   const [registro, setRegistro] = useState();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-
+  const updateRules = [
+    {
+      productNameContains: "pet",
+      condition: (product_name) =>
+        product_name === "paquete pet 600 ml",
+    },
+    {
+      productNameContains: "fardos",
+      condition: (product_name) =>
+        product_name === "fardo de agua",
+    },
+    {
+      productNameContains: "garrafones",
+      condition: (product_name) =>
+        product_name === "garrafones de 5 galones",
+    }
+  ]
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -86,41 +102,31 @@ export default function VentasControl() {
   };
 
   const actualizarInventario = async (registro, inventario) => {
-    let updatePromises = [];
-
     for (let key in registro) {
       let keyWithoutSuffix = key.replace(/(_in|_out)$/, "");
-      let producto = inventario.find(
-        (prod) => prod.product_name === keyWithoutSuffix
+      let producto = inventario.find((prod) =>
+        prod.product_name.includes(keyWithoutSuffix)
       );
-      if (producto && key.endsWith("_in")) {
-        producto.cantidad = Number(producto.cantidad) + Number(registro[key]);
-      } else if (producto && key.endsWith("_out")) {
-        producto.cantidad = Number(producto.cantidad) - Number(registro[key]);
-      }
-      if (producto) {
-        updatePromises.push(
-          axiosInstance.put(`/inventario/${producto.id}`, {
-            cantidad: producto.cantidad,
-          })
-        );
-      } else {
-        toast.error(`No se encontró el producto: ${keyWithoutSuffix}`, {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-      }
 
-      // Espera a que todas las promesas en el array se resuelvan.
-      await Promise.all(updatePromises);
+      if (producto) {
+        const rule = updateRules.find((rule) =>
+          producto.product_name.includes(rule.productNameContains)
+        );
+
+        if (rule && rule.condition(producto.product_name)) {
+          producto.cantidad = key.endsWith("_in")
+            ? Number(producto.cantidad) + Number(registro[key])
+            : Number(producto.cantidad) - Number(registro[key]);
+
+          updatePromises.push(
+            axiosInstance.put(`/inventario/${producto.id}`, {
+              cantidad: producto.cantidad,
+            })
+          );
+        }
+      }
     }
   };
-
   const enviarInventario = async (inventario) => {
     const updatePromises = inventario.map((product) => {
       return axiosInstance.put(`/inventario/${product.id}`, {
@@ -135,7 +141,7 @@ export default function VentasControl() {
       const response = await axiosInstance.post("/registro/daily", {
         cliente_id: cliente.unique_id,
         fardo: registro.fardo_out,
-        garrafa: registro.garrafa_out,
+        garrafa: registro.garrafones_out,
         pet: registro.pet_out,
       });
       return response.status !== 422;
@@ -338,8 +344,8 @@ export default function VentasControl() {
                       <input
                         type="number"
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        name="garrafa_in"
-                        value={registro?.garrafa_in || ""}
+                        name="garrafones_in"
+                        value={registro?.garrafones_in || ""}
                         onChange={handleChange}
                       />
                     </div>
@@ -361,8 +367,8 @@ export default function VentasControl() {
                       <input
                         type="number"
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        name="garrafa_out"
-                        value={registro?.garrafa_out || ""}
+                        name="garrafones_out"
+                        value={registro?.garrafones_out || ""}
                         onChange={handleChange}
                       />
                     </div>

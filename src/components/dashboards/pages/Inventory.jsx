@@ -84,7 +84,6 @@ export default function Inventory() {
 
     fetchData();
   }, [token]);
-  console.log(inventoryData);
   const handleDelete = async (inventoryDataId) => {
     try {
       const token = localStorage.getItem("token");
@@ -153,7 +152,6 @@ export default function Inventory() {
         inventoryData.map((item) => (item.id === itemId ? itemUpdated : item))
       );
 
-      console.log(response);
     } catch {
       toast.error("Error al actualizar el item", {
         position: "top-center",
@@ -183,7 +181,6 @@ export default function Inventory() {
         inventoryData.map((item) => (item.id === itemId ? itemUpdated : item))
       );
 
-      console.log(response);
     } catch {
       toast.error("Error al actualizar el item", {
         position: "top-center",
