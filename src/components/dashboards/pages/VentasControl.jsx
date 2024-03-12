@@ -15,20 +15,17 @@ export default function VentasControl() {
   const updateRules = [
     {
       productNameContains: "pet",
-      condition: (product_name) =>
-        product_name === "paquete pet 600 ml",
+      condition: (product_name) => product_name === "paquete pet 600 ml",
     },
     {
       productNameContains: "fardos",
-      condition: (product_name) =>
-        product_name === "fardo de agua",
+      condition: (product_name) => product_name === "fardo de agua",
     },
     {
       productNameContains: "garrafones",
-      condition: (product_name) =>
-        product_name === "garrafones de 5 galones",
-    }
-  ]
+      condition: (product_name) => product_name === "garrafones de 5 galones",
+    },
+  ];
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -161,21 +158,36 @@ export default function VentasControl() {
     }
   };
   const sumarDatosProductos = (registro, datosCliente) => {
+    const productoMapping = {
+      fardo: "fardo",
+      pet: "pet",
+      garrafones: "garrafa",
+      // Añadir más productos según sea necesario
+    };
     for (let key in registro) {
-      let nombreProducto = key.slice(0, -3);
+      let nombreProducto;
       if (key.endsWith("_in") || key.endsWith("_out")) {
-        if (datosCliente.hasOwnProperty(nombreProducto)) {
-          let cantidad = parseInt(registro[key]);
-          if (key.endsWith("_out")) {
-            datosCliente[nombreProducto] -= cantidad;
-          }
+        nombreProducto = key.replace(/_(in|out)$/, ""); // Elimina "_in" o "_out"
+      } else {
+        nombreProducto = key; // Para claves que no terminan en "_in" o "_out"
+      }
+
+      if (
+        productoMapping.hasOwnProperty(nombreProducto) &&
+        datosCliente.hasOwnProperty(productoMapping[nombreProducto])
+      ) {
+        let cantidad = parseInt(registro[key]);
+        if (key.endsWith("_out") && !isNaN(cantidad)) {
+          datosCliente[productoMapping[nombreProducto]] += cantidad;
         }
       }
     }
+
     return datosCliente;
   };
 
   const enviarRegistroCliente = async (cliente, datos) => {
+    console.log(datos);
     await axiosInstance.put(`/registro/daily/${cliente.unique_id}`, {
       fardo: datos.fardo,
       garrafa: datos.garrafa,
@@ -198,6 +210,7 @@ export default function VentasControl() {
       if (!clienteExiste) {
         const datosCliente = await obtenerRegistroCliente(infoClientSelected);
         const datosSumados = sumarDatosProductos(registro, datosCliente);
+        console.log(datosSumados);
         await enviarRegistroCliente(infoClientSelected, datosSumados);
       } else if (infoClientSelected?.unique_id) {
         await axiosInstance.put(
