@@ -5,8 +5,8 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function VentasControl() {
-  const [infoClientSelected, setInfoClientSelected] = useState();
-  const [selectedOption, setSelectedOption] = useState();
+  const [infoClientSelected, setInfoClientSelected] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(null);
   const [infoClients, setInfoClients] = useState();
   const [inventario, setInventario] = useState();
   const [registro, setRegistro] = useState();
@@ -306,10 +306,10 @@ export default function VentasControl() {
                         type="name"
                         className="border-0 px-3 py-3 opacity-50 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                         value={
-                          infoClientSelected?.nombre +
+                          (infoClientSelected?.nombre || "") +
                           " " +
-                          infoClientSelected?.apellido
-                        } //cambiar por props
+                          (infoClientSelected?.apellido || "")
+                        }
                         disabled
                       />
                     </div>
