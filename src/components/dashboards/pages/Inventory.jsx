@@ -40,7 +40,7 @@ export default function Inventory() {
   const navigate = useNavigate();
   const [inventoryData, setInventoryData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5); // Number of items to display per page
+  const [itemsPerPage] = useState(8); // Number of items to display per page
   const token = localStorage.getItem("token");
   const location = useLocation();
   const { successMessage } = location.state || {};
