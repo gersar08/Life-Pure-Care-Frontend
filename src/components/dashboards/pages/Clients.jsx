@@ -102,10 +102,6 @@ function Users() {
     });
   };
 
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = users.slice(indexOfFirstItem, indexOfLastItem);

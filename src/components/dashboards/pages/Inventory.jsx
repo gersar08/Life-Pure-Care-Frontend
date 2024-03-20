@@ -151,7 +151,6 @@ export default function Inventory() {
       setInventoryData(
         inventoryData.map((item) => (item.id === itemId ? itemUpdated : item))
       );
-
     } catch {
       toast.error("Error al actualizar el item", {
         position: "top-center",
@@ -180,7 +179,6 @@ export default function Inventory() {
       setInventoryData(
         inventoryData.map((item) => (item.id === itemId ? itemUpdated : item))
       );
-
     } catch {
       toast.error("Error al actualizar el item", {
         position: "top-center",
@@ -190,10 +188,6 @@ export default function Inventory() {
         draggable: true,
       });
     }
-  };
-
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
