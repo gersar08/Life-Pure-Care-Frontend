@@ -5,9 +5,40 @@ import { PencilSquareIcon } from "@heroicons/react/20/solid";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 
+const Pagination = ({ totalItems, itemsPerPage, currentPage, paginate }) => {
+  const pageNumbers = [];
+
+  for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  return (
+    <nav className="flex justify-center mt-4">
+      <ul className="flex">
+        {pageNumbers.map((number) => (
+          <li key={number} className="mx-1">
+            <button
+              onClick={() => paginate(number)}
+              className={`${
+                currentPage === number
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-300 text-gray-700"
+              } px-4 py-2 rounded-md transition duration-300 ease-in-out hover:bg-blue-700`}
+            >
+              {number}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+};
+
 export default function RegistroClientes() {
   // Definimos 'users' y 'setUsers' usando 'useState'
-  const [users, setUsers] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(7); // Number of items to display per page
   const navigate = useNavigate();
   const location = useLocation();
   const { successMessage } = location.state || {};
@@ -83,6 +114,10 @@ export default function RegistroClientes() {
       // Maneja el error de alguna manera
     }
   };
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = users.slice(indexOfFirstItem, indexOfLastItem);
+
   return (
     <div>
       <ToastContainer />
@@ -92,9 +127,11 @@ export default function RegistroClientes() {
           <button
             className="text-md mr-3 bg-red-500 hover:bg-red-700 text-white py-2 px-3 rounded focus:outline-none focus:shadow-outline"
             onClick={handleDeleteTable}
-            disabled={localStorage.getItem('rol') !== 'admin' && localStorage.getItem('rol') !== 'Operador de caja'}
-
-         >
+            disabled={
+              localStorage.getItem("rol") !== "admin" &&
+              localStorage.getItem("rol") !== "Operador de caja"
+            }
+          >
             Cierre de caja
           </button>
         </div>
@@ -108,59 +145,63 @@ export default function RegistroClientes() {
                 <th className="text-left p-3 px-5">Pet</th>
                 <th></th>
               </tr>
-              {Array.isArray(users) &&
-                users.map((user) => (
-                  <tr
-                    key={user.id}
-                    className="border-b hover:bg-orange-100 bg-gray-100"
-                  >
-                    <td className="p-3 px-5">
-                      <input
-                        type="text"
-                        value={user.cliente_id}
-                        className="bg-transparent"
-                        disabled
-                      />
-                    </td>
-                    <td className="p-3 px-5">
-                      <input
-                        type="number"
-                        value={user.fardo}
-                        className="bg-transparent"
-                        disabled
-                      />
-                    </td>
-                    <td className="p-3 px-5">
-                      <input
-                        type="number"
-                        value={user.garrafa}
-                        className="bg-transparent"
-                        disabled
-                      />
-                    </td>
-                    <td className="p-3 px-5">
-                      <input
-                        type="number"
-                        value={user.pet}
-                        className="bg-transparent"
-                        disabled
-                      />
-                    </td>
-                    <td>
-                      <button
-                        onClick={() => handleEdit(user.cliente_id)}
-                        className="text-sm bg-blue-500 hover:bg-blue-800 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outliine mr-5"
-                      >
-                        <PencilSquareIcon className="w-6 h-6" />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+              {currentItems.map((user) => (
+                <tr
+                  key={user.id}
+                  className="border-b hover:bg-orange-100 bg-gray-100"
+                >
+                  <td className="p-3 px-5">
+                    <input
+                      type="text"
+                      value={user.cliente_id}
+                      className="bg-transparent"
+                      disabled
+                    />
+                  </td>
+                  <td className="p-3 px-5">
+                    <input
+                      type="number"
+                      value={user.fardo}
+                      className="bg-transparent"
+                      disabled
+                    />
+                  </td>
+                  <td className="p-3 px-5">
+                    <input
+                      type="number"
+                      value={user.garrafa}
+                      className="bg-transparent"
+                      disabled
+                    />
+                  </td>
+                  <td className="p-3 px-5">
+                    <input
+                      type="number"
+                      value={user.pet}
+                      className="bg-transparent"
+                      disabled
+                    />
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => handleEdit(user.cliente_id)}
+                      className="text-sm bg-blue-500 hover:bg-blue-800 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outliine mr-5"
+                    >
+                      <PencilSquareIcon className="w-6 h-6" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
+        <Pagination
+          totalItems={users.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          paginate={setCurrentPage}
+        />
       </div>
     </div>
   );
 }
-
