@@ -74,17 +74,17 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
       precioBasePet = precioBasePet.toString();
 
       // Set the values of each field
-      precioGarrafaField.setText(precioBaseGarrafa);
-      precioFardoField.setText(precioBaseFardo);
-      precioPetField.setText(precioBasePet);
+      precioGarrafaField.setText("$" + precioBaseGarrafa);
+      precioFardoField.setText("$" + precioBaseFardo);
+      precioPetField.setText("$" + precioBasePet);
 
       // Calcula los totales
       const cantidadGarrafa = Number(cantidadGarrafaField.getText());
       const cantidadFardo = Number(cantidadFardoField.getText());
       const cantidadPet = Number(cantidadPetField.getText());
-      const precioGarrafa = Number(precioGarrafaField.getText());
-      const precioFardo = Number(precioFardoField.getText());
-      const precioPet = Number(precioPetField.getText());
+      const precioGarrafa = Number(precioBaseGarrafa);
+      const precioFardo = Number(precioBaseFardo);
+      const precioPet = Number(precioBasePet);
 
       // Calcula los totales
       const totalGarrafa =
@@ -114,9 +114,9 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
       const ventaTotalStr = ventaTotal.toString();
 
       // Set the values of each fields
-      totalGarrafaField.setText(totalGarrafaStr);
-      totalFardoField.setText(totalFardoStr);
-      totalPetField.setText(totalPetStr);
+      totalGarrafaField.setText("$" + totalGarrafaStr);
+      totalFardoField.setText("$" + totalFardoStr);
+      totalPetField.setText("$" + totalPetStr);
       totalResField.setText(totalResStr);
       subTotalField.setText(totalResStr);
       ventaTotalField.setText(ventaTotalStr);
