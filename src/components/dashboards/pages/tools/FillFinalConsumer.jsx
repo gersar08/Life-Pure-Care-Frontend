@@ -1,6 +1,7 @@
 import React from "react";
 import { PDFDocument } from "pdf-lib";
 import { saveAs } from "file-saver";
+import writtenNumber from "written-number";
 import { ArrowDownTrayIcon } from "@heroicons/react/20/solid";
 
 export default function FillFinalConsumer({ registro, infoCliente, precios }) {
@@ -18,6 +19,7 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
       const ano = fechaActual.getFullYear();
       const fechaFormateada = `${dia}/${mes}/${ano}`;
       const fechaPdf = `${dia}_${mes}_${ano}`;
+      writtenNumber.defaults.lang = "es";
 
       // Get the form containing all the fields
       const form = pdfDoc.getForm();
@@ -42,6 +44,7 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
       const totalResField = form.getTextField("totalSum");
       const subTotalField = form.getTextField("sub_total");
       const ventaTotalField = form.getTextField("total");
+      const sonField = form.getTextField("SON");
 
       // Set the values of each field
       fechaField.setText(fechaFormateada);
@@ -112,6 +115,13 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
       const totalResStr = totalRes.toString();
       //  const ivaStr = iva.toString();
       const ventaTotalStr = ventaTotal.toString();
+      const entero = Math.floor(Number(ventaTotal));
+      const decimal = Math.round((ventaTotal - entero) * 100);
+      const sonFieldText =
+        writtenNumber(entero) +
+        " dolares con " +
+        writtenNumber(decimal) +
+        " centavos";
 
       // Set the values of each fields
       totalGarrafaField.setText("$" + totalGarrafaStr);
@@ -120,6 +130,7 @@ export default function FillFinalConsumer({ registro, infoCliente, precios }) {
       totalResField.setText(totalResStr);
       subTotalField.setText(totalResStr);
       ventaTotalField.setText(ventaTotalStr);
+      sonField.setText(sonFieldText);
 
       // Serializa el documento PDF a bytes
       const pdfBytes = await pdfDoc.save();
