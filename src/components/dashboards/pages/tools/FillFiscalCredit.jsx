@@ -80,29 +80,24 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
         const cantidadFardo = Number(registro.fardo);
         const cantidadPet = Number(registro.pet);
         const precioGarrafa = Number(
-          (precioBaseGarrafa - precioBaseGarrafa * 0.13).toFixed(2)
+          (precioBaseGarrafa - (precioBaseGarrafa * 0.13) / 1.13).toFixed(6)
         );
         const precioFardo = Number(
-          (precioBaseFardo - precioBaseFardo * 0.13).toFixed(2)
+          (precioBaseFardo - (precioBaseFardo * 0.13) / 1.13).toFixed(6)
         );
         const precioPet = Number(
-          (precioBasePet - precioBasePet * 0.13).toFixed(2)
-        );
-        console.log(
-          "Precio Fardo:" + precioFardo,
-          "Precio Garrafa:" + precioGarrafa,
-          "Precio Pet:" + precioPet
+          (precioBasePet - (precioBasePet * 0.13) / 1.13).toFixed(6)
         );
 
         // Calcula los totales
         const totalGarrafa =
           cantidadGarrafa !== 0
-            ? (registro.garrafa * precioGarrafa).toFixed(2)
+            ? parseFloat((registro.garrafa * precioGarrafa)).toFixed(2)
             : "";
         const totalFardo =
-          cantidadFardo !== 0 ? (registro.fardo * precioFardo).toFixed(2) : "";
+          cantidadFardo !== 0 ? parseFloat((registro.fardo * precioFardo)).toFixed(2) : "";
         const totalPet =
-          cantidadPet !== 0 ? (registro.pet * precioPet).toFixed(2) : "";
+          cantidadPet !== 0 ? parseFloat((registro.pet * precioPet).toFixed(2)) : "";
 
         if (registro.garrafa !== 0) {
           const itemField = form.getTextField(`item${itemNumber}`);
@@ -117,7 +112,7 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
           itemField.setText("garrafones de 5 galones");
           cantidadItemField.setText(registro.garrafa.toString());
 
-          precioBaseGarrafa = precioGarrafa.toString();
+          precioBaseGarrafa = precioBaseGarrafa.toString();
           precioBaseItemField.setText("$" + precioBaseGarrafa);
 
           const totalGarrafaStr = totalGarrafa.toString();
@@ -139,7 +134,7 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
           itemField.setText("Fardo de agua");
           cantidadItemField.setText(registro.fardo.toString());
 
-          precioBaseFardo = precioFardo.toString();
+          precioBaseFardo = precioBaseFardo.toString();
           precioBaseItemField.setText("$" + precioBaseFardo);
 
           const totalFardoStr = totalFardo.toString();
@@ -160,7 +155,7 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
           itemField.setText("Paquete pet 600 ml");
           cantidadItemField.setText(registro.pet.toString());
 
-          precioBasePet = precioPet.toString();
+          precioBasePet = precioBasePet.toString();
           precioBaseItemField.setText("$" + precioBasePet);
 
           const totalPetStr = totalPet.toString();
@@ -197,6 +192,7 @@ export default function FillFiscalCredit({ registro, infoCliente, precios }) {
         ventaTotalField.setText(ventaTotalStr);
         sonField.setText(sonFieldText);
         itemNumber = 1;
+
         // Serializa el documento PDF a bytes
         const pdfBytes = await pdfDoc.save();
         setPdfBytes(pdfBytes);
